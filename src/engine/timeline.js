@@ -13,16 +13,23 @@ export function buildTimeline(lesson, timings) {
       const w = words[Math.min(a, words.length - 1)];
       return w ? [w[0], w[0]] : [t.start, t.start];
     });
-    const cues = s.cues.map((c) => ({
+    const cues = s.cues.map((c, k) => ({
       ...c,
-      seg: s.id,
+      seg: s.id, idx: k,
       time: Math.max(0, (unitTimes[c.unit] ? unitTimes[c.unit][0] : t.start) - (c.lead || 0) / 1000),
     }));
+    const el = document.querySelector('[data-seg="' + s.id + '"]');
+    const speaker = s.speaker && s.speaker !== "narr" ? s.speaker : null;
+    const rowEl = el ? el.closest("li.line") : null;
     segs.push({
       id: s.id, block: s.block, chapter: s.chapter, text: s.text,
       start: t.start, end: t.end,
-      el: document.querySelector('[data-seg="' + s.id + '"]'),
+      el,
       blockEl: document.getElementById(s.block),
+      speaker,
+      rowEl,
+      // The speaking character: the avatar in its dialogue row, or the mascot beside an aside.
+      actorEl: speaker ? (rowEl ? rowEl.querySelector(".line-avatar .actor") : document.getElementById(s.block + "-" + speaker)) : null,
       unitEls, unitTimes, cues,
     });
   }

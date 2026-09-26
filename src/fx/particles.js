@@ -53,12 +53,13 @@ export function palette(names) {
 /**
  * Emit particles from a viewport point (clientX/clientY coordinates).
  * kind: 'spark' (short streaks), 'confetti' (tumbling paper), 'ring' (one expanding outline).
+ * thick scales the width and length of spark streaks (1 = default).
  * Returns { done: Promise<void>, clear() }.
  */
 export function emit({
   x, y, kind = 'confetti', count = 24, colors = ['#000'],
   angle = -Math.PI / 2, spread = Math.PI * 2, speed = [220, 560], life = [700, 1100],
-  gravity = null, size = [5, 9], radius = 0, ring = null,
+  gravity = null, size = [5, 9], radius = 0, ring = null, thick = 1,
 } = {}) {
   if (typeof document === 'undefined') return { done: Promise.resolve(), clear() {} };
   mount();
@@ -86,8 +87,8 @@ export function emit({
         p.flip = rand(0, Math.PI * 2);
         p.vflip = rand(8, 16);
       } else {
-        p.width = rand(1.5, 2.4);
-        p.len = rand(0.028, 0.05);
+        p.width = rand(1.5, 2.4) * thick;
+        p.len = rand(0.028, 0.05) * (0.7 + 0.3 * thick);
       }
       add(p);
     }

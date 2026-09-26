@@ -1,0 +1,4801 @@
+{
+ "id": "variables-story",
+ "number": 1,
+ "title": "변수",
+ "subtitle": "카페 알바 민지의 첫 파이썬",
+ "motif": "tag",
+ "mode": "story",
+ "intensity": "strong",
+ "styles": {},
+ "versions": {
+  "calm": "variables",
+  "story": "variables-story"
+ },
+ "course": {
+  "id": "python-first-steps",
+  "title": "파이썬 첫걸음"
+ },
+ "next": {
+  "id": "conditionals",
+  "title": "조건문",
+  "status": "planned"
+ },
+ "chapters": [
+  {
+   "id": "ch1",
+   "title": "월요일 아침, 주문 폭주",
+   "block": "ch1"
+  },
+  {
+   "id": "ch2",
+   "title": "가격이 오른다고요?",
+   "block": "ch2"
+  },
+  {
+   "id": "ch3",
+   "title": "이름표 붙이기",
+   "block": "ch3"
+  },
+  {
+   "id": "ch4",
+   "title": "다음 주 월요일",
+   "block": "ch4"
+  },
+  {
+   "id": "ch5",
+   "title": "영수증에도 이름표를",
+   "block": "ch5"
+  },
+  {
+   "id": "ch6",
+   "title": "이름 짓기 규칙",
+   "block": "ch6"
+  },
+  {
+   "id": "ch7",
+   "title": "오늘의 한 줄",
+   "block": "ch7"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s1",
+   "text": "카페 알바 민지의 첫 파이썬. 첫 번째 레슨, 변수.",
+   "say": "카페 알바 민지의 첫 파이썬. 첫 번째 레슨, 변수.",
+   "units": [
+    {
+     "text": "카페",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "알바",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "민지의",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "첫",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "파이썬.",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "첫",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "번째",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "레슨,",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "변수.",
+     "say": [
+      8,
+      9
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "intro",
+     "target": "intro",
+     "lead": 1500
+    }
+   ],
+   "pauseBefore": 1500,
+   "pauseAfter": 1700,
+   "block": "intro",
+   "chapter": null
+  },
+  {
+   "id": "s2",
+   "text": "월요일 아침, 주문 폭주",
+   "say": "월요일 아침, 주문 폭주",
+   "units": [
+    {
+     "text": "월요일",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "아침,",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "주문",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "폭주",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "chapter",
+     "target": "ch1",
+     "lead": 450
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 1200,
+   "block": "ch1",
+   "chapter": "ch1"
+  },
+  {
+   "id": "s3",
+   "text": "월요일 아침 여덟 시.",
+   "say": "월요일 아침 여덟 시.",
+   "units": [
+    {
+     "text": "월요일",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "아침",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "여덟",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "시.",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 450,
+   "pauseAfter": 280,
+   "block": "sc1",
+   "chapter": "ch1",
+   "speaker": "narr"
+  },
+  {
+   "id": "s4",
+   "text": "민지가 일하는 작은 카페에 손님이 몰려들어요.",
+   "say": "민지가 일하는 작은 카페에 손님이 몰려들어요.",
+   "units": [
+    {
+     "text": "민지가",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "일하는",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "작은",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "카페에",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "손님이",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "몰려들어요.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 380,
+   "block": "sc1",
+   "chapter": "ch1",
+   "speaker": "narr"
+  },
+  {
+   "id": "s5",
+   "text": "민지 씨, 아메리카노 세 잔 주문이요!",
+   "say": "민지 씨, 아메리카노 세 잔 주문이요!",
+   "units": [
+    {
+     "text": "민지",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "씨,",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "아메리카노",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "세",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "잔",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "주문이요!",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "act",
+     "target": "sc1-r2-owner",
+     "params": {
+      "action": "enter"
+     }
+    },
+    {
+     "unit": 3,
+     "fx": "circle",
+     "target": "s5-fx0"
+    },
+    {
+     "unit": 5,
+     "fx": "emote",
+     "target": "sc1-r2-owner",
+     "params": {
+      "emote": "exclaim"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 874,
+   "block": "sc1",
+   "chapter": "ch1",
+   "speaker": "owner",
+   "voice": "M4"
+  },
+  {
+   "id": "s6",
+   "text": "한 잔에 4,500원이니까, 세 잔이면…",
+   "say": "한 잔에 사천오백 원이니까, 세 잔이면…",
+   "units": [
+    {
+     "text": "한",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "잔에",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "4,500원이니까,",
+     "say": [
+      2,
+      4
+     ]
+    },
+    {
+     "text": "세",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "잔이면…",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "react",
+     "target": "sc1-r3-minji",
+     "params": {
+      "expr": "flustered"
+     }
+    },
+    {
+     "unit": 2,
+     "fx": "marker",
+     "target": "s6-fx0"
+    },
+    {
+     "unit": 4,
+     "fx": "emote",
+     "target": "sc1-r3-minji",
+     "params": {
+      "emote": "sweat"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 874,
+   "block": "sc1",
+   "chapter": "ch1",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s7",
+   "text": "맞다, 요즘 배우는 파이썬으로 계산해 보자!",
+   "say": "맞다, 요즘 배우는 파이썬으로 계산해 보자!",
+   "units": [
+    {
+     "text": "맞다,",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "요즘",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "배우는",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "파이썬으로",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "계산해",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "보자!",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "emote",
+     "target": "sc1-r4-minji",
+     "params": {
+      "emote": "idea"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 874,
+   "block": "sc1",
+   "chapter": "ch1",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s8",
+   "text": "민지가 노트북에 한 줄을 입력해요.",
+   "say": "민지가 노트북에 한 줄을 입력해요.",
+   "units": [
+    {
+     "text": "민지가",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "노트북에",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "한",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "줄을",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "입력해요.",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "typecode",
+     "target": "c1"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2920,
+   "block": "p1",
+   "chapter": "ch1"
+  },
+  {
+   "id": "s9",
+   "text": "실행하기 전에 결과를 먼저 예상해 볼까요?",
+   "say": "실행하기 전에 결과를 먼저 예상해 볼까요?",
+   "units": [
+    {
+     "text": "실행하기",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "전에",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "결과를",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "먼저",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "예상해",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "볼까요?",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "countdown",
+     "target": "s9-u0-a0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 3400,
+   "block": "p1",
+   "chapter": "ch1"
+  },
+  {
+   "id": "s10",
+   "text": "실행하면 13500이 나와요.",
+   "say": "실행하면 만 삼천오백이 나와요.",
+   "units": [
+    {
+     "text": "실행하면",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "13500이",
+     "say": [
+      1,
+      3
+     ]
+    },
+    {
+     "text": "나와요.",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "terminal",
+     "target": "c1"
+    },
+    {
+     "unit": 1,
+     "fx": "countup",
+     "target": "s10-fx0",
+     "params": {
+      "from": "0"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2200,
+   "block": "p1",
+   "chapter": "ch1"
+  },
+  {
+   "id": "s11",
+   "text": "안녕, 나는 파이야!",
+   "say": "안녕, 나는 파이야!",
+   "units": [
+    {
+     "text": "안녕,",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "나는",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "파이야!",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 280,
+   "block": "m1",
+   "chapter": "ch1",
+   "speaker": "pai",
+   "voice": "F5"
+  },
+  {
+   "id": "s12",
+   "text": "print는 괄호 안을 계산해서 화면에 보여 주는 명령이야.",
+   "say": "프린트는 괄호 안을 계산해서 화면에 보여 주는 명령이야.",
+   "units": [
+    {
+     "text": "print는",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "괄호",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "안을",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "계산해서",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "화면에",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "보여",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "주는",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "명령이야.",
+     "say": [
+      7,
+      8
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "react",
+     "target": "m1-pai",
+     "params": {
+      "expr": "wink"
+     }
+    },
+    {
+     "unit": 4,
+     "fx": "underline",
+     "target": "s12-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 658,
+   "block": "m1",
+   "chapter": "ch1",
+   "speaker": "pai",
+   "voice": "F5"
+  },
+  {
+   "id": "s13",
+   "text": "가격이 오른다고요?",
+   "say": "가격이 오른다고요?",
+   "units": [
+    {
+     "text": "가격이",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "오른다고요?",
+     "say": [
+      1,
+      2
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "chapter",
+     "target": "ch2",
+     "lead": 450
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 1200,
+   "block": "ch2",
+   "chapter": "ch2"
+  },
+  {
+   "id": "s14",
+   "text": "점심시간이 지나고, 사장님이 심각한 얼굴로 다가왔어요.",
+   "say": "점심시간이 지나고, 사장님이 심각한 얼굴로 다가왔어요.",
+   "units": [
+    {
+     "text": "점심시간이",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "지나고,",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "사장님이",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "심각한",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "얼굴로",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "다가왔어요.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 450,
+   "pauseAfter": 380,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "narr"
+  },
+  {
+   "id": "s15",
+   "text": "원두값이 또 올랐어요.",
+   "say": "원두값이 또 올랐어요.",
+   "units": [
+    {
+     "text": "원두값이",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "또",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "올랐어요.",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "react",
+     "target": "sc2-r2-owner",
+     "params": {
+      "expr": "annoyed"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 604,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "owner",
+   "voice": "M4"
+  },
+  {
+   "id": "s16",
+   "text": "다음 주부터 아메리카노는 5,000원이에요.",
+   "say": "다음 주부터 아메리카노는 오천 원이에요.",
+   "units": [
+    {
+     "text": "다음",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "주부터",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "아메리카노는",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "5,000원이에요.",
+     "say": [
+      3,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "emote",
+     "target": "sc2-r2-owner",
+     "params": {
+      "emote": "anger"
+     }
+    },
+    {
+     "unit": 3,
+     "fx": "zoom",
+     "target": "s16-fx0"
+    },
+    {
+     "unit": 3,
+     "fx": "menuprice",
+     "target": "sc2-menu",
+     "params": {
+      "item": "아메리카노",
+      "price": "5000"
+     }
+    },
+    {
+     "unit": 3,
+     "fx": "screenshake",
+     "target": "s16-u3-a0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 1840,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "owner",
+   "voice": "M4"
+  },
+  {
+   "id": "s17",
+   "text": "네에? 오늘 짠 코드마다 4500을 열 번도 넘게 썼는데요!",
+   "say": "네에? 오늘 짠 코드마다 사천오백을 열 번도 넘게 썼는데요!",
+   "units": [
+    {
+     "text": "네에?",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "오늘",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "짠",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "코드마다",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "4500을",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "열",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "번도",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "넘게",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "썼는데요!",
+     "say": [
+      8,
+      9
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "react",
+     "target": "sc2-r3-minji",
+     "params": {
+      "expr": "surprised"
+     }
+    },
+    {
+     "unit": 0,
+     "fx": "shake",
+     "target": "s17-fx0"
+    },
+    {
+     "unit": 4,
+     "fx": "circle",
+     "target": "s17-fx1"
+    },
+    {
+     "unit": 8,
+     "fx": "emote",
+     "target": "sc2-r3-minji",
+     "params": {
+      "emote": "sweat"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 874,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s18",
+   "text": "숫자가 들어간 곳을 전부 찾아서 고쳐야 해요.",
+   "say": "숫자가 들어간 곳을 전부 찾아서 고쳐야 해요.",
+   "units": [
+    {
+     "text": "숫자가",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "들어간",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "곳을",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "전부",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "찾아서",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "고쳐야",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "해요.",
+     "say": [
+      6,
+      7
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 280,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "narr"
+  },
+  {
+   "id": "s19",
+   "text": "한 군데라도 놓치면 계산이 틀리죠.",
+   "say": "한 군데라도 놓치면 계산이 틀리죠.",
+   "units": [
+    {
+     "text": "한",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "군데라도",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "놓치면",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "계산이",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "틀리죠.",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "vignette",
+     "target": "s19-u0-a0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 1960,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "narr"
+  },
+  {
+   "id": "s20",
+   "text": "안녕, 민지야!",
+   "say": "안녕, 민지야!",
+   "units": [
+    {
+     "text": "안녕,",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "민지야!",
+     "say": [
+      1,
+      2
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "act",
+     "target": "sc2-r5-doyun",
+     "params": {
+      "action": "enter"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 766,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "doyun",
+   "voice": "M1"
+  },
+  {
+   "id": "s21",
+   "text": "무슨 일 있어?",
+   "say": "무슨 일 있어?",
+   "units": [
+    {
+     "text": "무슨",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "일",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "있어?",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 2,
+     "fx": "act",
+     "target": "sc2-r5-doyun",
+     "params": {
+      "action": "point"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 766,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "doyun",
+   "voice": "M1"
+  },
+  {
+   "id": "s22",
+   "text": "가격이 바뀌면 코드를 전부 고쳐야 해.",
+   "say": "가격이 바뀌면 코드를 전부 고쳐야 해.",
+   "units": [
+    {
+     "text": "가격이",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "바뀌면",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "코드를",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "전부",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "고쳐야",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "해.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 5,
+     "fx": "react",
+     "target": "sc2-r6-minji",
+     "params": {
+      "expr": "sad"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 604,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s23",
+   "text": "그럼 숫자에 이름을 붙여 둬.",
+   "say": "그럼 숫자에 이름을 붙여 둬.",
+   "units": [
+    {
+     "text": "그럼",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "숫자에",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "이름을",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "붙여",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "둬.",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "react",
+     "target": "sc2-r7-doyun",
+     "params": {
+      "expr": "wink"
+     }
+    },
+    {
+     "unit": 2,
+     "fx": "marker",
+     "target": "s23-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 712,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "doyun",
+   "voice": "M1"
+  },
+  {
+   "id": "s24",
+   "text": "그러면 한 곳만 고치면 돼.",
+   "say": "그러면 한 곳만 고치면 돼.",
+   "units": [
+    {
+     "text": "그러면",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "한",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "곳만",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "고치면",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "돼.",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 1,
+     "fx": "underline",
+     "target": "s24-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 658,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "doyun",
+   "voice": "M1"
+  },
+  {
+   "id": "s25",
+   "text": "숫자에 이름을 붙인다고?",
+   "say": "숫자에 이름을 붙인다고?",
+   "units": [
+    {
+     "text": "숫자에",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "이름을",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "붙인다고?",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "emote",
+     "target": "sc2-r8-minji",
+     "params": {
+      "emote": "question"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 874,
+   "block": "sc2",
+   "chapter": "ch2",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s26",
+   "text": "이름표 붙이기",
+   "say": "이름표 붙이기",
+   "units": [
+    {
+     "text": "이름표",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "붙이기",
+     "say": [
+      1,
+      2
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "chapter",
+     "target": "ch3",
+     "lead": 450
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 1200,
+   "block": "ch3",
+   "chapter": "ch3"
+  },
+  {
+   "id": "s27",
+   "text": "그게 바로 변수야!",
+   "say": "그게 바로 변수야!",
+   "units": [
+    {
+     "text": "그게",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "바로",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "변수야!",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 2,
+     "fx": "bouncein",
+     "target": "s27-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 712,
+   "block": "m2",
+   "chapter": "ch3",
+   "speaker": "pai",
+   "voice": "F5"
+  },
+  {
+   "id": "s28",
+   "text": "변수는 값에 붙이는 이름표라고 생각하면 돼.",
+   "say": "변수는 값에 붙이는 이름표라고 생각하면 돼.",
+   "units": [
+    {
+     "text": "변수는",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "값에",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "붙이는",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "이름표라고",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "생각하면",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "돼.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "react",
+     "target": "m2-pai",
+     "params": {
+      "expr": "excited"
+     }
+    },
+    {
+     "unit": 0,
+     "fx": "lowerthird",
+     "target": "s28-u0-a0",
+     "params": {
+      "title": "변수",
+      "sub": "값에 붙이는 이름표"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 3400,
+   "block": "m2",
+   "chapter": "ch3",
+   "speaker": "pai",
+   "voice": "F5"
+  },
+  {
+   "id": "s29",
+   "text": "도윤이 알려 준 대로 민지가 두 줄을 입력해요.",
+   "say": "도윤이 알려 준 대로 민지가 두 줄을 입력해요.",
+   "units": [
+    {
+     "text": "도윤이",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "알려",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "준",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "대로",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "민지가",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "두",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "줄을",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "입력해요.",
+     "say": [
+      7,
+      8
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "typecode",
+     "target": "c2"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2920,
+   "block": "p2",
+   "chapter": "ch3"
+  },
+  {
+   "id": "s30",
+   "text": "첫 줄 price = 4500은 4500이라는 값에 price라는 이름표를 붙이라는 뜻이에요.",
+   "say": "첫 줄 프라이스 이콜 사천오백은 사천오백이라는 값에 프라이스라는 이름표를 붙이라는 뜻이에요.",
+   "units": [
+    {
+     "text": "첫",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "줄",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "price = 4500은",
+     "say": [
+      2,
+      5
+     ]
+    },
+    {
+     "text": "4500이라는",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "값에",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "price라는",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "이름표를",
+     "say": [
+      8,
+      9
+     ]
+    },
+    {
+     "text": "붙이라는",
+     "say": [
+      9,
+      10
+     ]
+    },
+    {
+     "text": "뜻이에요.",
+     "say": [
+      10,
+      11
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "flyvalue",
+     "target": "c2",
+     "params": {
+      "to": "f1",
+      "line": "1"
+     }
+    },
+    {
+     "unit": 6,
+     "fx": "marker",
+     "target": "s30-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 1720,
+   "block": "p3",
+   "chapter": "ch3"
+  },
+  {
+   "id": "s31",
+   "text": "이름표가 상자에 착 붙었죠.",
+   "say": "이름표가 상자에 착 붙었죠.",
+   "units": [
+    {
+     "text": "이름표가",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "상자에",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "착",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "붙었죠.",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "step",
+     "target": "f1",
+     "n": 1
+    },
+    {
+     "unit": 2,
+     "fx": "jelly",
+     "target": "s31-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 820,
+   "block": "p3",
+   "chapter": "ch3"
+  },
+  {
+   "id": "s32",
+   "text": "이제 price라고 부르면 이름표가 붙은 값이 나와요.",
+   "say": "이제 프라이스라고 부르면 이름표가 붙은 값이 나와요.",
+   "units": [
+    {
+     "text": "이제",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "price라고",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "부르면",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "이름표가",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "붙은",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "값이",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "나와요.",
+     "say": [
+      6,
+      7
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "terminal",
+     "target": "c2"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2200,
+   "block": "p4",
+   "chapter": "ch3"
+  },
+  {
+   "id": "s33",
+   "text": "그래서 price * 3은 13500이에요.",
+   "say": "그래서 프라이스 곱하기 삼은 만 삼천오백이에요.",
+   "units": [
+    {
+     "text": "그래서",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "price * 3은",
+     "say": [
+      1,
+      4
+     ]
+    },
+    {
+     "text": "13500이에요.",
+     "say": [
+      4,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 2,
+     "fx": "countup",
+     "target": "s33-fx0",
+     "params": {
+      "from": "0"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 928,
+   "block": "p4",
+   "chapter": "ch3"
+  },
+  {
+   "id": "s34",
+   "text": "등호는 수학에서 말하는 같다가 아니에요.",
+   "say": "등호는 수학에서 말하는 같다가 아니에요.",
+   "units": [
+    {
+     "text": "등호는",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "수학에서",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "말하는",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "같다가",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "아니에요.",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 3,
+     "fx": "strike",
+     "target": "s34-fx0",
+     "params": {
+      "to": "붙인다"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 982,
+   "block": "p5",
+   "chapter": "ch3"
+  },
+  {
+   "id": "s35",
+   "text": "오른쪽 값에 왼쪽 이름을 붙인다는 뜻이에요.",
+   "say": "오른쪽 값에 왼쪽 이름을 붙인다는 뜻이에요.",
+   "units": [
+    {
+     "text": "오른쪽",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "값에",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "왼쪽",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "이름을",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "붙인다는",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "뜻이에요.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 4,
+     "fx": "spotlight",
+     "target": "s35-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 1144,
+   "block": "p5",
+   "chapter": "ch3"
+  },
+  {
+   "id": "s36",
+   "text": "다음 주 월요일",
+   "say": "다음 주 월요일",
+   "units": [
+    {
+     "text": "다음",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "주",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "월요일",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "chapter",
+     "target": "ch4",
+     "lead": 450
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 1200,
+   "block": "ch4",
+   "chapter": "ch4"
+  },
+  {
+   "id": "s37",
+   "text": "드디어 다음 주 월요일.",
+   "say": "드디어 다음 주 월요일.",
+   "units": [
+    {
+     "text": "드디어",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "다음",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "주",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "월요일.",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 450,
+   "pauseAfter": 280,
+   "block": "sc3",
+   "chapter": "ch4",
+   "speaker": "narr"
+  },
+  {
+   "id": "s38",
+   "text": "오늘부터 아메리카노가 5,000원이에요.",
+   "say": "오늘부터 아메리카노가 오천 원이에요.",
+   "units": [
+    {
+     "text": "오늘부터",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "아메리카노가",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "5,000원이에요.",
+     "say": [
+      2,
+      4
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 380,
+   "block": "sc3",
+   "chapter": "ch4",
+   "speaker": "narr"
+  },
+  {
+   "id": "s39",
+   "text": "민지 씨, 오늘도 아메리카노 세 잔이요!",
+   "say": "민지 씨, 오늘도 아메리카노 세 잔이요!",
+   "units": [
+    {
+     "text": "민지",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "씨,",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "오늘도",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "아메리카노",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "세",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "잔이요!",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 5,
+     "fx": "react",
+     "target": "sc3-r2-owner",
+     "params": {
+      "expr": "happy"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 604,
+   "block": "sc3",
+   "chapter": "ch4",
+   "speaker": "owner",
+   "voice": "M4"
+  },
+  {
+   "id": "s40",
+   "text": "걱정 마세요.",
+   "say": "걱정 마세요.",
+   "units": [
+    {
+     "text": "걱정",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "마세요.",
+     "say": [
+      1,
+      2
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "react",
+     "target": "sc3-r3-minji",
+     "params": {
+      "expr": "proud"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 604,
+   "block": "sc3",
+   "chapter": "ch4",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s41",
+   "text": "이번엔 한 줄만 고치면 돼요!",
+   "say": "이번엔 한 줄만 고치면 돼요!",
+   "units": [
+    {
+     "text": "이번엔",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "한",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "줄만",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "고치면",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "돼요!",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 1,
+     "fx": "typewriter",
+     "target": "s41-fx0"
+    },
+    {
+     "unit": 4,
+     "fx": "act",
+     "target": "sc3-r3-minji",
+     "params": {
+      "action": "nod"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 928,
+   "block": "sc3",
+   "chapter": "ch4",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s42",
+   "text": "민지가 코드를 이렇게 고쳤어요.",
+   "say": "민지가 코드를 이렇게 고쳤어요.",
+   "units": [
+    {
+     "text": "민지가",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "코드를",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "이렇게",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "고쳤어요.",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "typecode",
+     "target": "c3"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2920,
+   "block": "p6",
+   "chapter": "ch4"
+  },
+  {
+   "id": "s43",
+   "text": "같은 이름에 다시 등호를 쓰면, 이름표가 4500에서 떨어져 5000으로 옮겨 가요.",
+   "say": "같은 이름에 다시 등호를 쓰면, 이름표가 사천오백에서 떨어져 오천으로 옮겨 가요.",
+   "units": [
+    {
+     "text": "같은",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "이름에",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "다시",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "등호를",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "쓰면,",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "이름표가",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "4500에서",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "떨어져",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "5000으로",
+     "say": [
+      8,
+      9
+     ]
+    },
+    {
+     "text": "옮겨",
+     "say": [
+      9,
+      10
+     ]
+    },
+    {
+     "text": "가요.",
+     "say": [
+      10,
+      11
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "diff",
+     "target": "c3",
+     "params": {
+      "line": "2"
+     }
+    },
+    {
+     "unit": 9,
+     "fx": "step",
+     "target": "f2",
+     "n": 2
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 1600,
+   "block": "p6",
+   "chapter": "ch4"
+  },
+  {
+   "id": "s44",
+   "text": "실행하면 15000이 나와요.",
+   "say": "실행하면 만 오천이 나와요.",
+   "units": [
+    {
+     "text": "실행하면",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "15000이",
+     "say": [
+      1,
+      3
+     ]
+    },
+    {
+     "text": "나와요.",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "terminal",
+     "target": "c3"
+    },
+    {
+     "unit": 1,
+     "fx": "odometer",
+     "target": "s44-fx0",
+     "params": {
+      "from": "13500"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2200,
+   "block": "p7",
+   "chapter": "ch4"
+  },
+  {
+   "id": "s45",
+   "text": "계산하는 줄은 한 글자도 고치지 않았는데, 결과가 알아서 바뀌었어요!",
+   "say": "계산하는 줄은 한 글자도 고치지 않았는데, 결과가 알아서 바뀌었어요!",
+   "units": [
+    {
+     "text": "계산하는",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "줄은",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "한",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "글자도",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "고치지",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "않았는데,",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "결과가",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "알아서",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "바뀌었어요!",
+     "say": [
+      8,
+      9
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "stamp",
+     "target": "s45-u0-a0",
+     "params": {
+      "text": "15000"
+     }
+    },
+    {
+     "unit": 7,
+     "fx": "confetti",
+     "target": "s45-u7-a1"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 1960,
+   "block": "p7",
+   "chapter": "ch4"
+  },
+  {
+   "id": "s46",
+   "text": "우와, 벌써 계산 끝났어요?",
+   "say": "우와, 벌써 계산 끝났어요?",
+   "units": [
+    {
+     "text": "우와,",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "벌써",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "계산",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "끝났어요?",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 3,
+     "fx": "react",
+     "target": "sc4-r1-owner",
+     "params": {
+      "expr": "surprised"
+     }
+    },
+    {
+     "unit": 3,
+     "fx": "act",
+     "target": "sc4-r1-owner",
+     "params": {
+      "action": "clap"
+     }
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 766,
+   "block": "sc4",
+   "chapter": "ch4",
+   "speaker": "owner",
+   "voice": "M4"
+  },
+  {
+   "id": "s47",
+   "text": "이름표 덕분이에요!",
+   "say": "이름표 덕분이에요!",
+   "units": [
+    {
+     "text": "이름표",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "덕분이에요!",
+     "say": [
+      1,
+      2
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "act",
+     "target": "sc4-r2-minji",
+     "params": {
+      "action": "jump"
+     }
+    },
+    {
+     "unit": 0,
+     "fx": "wave",
+     "target": "s47-fx0"
+    },
+    {
+     "unit": 1,
+     "fx": "emote",
+     "target": "sc4-r2-minji",
+     "params": {
+      "emote": "heart"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 874,
+   "block": "sc4",
+   "chapter": "ch4",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s48",
+   "text": "사장님은 흐뭇하게 웃으며 주방으로 들어갔어요.",
+   "say": "사장님은 흐뭇하게 웃으며 주방으로 들어갔어요.",
+   "units": [
+    {
+     "text": "사장님은",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "흐뭇하게",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "웃으며",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "주방으로",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "들어갔어요.",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "act",
+     "target": "sc4-r1-owner",
+     "params": {
+      "action": "exit"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 766,
+   "block": "sc4",
+   "chapter": "ch4",
+   "speaker": "narr"
+  },
+  {
+   "id": "s49",
+   "text": "여기까지 잘 따라왔어요.",
+   "say": "여기까지 잘 따라왔어요.",
+   "units": [
+    {
+     "text": "여기까지",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "잘",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "따라왔어요.",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "checkpoint",
+     "target": "checkpoint",
+     "lead": 450
+    },
+    {
+     "unit": 1,
+     "fx": "sparkle",
+     "target": "s49-u1-a0"
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 1720,
+   "block": "checkpoint",
+   "chapter": "ch4"
+  },
+  {
+   "id": "s50",
+   "text": "이름표를 붙이고 옮겨 붙이는 것까지 배웠어요.",
+   "say": "이름표를 붙이고 옮겨 붙이는 것까지 배웠어요.",
+   "units": [
+    {
+     "text": "이름표를",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "붙이고",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "옮겨",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "붙이는",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "것까지",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "배웠어요.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 1440,
+   "block": "checkpoint",
+   "chapter": "ch4"
+  },
+  {
+   "id": "s51",
+   "text": "영수증에도 이름표를",
+   "say": "영수증에도 이름표를",
+   "units": [
+    {
+     "text": "영수증에도",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "이름표를",
+     "say": [
+      1,
+      2
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "chapter",
+     "target": "ch5",
+     "lead": 450
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 1200,
+   "block": "ch5",
+   "chapter": "ch5"
+  },
+  {
+   "id": "s52",
+   "text": "마감 후, 카페 뒷방 사무실.",
+   "say": "마감 후, 카페 뒷방 사무실.",
+   "units": [
+    {
+     "text": "마감",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "후,",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "카페",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "뒷방",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "사무실.",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 450,
+   "pauseAfter": 380,
+   "block": "sc5",
+   "chapter": "ch5",
+   "speaker": "narr"
+  },
+  {
+   "id": "s53",
+   "text": "민지 씨, 새로 온 알바생이 민지 씨 코드를 보더니 숫자가 뭔지 모르겠대요.",
+   "say": "민지 씨, 새로 온 알바생이 민지 씨 코드를 보더니 숫자가 뭔지 모르겠대요.",
+   "units": [
+    {
+     "text": "민지",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "씨,",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "새로",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "온",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "알바생이",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "민지",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "씨",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "코드를",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "보더니",
+     "say": [
+      8,
+      9
+     ]
+    },
+    {
+     "text": "숫자가",
+     "say": [
+      9,
+      10
+     ]
+    },
+    {
+     "text": "뭔지",
+     "say": [
+      10,
+      11
+     ]
+    },
+    {
+     "text": "모르겠대요.",
+     "say": [
+      11,
+      12
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 9,
+     "fx": "scramble",
+     "target": "s53-fx0"
+    },
+    {
+     "unit": 11,
+     "fx": "react",
+     "target": "sc5-r2-owner",
+     "params": {
+      "expr": "thinking"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 874,
+   "block": "sc5",
+   "chapter": "ch5",
+   "speaker": "owner",
+   "voice": "M4"
+  },
+  {
+   "id": "s54",
+   "text": "그럼 잔 수랑 합계에도 이름표를 붙일게요!",
+   "say": "그럼 잔 수랑 합계에도 이름표를 붙일게요!",
+   "units": [
+    {
+     "text": "그럼",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "잔",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "수랑",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "합계에도",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "이름표를",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "붙일게요!",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "emote",
+     "target": "sc5-r3-minji",
+     "params": {
+      "emote": "idea"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 874,
+   "block": "sc5",
+   "chapter": "ch5",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s55",
+   "text": "민지가 코드를 이렇게 바꿨어요.",
+   "say": "민지가 코드를 이렇게 바꿨어요.",
+   "units": [
+    {
+     "text": "민지가",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "코드를",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "이렇게",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "바꿨어요.",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "typecode",
+     "target": "c4"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2920,
+   "block": "p8",
+   "chapter": "ch5"
+  },
+  {
+   "id": "s56",
+   "text": "잔 수 3에는 count라는 이름표를 붙였어요.",
+   "say": "잔 수 삼에는 카운트라는 이름표를 붙였어요.",
+   "units": [
+    {
+     "text": "잔",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "수",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "3에는",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "count라는",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "이름표를",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "붙였어요.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "step",
+     "target": "f3",
+     "n": 3
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 820,
+   "block": "p9",
+   "chapter": "ch5"
+  },
+  {
+   "id": "s57",
+   "text": "그리고 price * count로 계산한 새 값에는 total이라는 이름표를 붙였죠.",
+   "say": "그리고 프라이스 곱하기 카운트로 계산한 새 값에는 토탈이라는 이름표를 붙였죠.",
+   "units": [
+    {
+     "text": "그리고",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "price * count로",
+     "say": [
+      1,
+      4
+     ]
+    },
+    {
+     "text": "계산한",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "새",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "값에는",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "total이라는",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "이름표를",
+     "say": [
+      8,
+      9
+     ]
+    },
+    {
+     "text": "붙였죠.",
+     "say": [
+      9,
+      10
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "step",
+     "target": "f3",
+     "n": 4
+    },
+    {
+     "unit": 6,
+     "fx": "marker",
+     "target": "s57-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 820,
+   "block": "p9",
+   "chapter": "ch5"
+  },
+  {
+   "id": "s58",
+   "text": "마지막 줄에서 total을 출력하면 15000이 나와요.",
+   "say": "마지막 줄에서 토탈을 출력하면 만 오천이 나와요.",
+   "units": [
+    {
+     "text": "마지막",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "줄에서",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "total을",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "출력하면",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "15000이",
+     "say": [
+      4,
+      6
+     ]
+    },
+    {
+     "text": "나와요.",
+     "say": [
+      6,
+      7
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "terminal",
+     "target": "c4"
+    },
+    {
+     "unit": 5,
+     "fx": "confetti",
+     "target": "s58-u5-a0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2200,
+   "block": "p10",
+   "chapter": "ch5"
+  },
+  {
+   "id": "s59",
+   "text": "숫자만 늘어놓을 때보다, 이름만 읽어도 무엇을 계산하는지 한눈에 보이지?",
+   "say": "숫자만 늘어놓을 때보다, 이름만 읽어도 무엇을 계산하는지 한눈에 보이지?",
+   "units": [
+    {
+     "text": "숫자만",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "늘어놓을",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "때보다,",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "이름만",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "읽어도",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "무엇을",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "계산하는지",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "한눈에",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "보이지?",
+     "say": [
+      8,
+      9
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 3,
+     "fx": "callout",
+     "target": "s59-fx0",
+     "params": {
+      "text": "total = price * count"
+     }
+    },
+    {
+     "unit": 8,
+     "fx": "emote",
+     "target": "m3-pai",
+     "params": {
+      "emote": "sparkle"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 1090,
+   "block": "m3",
+   "chapter": "ch5",
+   "speaker": "pai",
+   "voice": "F5"
+  },
+  {
+   "id": "s60",
+   "text": "이름 짓기 규칙",
+   "say": "이름 짓기 규칙",
+   "units": [
+    {
+     "text": "이름",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "짓기",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "규칙",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "chapter",
+     "target": "ch6",
+     "lead": 450
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 1200,
+   "block": "ch6",
+   "chapter": "ch6"
+  },
+  {
+   "id": "s61",
+   "text": "손님이 뜸한 오후, 민지는 카페 구석 자리에서 노트북을 켰어요.",
+   "say": "손님이 뜸한 오후, 민지는 카페 구석 자리에서 노트북을 켰어요.",
+   "units": [
+    {
+     "text": "손님이",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "뜸한",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "오후,",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "민지는",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "카페",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "구석",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "자리에서",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "노트북을",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "켰어요.",
+     "say": [
+      8,
+      9
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 450,
+   "pauseAfter": 280,
+   "block": "sc6",
+   "chapter": "ch6",
+   "speaker": "narr"
+  },
+  {
+   "id": "s62",
+   "text": "옆자리에는 도윤이 앉아 있어요.",
+   "say": "옆자리에는 도윤이 앉아 있어요.",
+   "units": [
+    {
+     "text": "옆자리에는",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "도윤이",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "앉아",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "있어요.",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 380,
+   "block": "sc6",
+   "chapter": "ch6",
+   "speaker": "narr"
+  },
+  {
+   "id": "s63",
+   "text": "이번엔 나이에도 이름표를 붙여 볼래.",
+   "say": "이번엔 나이에도 이름표를 붙여 볼래.",
+   "units": [
+    {
+     "text": "이번엔",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "나이에도",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "이름표를",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "붙여",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "볼래.",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 4,
+     "fx": "emote",
+     "target": "sc6-r2-minji",
+     "params": {
+      "emote": "music"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 874,
+   "block": "sc6",
+   "chapter": "ch6",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s64",
+   "text": "민지가 지은 이름은 2age예요.",
+   "say": "민지가 지은 이름은 투 에이지예요.",
+   "units": [
+    {
+     "text": "민지가",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "지은",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "이름은",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "2age예요.",
+     "say": [
+      3,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "typecode",
+     "target": "c5"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2920,
+   "block": "p11",
+   "chapter": "ch6"
+  },
+  {
+   "id": "s65",
+   "text": "실행하자마자 오류가 떴어요!",
+   "say": "실행하자마자 오류가 떴어요!",
+   "units": [
+    {
+     "text": "실행하자마자",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "오류가",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "떴어요!",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "terminal",
+     "target": "c5"
+    },
+    {
+     "unit": 0,
+     "fx": "errorfx",
+     "target": "c5"
+    },
+    {
+     "unit": 1,
+     "fx": "glitch",
+     "target": "s65-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2200,
+   "block": "p11",
+   "chapter": "ch6"
+  },
+  {
+   "id": "s66",
+   "text": "도윤아, 이거 왜 안 돼?",
+   "say": "도윤아, 이거 왜 안 돼?",
+   "units": [
+    {
+     "text": "도윤아,",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "이거",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "왜",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "안",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "돼?",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "react",
+     "target": "sc7-r1-minji",
+     "params": {
+      "expr": "flustered"
+     }
+    },
+    {
+     "unit": 4,
+     "fx": "emote",
+     "target": "sc7-r1-minji",
+     "params": {
+      "emote": "question"
+     }
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 874,
+   "block": "sc7",
+   "chapter": "ch6",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s67",
+   "text": "이름은 숫자로 시작할 수 없어. 글자나 밑줄로 시작해야 해.",
+   "say": "이름은 숫자로 시작할 수 없어. 글자나 밑줄로 시작해야 해.",
+   "units": [
+    {
+     "text": "이름은",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "숫자로",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "시작할",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "수",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "없어.",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "글자나",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "밑줄로",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "시작해야",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "해.",
+     "say": [
+      8,
+      9
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "act",
+     "target": "sc7-r2-doyun",
+     "params": {
+      "action": "shakehead"
+     }
+    },
+    {
+     "unit": 1,
+     "fx": "zoom",
+     "target": "s67-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 766,
+   "block": "sc7",
+   "chapter": "ch6",
+   "speaker": "doyun",
+   "voice": "M1"
+  },
+  {
+   "id": "s68",
+   "text": "그리고 대문자와 소문자는 서로 다른 이름이야.",
+   "say": "그리고 대문자와 소문자는 서로 다른 이름이야.",
+   "units": [
+    {
+     "text": "그리고",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "대문자와",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "소문자는",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "서로",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "다른",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "이름이야.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "act",
+     "target": "sc7-r3-doyun",
+     "params": {
+      "action": "point"
+     }
+    },
+    {
+     "unit": 3,
+     "fx": "flip3d",
+     "target": "s68-fx0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 766,
+   "block": "sc7",
+   "chapter": "ch6",
+   "speaker": "doyun",
+   "voice": "M1"
+  },
+  {
+   "id": "s69",
+   "text": "아하!",
+   "say": "아하!",
+   "units": [
+    {
+     "text": "아하!",
+     "say": [
+      0,
+      1
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "flash",
+     "target": "s69-u0-a0"
+    },
+    {
+     "unit": 0,
+     "fx": "react",
+     "target": "sc7-r4-minji",
+     "params": {
+      "expr": "happy"
+     }
+    },
+    {
+     "unit": 0,
+     "fx": "act",
+     "target": "sc7-r4-minji",
+     "params": {
+      "action": "highfive"
+     }
+    },
+    {
+     "unit": 0,
+     "fx": "act",
+     "target": "sc7-r3-doyun",
+     "params": {
+      "action": "highfive"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 880,
+   "block": "sc7",
+   "chapter": "ch6",
+   "speaker": "minji",
+   "voice": "F3"
+  },
+  {
+   "id": "s70",
+   "text": "규칙대로 고치면 이렇게 돼요.",
+   "say": "규칙대로 고치면 이렇게 돼요.",
+   "units": [
+    {
+     "text": "규칙대로",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "고치면",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "이렇게",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "돼요.",
+     "say": [
+      3,
+      4
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "typecode",
+     "target": "c6"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2920,
+   "block": "p12",
+   "chapter": "ch6"
+  },
+  {
+   "id": "s71",
+   "text": "숫자는 맨 앞만 아니면 괜찮아서, age2는 되지만 2age는 안 돼요.",
+   "say": "숫자는 맨 앞만 아니면 괜찮아서, 에이지 투는 되지만 투 에이지는 안 돼요.",
+   "units": [
+    {
+     "text": "숫자는",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "맨",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "앞만",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "아니면",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "괜찮아서,",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "age2는",
+     "say": [
+      5,
+      7
+     ]
+    },
+    {
+     "text": "되지만",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "2age는",
+     "say": [
+      8,
+      10
+     ]
+    },
+    {
+     "text": "안",
+     "say": [
+      10,
+      11
+     ]
+    },
+    {
+     "text": "돼요.",
+     "say": [
+      11,
+      12
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 280,
+   "block": "p12",
+   "chapter": "ch6"
+  },
+  {
+   "id": "s72",
+   "text": "실행해 보면 age는 20, Age는 30이 나와요.",
+   "say": "실행해 보면 에이지는 이십, 대문자 에이지는 삼십이 나와요.",
+   "units": [
+    {
+     "text": "실행해",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "보면",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "age는",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "20,",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "Age는",
+     "say": [
+      4,
+      6
+     ]
+    },
+    {
+     "text": "30이",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "나와요.",
+     "say": [
+      7,
+      8
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "terminal",
+     "target": "c6"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 2200,
+   "block": "p12",
+   "chapter": "ch6"
+  },
+  {
+   "id": "s73",
+   "text": "대문자와 소문자가 다르면 다른 이름표예요.",
+   "say": "대문자와 소문자가 다르면 다른 이름표예요.",
+   "units": [
+    {
+     "text": "대문자와",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "소문자가",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "다르면",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "다른",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "이름표예요.",
+     "say": [
+      4,
+      5
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 3,
+     "fx": "shockwave",
+     "target": "s73-u3-a0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 1480,
+   "block": "p12",
+   "chapter": "ch6"
+  },
+  {
+   "id": "s74",
+   "text": "오늘의 한 줄",
+   "say": "오늘의 한 줄",
+   "units": [
+    {
+     "text": "오늘의",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "한",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "줄",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "chapter",
+     "target": "ch7",
+     "lead": 450
+    }
+   ],
+   "pauseBefore": 450,
+   "pauseAfter": 1200,
+   "block": "ch7",
+   "chapter": "ch7"
+  },
+  {
+   "id": "s75",
+   "text": "자, 오늘 배운 걸 카드 한 장으로 정리해 볼까?",
+   "say": "자, 오늘 배운 걸 카드 한 장으로 정리해 볼까?",
+   "units": [
+    {
+     "text": "자,",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "오늘",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "배운",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "걸",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "카드",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "한",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "장으로",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "정리해",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "볼까?",
+     "say": [
+      8,
+      9
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 8,
+     "fx": "react",
+     "target": "m4-pai",
+     "params": {
+      "expr": "excited"
+     }
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 604,
+   "block": "m4",
+   "chapter": "ch7",
+   "speaker": "pai",
+   "voice": "F5"
+  },
+  {
+   "id": "s76",
+   "text": "카드를 뒤집으면, 변수는 값에 붙인 이름표예요.",
+   "say": "카드를 뒤집으면, 변수는 값에 붙인 이름표예요.",
+   "units": [
+    {
+     "text": "카드를",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "뒤집으면,",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "변수는",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "값에",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "붙인",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "이름표예요.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "flip",
+     "target": "t1"
+    },
+    {
+     "unit": 3,
+     "fx": "marker",
+     "target": "s76-fx0"
+    },
+    {
+     "unit": 5,
+     "fx": "fireworks",
+     "target": "s76-u5-a0"
+    }
+   ],
+   "pauseBefore": 0,
+   "pauseAfter": 3160,
+   "block": "p13",
+   "chapter": "ch7"
+  },
+  {
+   "id": "s77",
+   "text": "민지는 가격이 바뀌어도 한 줄만 고치면 되는 코드를 만들었어요.",
+   "say": "민지는 가격이 바뀌어도 한 줄만 고치면 되는 코드를 만들었어요.",
+   "units": [
+    {
+     "text": "민지는",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "가격이",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "바뀌어도",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "한",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "줄만",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "고치면",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "되는",
+     "say": [
+      6,
+      7
+     ]
+    },
+    {
+     "text": "코드를",
+     "say": [
+      7,
+      8
+     ]
+    },
+    {
+     "text": "만들었어요.",
+     "say": [
+      8,
+      9
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "unit": 0,
+     "fx": "outro",
+     "target": "outro",
+     "lead": 1700
+    }
+   ],
+   "pauseBefore": 1700,
+   "pauseAfter": 280,
+   "block": "outro",
+   "chapter": "ch7"
+  },
+  {
+   "id": "s78",
+   "text": "이제 여러분 차례예요.",
+   "say": "이제 여러분 차례예요.",
+   "units": [
+    {
+     "text": "이제",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "여러분",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "차례예요.",
+     "say": [
+      2,
+      3
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 280,
+   "block": "outro",
+   "chapter": "ch7"
+  },
+  {
+   "id": "s79",
+   "text": "관심 있는 주제를 골라 직접 연습해 봐요.",
+   "say": "관심 있는 주제를 골라 직접 연습해 봐요.",
+   "units": [
+    {
+     "text": "관심",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "있는",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "주제를",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "골라",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "직접",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "연습해",
+     "say": [
+      5,
+      6
+     ]
+    },
+    {
+     "text": "봐요.",
+     "say": [
+      6,
+      7
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 280,
+   "block": "outro",
+   "chapter": "ch7"
+  },
+  {
+   "id": "s80",
+   "text": "다음 레슨에서는 조건문으로 코드에 갈림길을 만들어요.",
+   "say": "다음 레슨에서는 조건문으로 코드에 갈림길을 만들어요.",
+   "units": [
+    {
+     "text": "다음",
+     "say": [
+      0,
+      1
+     ]
+    },
+    {
+     "text": "레슨에서는",
+     "say": [
+      1,
+      2
+     ]
+    },
+    {
+     "text": "조건문으로",
+     "say": [
+      2,
+      3
+     ]
+    },
+    {
+     "text": "코드에",
+     "say": [
+      3,
+      4
+     ]
+    },
+    {
+     "text": "갈림길을",
+     "say": [
+      4,
+      5
+     ]
+    },
+    {
+     "text": "만들어요.",
+     "say": [
+      5,
+      6
+     ]
+    }
+   ],
+   "cues": [],
+   "pauseBefore": 0,
+   "pauseAfter": 1400,
+   "block": "outro",
+   "chapter": "ch7"
+  }
+ ],
+ "stats": {
+  "segments": 80,
+  "spokenChars": 1706,
+  "estimatedSeconds": 383
+ }
+}

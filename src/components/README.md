@@ -36,6 +36,17 @@ Multiply every time by k.time, every distance/scale excursion by k.amp, every pa
 - opts.mode 'read': same look; may be quicker where no narration has to line up (for example long run sweeps).
 - Sounds only for intro, chapter, checkpoint, outro, and only when opts.sound is true. Use sting() from
   src/fx/sound.js (registerSting to add a named sting). Schedule with tl.cue(() => sting(name, { amp }), atMs).
+- Intensity 'strong' is the story lessons' default and must be unmistakable. pop, burst, run, flip and checkpoint
+  have strong-only sizing and timing (same look, only size, contrast and time change); soft and normal keep the
+  v0.1 values so the calm lesson stays comparable:
+  - pop: bigger jump (scale 1 + 0.24 x amp, lift 4.5 x amp px); the word stays coral from 14% to 60% of the
+    effect, then the highlighter sweeps in as it cools.
+  - burst: the anchor word stays coral for the first half; ring, spark streaks and confetti are 1.35x larger.
+  - run: the active-line band is twice as strong (components.css --ln-boost, set on the block while it plays) and
+    each output line lands in yellow (--marker) before settling to its normal colour.
+  - flip: the card lifts a little higher mid-turn (scale 1 + 0.075 x amp).
+  - checkpoint: a bigger ring pulse, a brief mint wash and 2px mint outline on the card when the ring closes,
+    and more, larger confetti.
 
 ## Visual grammar (keep every component in one family)
 
@@ -58,13 +69,45 @@ Multiply every time by k.time, every distance/scale excursion by k.amp, every pa
 
 - src/fx/motion.js     token(), ease, spring(), INTENSITY, normalize()
 - src/fx/timeline.js   Timeline (to/set/cue/hold/then/play), stop(), instant(), setState()
-- src/fx/sound.js      sting(), registerSting(), voice(), noise(), unlockAudio()
-- src/fx/particles.js  emit() on one shared fixed canvas, palette(), clearParticles()
+- src/fx/sound.js      sting(), registerSting(), playSfx(), SFX_NAMES, setMuted(), isMuted(), setVolume(),
+                       getVolume(), voice(), noise(), unlockAudio()
+- src/fx/particles.js  emit() on one shared fixed canvas (thick scales spark streaks), palette(), clearParticles()
 - src/components/intro.js (+ intro/)      intro, drawMotif(el, motif)
 - src/components/chapter.js, checkpoint.js, outro.js   stage bands and the mid-lesson break
 - src/components/pop.js, burst.js, flip.js, run.js (+ highlight.js), step.js
 - src/components/figures/index.js         figure registry; figures/name-tag.js
+- src/components/effects/code.js          v2 code-block effects: typecode, terminal, flyvalue, diff, errorfx
 - styles/components.css                    all component styles (partials under src/components are merged into it)
+
+## v2 code effects (src/components/effects/code.js, SPEC section 12)
+
+export const effects = { typecode, terminal, flyvalue, diff, errorfx }; each is { run(el, opts) -> Handle, prime(el),
+settle(el, opts?), reset(el) } on the compiler's code block (figure.blk.code > pre > code > span.ln[data-line],
+div.out > span.out-line[data-from]). The module touches no DOM at import. Durations are the registry value x
+intensity (soft 0.7, normal 1, strong 1.2); reduced motion returns duration 0 and lands in the final state. Sounds
+(playSfx) only when opts.sound is true. Everything stays inside the existing code block design.
+
+- typecode: the code types itself line by line with a yellow block caret and key clicks. prime() hides the code
+  text (line numbers stay) until it plays or settles.
+- terminal: a status chip ("실행 중…" with a spinner) takes the place of the "Python" label, the lines light up as
+  they run, the output types itself in (each line lands in yellow), and the chip ends as "✓ 실행 완료", or
+  "✕ 오류 발생" when the block's output is an error (.has-error, .out-line.out-error, or an ...Error line).
+  prime() hides the output lines.
+- flyvalue { to: figure id | "out", line }: the last number or string on that line (else the first output line)
+  lifts off as a yellow chip, flies in an arc and is absorbed by the target: a figure value with the same text
+  (it jumps and turns coral), the figure stage, or the output line (it flashes yellow). Nothing lasting.
+- diff { line }: the changed token (compared with the earlier assignment of the same name) gets a yellow frame and
+  rolls like an odometer from the old value to the new one (4500 -> 5000); the token keeps a coral underline.
+- errorfx { line? }: red flash, shake and an error badge naming the error (NameError, SyntaxError, else 오류). The
+  failing line (params.line, "line N" in the output, or the error output line's data-from) is marked red, and the
+  error output line is marked (.out-error, which the compiler already emits; errorfx adds it only on generic
+  markup and never removes the compiler's). The badge hides the terminal chip.
+
+Integration notes: prime typecode and terminal only on blocks that carry those cues, and make read mode play or
+settle them, or the code/output stays hidden. params.line may be a string ("2"). opts.line is accepted as well.
+DOM added at prime or run: .code-caret (in pre), .term-status, .err-badge, .err-flash, .diff-glow / .diff-reel
+(removed after the effect), and a body-level .fx-flylayer while a value flies. The inline style --ln-boost on the
+block only strengthens the active-line band while an effect plays.
 
 ## Integration notes for root (motion, 2026-09-26)
 
@@ -115,7 +158,13 @@ Optional compiler hooks for readers without JavaScript (both pure, Node-importab
 Sound
 - Stings play only for intro, chapter, checkpoint and outro, and only when opts.sound is true.
   Call unlockAudio() inside the Play button's click handler so Safari lets later stings sound.
-- Measured offline (before device volume): peaks between -11 and -21 dBFS, tails under 2.5 s.
+- v2 effect sounds: playSfx(name, { intensity, delay }) with pop, whoosh, thud, chime, fanfare, crackle, typing,
+  glitch, drumroll, riser, boing, zap, sparkle, stamp, tick (SFX_NAMES). setMuted(true) or ?mute=1 silences all
+  sound; setVolume(0..1) scales stings and effect sounds (default 1).
+- Levels sit well under the narration (variables.m4a: -16 LUFS integrated, -1.9 dBFS peak). Measured offline at
+  normal intensity: effect sounds peak at -14.4 to -19.8 dBFS and their loudest 400 ms stays at -25 LUFS or below
+  (strong adds about 1 to 1.5 dB); stings peak at -16 to -22 dBFS (cinema intro and chapter about -16, strong -14.5).
+  Tails stay under 2.5 s.
 
 Layout notes
 - The intro keeps its title clear of the dock (bottom padding uses --dock-h) and honours --topbar-h.
@@ -125,4 +174,5 @@ Layout notes
         margin-right: calc(50% - var(--measure) / 2 - 13rem - var(--s-7)); }
     }
 
-Gallery for checking each element: lab/components.html (python3 -m http.server 8810, then /lab/components.html).
+Gallery for checking each element: lab/components.html (python3 -m http.server 8811, then /lab/components.html).
+The v2 effects (including the code group) are shown on generic markup in lab/effects.html (root).

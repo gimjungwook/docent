@@ -38,7 +38,9 @@ export function prepareSegments(lesson, { allowNonHangul = false } = {}) {
     const pauseBefore = Number(s.pauseBefore ?? 0);
     const pauseAfter = Number(s.pauseAfter ?? 0);
     if (!(pauseBefore >= 0) || !(pauseAfter >= 0)) throw new Error(s.id + ': invalid pause');
-    return { id: s.id, say, words, pauseBefore, pauseAfter };
+    // Optional per-segment speaker (story lessons: each character has its own voice).
+    const voice = typeof s.voice === 'string' && s.voice ? s.voice : null;
+    return { id: s.id, say, words, pauseBefore, pauseAfter, voice };
   });
   if (bad.length && !allowNonHangul) {
     throw new Error('"say" must be Hangul-normalised (SPEC §4); non-Hangul letters/digits found:\n  ' + bad.join('\n  ') +

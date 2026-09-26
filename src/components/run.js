@@ -47,6 +47,10 @@ export default {
     if (o.reduced) return instant(() => { show(outs); syncState(el); });
 
     const T = o.k.time;
+    // Strong (story lessons): the active-line band is twice as strong (--ln-boost in components.css) and each
+    // output line lands in yellow before settling to the normal colour. Soft and normal keep the v0.1 look.
+    const loud = o.intensity === 'strong';
+    el.style.setProperty('--ln-boost', loud ? '1' : '0');
     const n = Math.max(1, lit.length);
     const per = (o.mode === 'read' && !single ? Math.min(380, 1500 / n) : 380) * T;
     const outDur = 420 * T;
@@ -66,8 +70,21 @@ export default {
     const outAt = per * (single ? 1 : lit.length);
     if (wasHidden.length) {
       const stagger = Math.min(90 * T, (outDur * 0.5) / wasHidden.length);
-      tl.to(wasHidden, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0px)' }],
-        { at: outAt, dur: outDur - stagger * (wasHidden.length - 1), stagger, ease: ease.out });
+      const each = outDur - stagger * (wasHidden.length - 1);
+      if (loud) {
+        const hot = getComputedStyle(el).getPropertyValue('--marker').trim() || 'currentColor';
+        wasHidden.forEach((line, i) => {
+          const ink = getComputedStyle(line).color;
+          tl.to(line, [
+            { opacity: 0, transform: 'translateY(' + (6 * o.k.amp).toFixed(1) + 'px)', color: hot, easing: ease.out },
+            { opacity: 1, transform: 'translateY(0px)', color: hot, offset: 0.45, easing: ease.inOut },
+            { opacity: 1, transform: 'translateY(0px)', color: ink },
+          ], { at: outAt + i * stagger, dur: each });
+        });
+      } else {
+        tl.to(wasHidden, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0px)' }],
+          { at: outAt, dur: each, stagger, ease: ease.out });
+      }
       tl.to(el.querySelector('.out'), [{ '--out-on': 0 }, { '--out-on': 1, offset: 0.25 }, { '--out-on': 0 }], { at: outAt, dur: outDur, ease: ease.out });
     }
     tl.hold(outAt + outDur);

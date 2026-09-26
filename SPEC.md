@@ -220,3 +220,54 @@ States: read (no audio), playing, paused. The rAF loop reads audio.currentTime, 
 
 No console errors. Works at 1440×900, 1280×800 and 390×844. No horizontal overflow. Reduced motion works. Every code output on the page was produced by running it. Korean copy follows the lesson tone (친근한 해요체).
 
+
+
+## 12. Effect library v2 — learning effects, clearly noticeable (2026-09-27)
+
+The user asked for many more effects and for them to stand out. Clarified the same day: **the v0.1 design stays as it is** (layout, colours, type, the intro, chapter, checkpoint and outro looks). "Louder" means *noticeable*: effects are added for learning and are big and clear enough to be seen, inside the existing tokens. The v0.1 lesson (lessons/variables.html, §5 budgets) stays for comparison as 기본판; story versions (front matter `mode: story`) have no budgets and default to intensity 'strong'.
+
+- **Registry**: `src/components/effects/registry.js` (root, pure data, Node-importable) lists every effect with its label, group, kind, duration, params and **use** — the learning job it does (point at a key word, show a change, move a value from code to a figure, mark an error, confirm a result, celebrate an achievement). An effect without a learning job is not added. 36 effects: text 17, screen 10, code 5, cast 4. STYLES keeps the v0.1 looks only.
+- **Implementations** (each file exports `effects = { name: { run(el, opts) -> Handle, prime?(el, opts), settle?(el, opts), reset?(el, opts) } }` and must not touch the DOM at import time): `effects/text.js`, `effects/screen.js` (fx agent), `effects/code.js` (motion agent), `src/components/cast/index.js` (cast agent). `effects/index.js` merges them; `src/engine/fxhub.js` puts v1 and v2 behind one `run/settle/reset/prime` door keyed by cue name.
+- **Handle, opts**: as §6. `opts.params` carries the tag's params (e.g. `{ text: "15000" }`, `{ to: "f1", line: "1" }`, `{ expr: "surprised" }`). Durations equal the registry value × intensity factor (soft 0.7, normal 1, strong 1.2); reduced motion → 0 ms, final state.
+- **Markup the compiler emits**: inline `<span class="fx fx-marker" data-fx="marker" id="s12-fx0" data-to="…">…</span>` (inside one word or wrapping several `.u` spans); point `<span class="fx-anchor" data-fx="stamp" id="s12-u3-a0" data-text="…"></span>` right before the word it fires on; block cues target a block id (code `c2`, menu `sc2-menu`); actor cues target an avatar (`sc1-r3-minji`) or the mascot (`m1-pai`).
+- **Noticeable, not a new look**: at 'strong' an effect is visible at a glance (thick hand-drawn lines, solid marker, clear scale); colours come from tokens (accent, marker, coral, mint, danger, gold). Marker, underline and circle leave a light trace after settle() as a review aid. Celebrations (confetti, fireworks, sparkle, stamp) are for achievements only: a correct result, a new concept, the checkpoint.
+- **Sound**: `playSfx(name, { intensity })` from `src/fx/sound.js` (synthesized WebAudio), only when opts.sound.
+- **Showcase**: `lab/effects.html` shows every registered effect on lesson-style markup with its `use` line and a replay button.
+
+## 13. Cast and story lessons (2026-09-27)
+
+Lessons become stories: characters in realistic situations (a cafe, a first job) talk, react and get helped by a guide — Duolingo-like warmth inside the v0.1 page. There is no stage or background art; characters appear as avatars beside their own dialogue rows in the reading column.
+
+- **Cast** (registry CAST): 민지 (minji, protagonist, part-time barista learning Python), 도윤 (doyun, developer friend and cafe regular), 사장님 (owner, cafe owner who keeps changing prices), 파이 (pai, a small Python snake wearing a name tag — the lesson's guide), plus the narrator (narr, no body). Each speaks with its own Supertonic voice (registry CAST.voice).
+- **Script syntax**:
+
+```
+[scene sc1 민지 사장님 menu=아메리카노:4500,라떼:5000]   ← scene id, cast, optional menu card
+[narr] 월요일 아침, 민지가 일하는 카페.
+[사장님 등장]                                      ← tag-only line: fires on the next line
+사장님: 민지 씨, 아메리카노 세 잔이요! [사장님 !]
+민지: [민지 고민] 한 잔에 {4,500원|사천오백 원}이니까…
+[메뉴 아메리카노 5000]                             ← menu price changes (menuprice); needs menu=
+[/scene]
+
+[pai] 변수는 값에 붙인 [marker]이름표[/marker]야!     ← mascot aside outside scenes
+```
+
+  Actor tags: `[이름 표정]` (EXPRESSIONS) → react, `[이름 !]` (EMOTES) → emote, `[이름 등장]` (ACTIONS) → act. They fire on the word that follows them, or on the last word when they close a sentence. A tag animates that character's avatar in the same row, else in its nearest earlier row, else its nearest later row. Code blocks stay outside scenes.
+- **Scene markup** (compiler):
+
+```html
+<section class="blk scene" id="sc1" data-cast="minji owner">
+  <div class="menu-card" id="sc1-menu">…renderMenu()…</div>
+  <ol class="scene-lines">
+    <li class="line line-narr" id="sc1-r1"><p class="line-text"><span class="seg" data-seg="s5">…</span></p></li>
+    <li class="line" id="sc1-r2" data-speaker="owner"><div class="line-avatar">…renderActor("owner", expr, "sc1-r2-owner")…</div>
+      <div class="line-body"><span class="line-name">사장님</span><p class="line-text"><span class="seg" data-seg="s6">…</span></p></div></li>
+  </ol>
+</section>
+<aside class="blk mascot" id="m1" data-actor="pai"><div class="mascot-art">…</div><p class="mascot-text"><span class="seg" data-seg="s9">…</span></p></aside>
+```
+
+  Each avatar starts with the expression its character had at the end of the earlier rows (`data-expr0`, restored by reset). The cast module provides pure string renderers `renderActor(castId, expr, id)` and `renderMenu(id, menu)`.
+- **Talking and rows**: while a character's line plays the engine adds `.is-talking` to that row's avatar and dispatches `docent:word` (detail `{ index }`) on it at each word. Rows get `.is-active` while spoken and `.is-said` afterwards; the scene is `.is-live` while one of its rows plays. The camera treats a row like a sentence (reading line).
+- **Timing**: characters and word effects play at once next to other effects on story pages; screen and block effects still take turns, and the camera moves to a block (framing code and figure together for flyvalue) before it plays.

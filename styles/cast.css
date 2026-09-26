@@ -1,0 +1,301 @@
+/* Docent cast: character avatars beside dialogue lines, the mascot aside and the scene menu card. Owner: cast.
+   Default rules are the final look, which is what readers without JavaScript see. Colours are tokens plus
+   natural skin tones. Avatars are drawn in a 150-unit box (src/components/cast/art.js); --o is the ink line
+   width in those units (5.4 units = about 2px at the 56px dialogue size, matching the name-tag figure). */
+
+@property --menu-mark { syntax: "<number>"; inherits: true; initial-value: 1; }
+
+/* ------------------------------------------------------------------ palettes */
+[data-actor="minji"], .line[data-speaker="minji"] {
+  --skin: #f8d7c1; --skin-2: #ecbb9d; --skin-line: #c8896a;
+  --hair: var(--ink); --hair-2: var(--ink-2);
+  --c1: var(--paper); --c1b: var(--paper-3); --c2: var(--coral); --c2b: color-mix(in srgb, var(--coral) 78%, var(--ink)); --c3: var(--accent);
+  --sig: var(--coral); --sig-ink: color-mix(in srgb, var(--coral) 74%, var(--ink));
+}
+[data-actor="doyun"], .line[data-speaker="doyun"] {
+  --skin: #efc3a0; --skin-2: #dca583; --skin-line: #b47655;
+  --hair: var(--ink); --hair-2: var(--ink-2);
+  --c1: color-mix(in srgb, var(--accent-ink) 60%, var(--ink)); --c1b: color-mix(in srgb, var(--accent-ink) 40%, var(--ink)); --c2: var(--paper); --c3: var(--accent);
+  --sig: color-mix(in srgb, var(--accent-ink) 78%, var(--ink)); --sig-ink: color-mix(in srgb, var(--accent-ink) 78%, var(--ink));
+}
+[data-actor="owner"], .line[data-speaker="owner"] {
+  --skin: #e6b08a; --skin-2: #d29873; --skin-line: #a86c4a;
+  --hair: color-mix(in srgb, var(--ink-4) 62%, var(--paper)); --hair-2: var(--ink-3); --brow: var(--ink-3);
+  --c1: color-mix(in srgb, var(--mint) 66%, var(--ink)); --c1b: color-mix(in srgb, var(--mint) 44%, var(--ink)); --c2: var(--paper); --c3: var(--coral);
+  --sig: color-mix(in srgb, var(--mint) 80%, var(--ink)); --sig-ink: color-mix(in srgb, var(--mint) 70%, var(--ink));
+}
+[data-actor="pai"], .line[data-speaker="pai"], .blk.mascot {
+  --skin: var(--gold); --skin-2: var(--gold); --skin-line: var(--ink-3);
+  --hair: var(--ink); --hair-2: var(--ink-2);
+  --c1: var(--gold); --c1b: color-mix(in srgb, var(--gold) 64%, var(--coral)); --c2: var(--marker-soft); --c3: var(--coral);
+  --tag: var(--paper);
+  --sig: color-mix(in srgb, var(--gold) 82%, var(--ink)); --sig-ink: color-mix(in srgb, var(--gold) 46%, var(--ink));
+}
+
+/* ------------------------------------------------------------------ avatar art */
+.actor { --o: 5.4px; position: relative; display: block; width: 56px; height: 56px; }
+.actor-body { position: relative; width: 100%; height: 100%; transform-origin: 50% 100%; }
+.cast-art { display: block; width: 100%; height: 100%; overflow: visible; clip-path: inset(-100% -100% 0 -100%); }
+.cast-art .o { stroke: var(--ink); stroke-width: var(--o); stroke-linejoin: round; stroke-linecap: round; }
+.cast-art .o3 { stroke: var(--ink); stroke-width: calc(var(--o) * 0.74); stroke-linejoin: round; stroke-linecap: round; }
+.cast-art .ln, .cast-art .ln3, .cast-art .brow, .cast-art .nose, .cast-art .hl, .cast-art .hr-line, .cast-art .glint,
+.cast-art .str, .cast-art .str-ink, .cast-art .neck, .cast-art .neck-ink, .cast-art .neck-belly, .cast-art .lap-edge,
+.cast-art .tongue-fork, .cast-mark path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.cast-art .ln { stroke: var(--ink); stroke-width: var(--o); }
+.cast-art .ln3 { stroke: var(--ink); stroke-width: calc(var(--o) * 0.62); }
+.cast-art .eye-ln { stroke-width: calc(var(--o) * 1.05); }
+.cast-art .mouth-ln { stroke-width: calc(var(--o) * 0.92); }
+.cast-art .brow { stroke: var(--brow, var(--hair)); stroke-width: calc(var(--o) * 1.02); }
+.cast-art .is-thick .brow { stroke-width: calc(var(--o) * 1.6); }
+.cast-art .nose { stroke: var(--skin-line); stroke-width: calc(var(--o) * 0.6); }
+.cast-art .hl { stroke: var(--paper); stroke-opacity: 0.32; stroke-width: calc(var(--o) * 0.9); }
+.cast-art .hr-line { stroke: var(--hair-2); stroke-opacity: 0.55; stroke-width: calc(var(--o) * 0.5); }
+.cast-art .sk { fill: var(--skin); }
+.cast-art .sk2 { fill: var(--skin-2); }
+.cast-art .hr { fill: var(--hair); }
+.cast-art .hr2 { fill: var(--hair-2); }
+.cast-art .c1 { fill: var(--c1); }
+.cast-art .c1b { fill: var(--c1b); }
+.cast-art .c2 { fill: var(--c2); }
+.cast-art .c2b { fill: var(--c2b, var(--c2)); }
+.cast-art .c3 { fill: var(--c3); }
+.cast-art .c2-line { stroke: var(--c2b, var(--ink)); stroke-opacity: 0.5; }
+.cast-art .ink { fill: var(--ink); }
+.cast-art .wh { fill: var(--paper); }
+.cast-art .mo { fill: color-mix(in srgb, var(--ink) 80%, var(--coral)); }
+.cast-art .tg { fill: color-mix(in srgb, var(--coral) 62%, var(--paper)); }
+.cast-art .blush { fill: var(--coral); }
+.cast-art .tear { fill: color-mix(in srgb, var(--accent) 26%, var(--paper)); }
+.cast-art .lens { fill: var(--paper); fill-opacity: 0.16; }
+.cast-art .glint { stroke: var(--paper); stroke-width: calc(var(--o) * 0.55); }
+.cast-art .str-ink { stroke: var(--ink); stroke-width: calc(var(--o) * 1.3); }
+.cast-art .str { stroke: var(--paper); stroke-width: calc(var(--o) * 0.42); }
+.cast-art .lap { fill: var(--paper-3); }
+.cast-art .lap-edge { stroke: var(--paper); stroke-width: calc(var(--o) * 0.5); stroke-opacity: 0.8; }
+.cast-art .stk { fill: var(--gold); }
+.cast-art .stk2 { fill: var(--stage-2); }
+.cast-art .stk-t { font: 800 9px/1 var(--font-mono); fill: var(--mint); text-anchor: middle; }
+.cast-art .neck-ink { stroke: var(--ink); stroke-width: 29px; }
+.cast-art .neck { stroke: var(--c1); stroke-width: calc(29px - 2 * var(--o)); }
+.cast-art .neck-belly { stroke: var(--c2); stroke-width: 11px; }
+.cast-art .belly-ln { fill: none; stroke: var(--c1b); stroke-width: calc(var(--o) * 0.5); stroke-linecap: round; }
+.cast-art .tag { fill: var(--tag, var(--paper)); }
+.cast-art .tag-hole { fill: var(--paper-2); }
+.cast-art .tag-str { stroke-width: calc(var(--o) * 0.5); }
+.cast-art .tag-t { font: 800 19px/1 var(--font-sans); letter-spacing: -0.04em; fill: var(--ink); text-anchor: middle; }
+.cast-art .tongue-fork { stroke: var(--coral); stroke-width: calc(var(--o) * 0.6); }
+
+/* Moving parts. SVG groups rotate around their local origin (joints, neck); fill-box parts around their centre. */
+.cast-art .a-eyes, .cast-art .a-talk, .cast-art .a-stache, .cast-art .em-art { transform-box: fill-box; }
+.cast-art .a-eyes { transform-origin: 50% 50%; }
+.cast-art .a-talk { transform-origin: 50% 0%; display: none; }
+.cast-art .a-stache { transform-origin: 50% 20%; }
+.actor.is-talking .a-mouth { display: none; }
+.actor.is-talking .a-talk { display: inline; animation: cast-flap 0.24s ease-in-out infinite alternate; }
+.actor.is-talking.is-word-sync .a-talk { animation: none; transform: scaleY(0.18); }
+.actor.is-talking .a-head-idle { animation: cast-talkbob 0.9s ease-in-out infinite; }
+.actor.is-talking .a-stache { animation: cast-stache 0.24s ease-in-out infinite alternate; }
+.actor.is-talking .a-tag-swing { animation: cast-tagswing 1.1s ease-in-out infinite; }
+.actor.is-live .a-eyes.can-blink { animation: cast-blink 5.4s linear var(--blink-delay, 0s) infinite; }
+.actor.is-offscreen, .actor.is-offscreen * { animation-play-state: paused !important; }
+@keyframes cast-flap { from { transform: scaleY(0.18); } to { transform: scaleY(1); } }
+@keyframes cast-talkbob { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(-2.2deg); } 70% { transform: rotate(1.8deg); } }
+@keyframes cast-stache { from { transform: translateY(0) scaleY(1); } to { transform: translateY(1.2px) scaleY(0.9); } }
+@keyframes cast-tagswing { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(5deg); } }
+@keyframes cast-blink { 0%, 95%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.1); } }
+/* The guide sways a little while it waits. */
+.blk.mascot .actor.is-live:not(.is-talking) .a-head-idle { animation: cast-sway 5.2s ease-in-out infinite; }
+@keyframes cast-sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-3deg); } }
+
+/* Presence after enter/exit cues. */
+.actor[data-away="1"] { visibility: hidden; }
+.actor[data-out="1"] .actor-body { opacity: 0.32; transform: translate(0%, 6%) scale(0.94); filter: grayscale(0.5); }
+
+/* Clap sparks and the high-five burst, drawn inside the avatar. */
+.cast-mark { opacity: 0; }
+.cast-mark .mk-halo path { stroke: var(--paper); stroke-width: calc(var(--o) * 2.1); }
+.cast-mark .mk-line path { stroke: var(--coral); stroke-width: calc(var(--o) * 0.86); }
+.cast-puff .mk-line path { stroke: var(--ink-2); }
+
+/* Emote: a small speech bubble with an icon, above the avatar's shoulder. Hidden unless an emote plays. */
+.cast-emote {
+  position: absolute; z-index: 3; left: 58%; bottom: 66%;
+  width: 62%; aspect-ratio: 1;
+  transform-origin: 18% 96%; opacity: 0; pointer-events: none;
+}
+.cast-emote svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.cast-emote .em-bubble { fill: var(--paper); stroke: var(--ink); stroke-width: 3.2px; stroke-linejoin: round; }
+.cast-emote .em-art { transform-origin: 50% 50%; }
+.cast-emote .o3, .cast-emote .ln3 { stroke: var(--ink); stroke-width: 2.8px; stroke-linejoin: round; stroke-linecap: round; }
+.cast-emote .ln3, .cast-emote .em-shine, .cast-emote .em-vein { fill: none; stroke-linecap: round; }
+.cast-emote .ink { fill: var(--ink); }
+.cast-emote .em-coral { fill: var(--coral); }
+.cast-emote .em-blue { fill: var(--accent); }
+.cast-emote .em-sweat { fill: color-mix(in srgb, var(--accent) 28%, var(--paper)); }
+.cast-emote .em-gold { fill: var(--marker); }
+.cast-emote .em-bulb { fill: var(--marker); }
+.cast-emote .em-base { fill: var(--paper-3); }
+.cast-emote .em-fil { stroke: var(--gold); stroke-width: 2.2px; }
+.cast-emote .em-shine { stroke: var(--paper); stroke-width: 2.6px; }
+.cast-emote .em-vein { stroke: var(--danger); stroke-width: 4.4px; }
+
+/* ------------------------------------------------------------------ scene: dialogue rows */
+.lesson > .scene { margin-top: var(--s-6); margin-bottom: var(--s-7); }
+.blk.scene { position: relative; }
+.scene-lines { display: grid; gap: var(--s-4); margin: 0; padding: 0; list-style: none; }
+.scene-lines > .line {
+  --av: 56px;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--av) minmax(0, 1fr);
+  column-gap: var(--s-3);
+  align-items: start;
+  transition: opacity 420ms var(--ease-out);
+}
+.line-avatar { position: relative; z-index: 2; width: var(--av); height: var(--av); margin-top: 2px; transition: transform var(--dur-3) var(--ease-spring); }
+.line-avatar > .actor { width: 100%; height: 100%; }
+.line-body { display: grid; justify-items: start; gap: 2px; min-width: 0; }
+.line-name {
+  padding-left: 6px;
+  font-size: var(--text-xs); font-weight: 700; line-height: 1.35; letter-spacing: 0.01em;
+  color: var(--sig-ink, var(--ink-3));
+}
+.line-body > .line-text {
+  position: relative;
+  max-width: 100%;
+  padding: 8px 16px 9px;
+  border: 2px solid var(--paper-3);
+  border-radius: 6px 18px 18px 18px;
+  background: var(--paper);
+  line-height: 1.7;
+  transition: border-color var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
+}
+/* The bubble's tail points at the speaker. */
+.line-body > .line-text::before {
+  content: "";
+  position: absolute; left: -7.5px; top: 9px;
+  width: 11px; height: 11px;
+  border: 2px solid transparent;
+  border-left-color: inherit; border-bottom-color: inherit;
+  border-bottom-left-radius: 3px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+.line-body > .line-text::before { border-top: 0; border-right: 0; }
+
+/* Narrator rows: plain captions across the column. */
+.scene-lines > .line.line-narr { grid-template-columns: minmax(0, 1fr); }
+.line-narr > .line-text { color: var(--ink-2); line-height: var(--leading-body); }
+
+/* Play state (root's engine): the speaking row is marked, rows still to come step back. */
+.scene-lines > .line.is-active .line-text { border-color: var(--sig, var(--ink-3)); box-shadow: 0 3px 0 -1px color-mix(in srgb, var(--sig, var(--ink-3)) 26%, transparent); }
+.scene-lines > .line.is-active .line-avatar { transform: translateY(-2px) scale(1.06); }
+.scene.is-live .scene-lines > .line:not(.is-active):not(.is-said) { opacity: 0.38; }
+.is-narrating .scene-lines .seg.is-active,
+.is-narrating .mascot .seg.is-active { background-color: transparent; box-shadow: none; }
+
+/* ------------------------------------------------------------------ mascot aside (pai) */
+.lesson > .mascot { margin-top: var(--s-6); margin-bottom: var(--s-6); }
+.blk.mascot { display: grid; grid-template-columns: 72px minmax(0, 1fr); column-gap: var(--s-3); align-items: end; }
+.mascot-art { position: relative; z-index: 2; width: 72px; height: 72px; }
+.mascot-art > .actor { --o: 4.6px; width: 100%; height: 100%; }
+.mascot-text {
+  position: relative;
+  justify-self: start;
+  max-width: 100%;
+  margin-bottom: 14px;
+  padding: 10px 18px 11px;
+  border: 2px solid var(--ink);
+  border-radius: 18px 18px 18px 6px;
+  background: var(--paper);
+  line-height: 1.7;
+  transition: box-shadow var(--dur-2) var(--ease-out);
+}
+.mascot-text::before {
+  content: "";
+  position: absolute; left: -7.5px; bottom: 10px;
+  width: 11px; height: 11px;
+  border-left: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+  border-bottom-left-radius: 3px;
+  background: var(--paper);
+  transform: rotate(45deg);
+}
+.blk.mascot:has(.seg.is-active) .mascot-text,
+.blk.mascot.is-active .mascot-text { box-shadow: 0 3px 0 0 var(--marker); }
+
+/* ------------------------------------------------------------------ menu card */
+/* Sticks under the top bar while its scene scrolls, so a price change is seen where it happens. */
+.menu-card {
+  position: sticky;
+  top: calc(var(--topbar-h, 56px) + var(--s-3));
+  z-index: 6;
+  margin: 0 0 var(--s-5);
+  padding: var(--s-3) var(--s-4) 10px;
+  border-radius: var(--r-3);
+  background: var(--paper);
+  box-shadow: var(--shadow-1), 0 0 0 1px var(--rule);
+}
+.menu-title { margin-bottom: 2px; font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.01em; color: var(--ink-3); }
+.menu-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr)); gap: 2px var(--s-4); margin: 0; padding: 0; list-style: none; }
+.menu-item { display: grid; min-width: 0; }
+.menu-name { font-size: var(--text-xs); font-weight: 600; line-height: 1.5; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.menu-cost { position: relative; display: flex; align-items: baseline; gap: 2px; white-space: nowrap; font-variant-numeric: tabular-nums; line-height: 1.45; }
+.menu-price { position: relative; z-index: 0; display: inline-block; font-size: 1.125rem; font-weight: 760; letter-spacing: -0.01em; color: var(--ink); transform-origin: 50% 70%; }
+.menu-won { font-size: var(--text-xs); font-weight: 600; color: var(--ink-3); }
+/* After a change: a highlighter band under the new price and the old price struck through beside it. */
+.menu-price.is-changed::before {
+  content: "";
+  position: absolute; z-index: -1;
+  left: -0.14em; right: -0.14em; bottom: 0.12em; height: 0.48em;
+  border-radius: 0.16em 0.28em 0.2em 0.3em;
+  background: var(--marker);
+  transform: skewX(-8deg) scaleX(var(--menu-mark));
+  transform-origin: 0 50%;
+}
+.menu-old {
+  margin-left: 6px;
+  font-size: var(--text-xs); font-weight: 650; color: var(--ink-3);
+  text-decoration: line-through; text-decoration-color: var(--coral); text-decoration-thickness: 2px;
+}
+/* While a price changes: the old number sits over the new one, struck through, then fades. */
+.menu-was {
+  position: absolute; left: 0; top: 0;
+  font-size: 1.125rem; font-weight: 760; letter-spacing: -0.01em; color: var(--ink);
+  opacity: 0; pointer-events: none; transform-origin: 50% 70%;
+}
+.menu-strike {
+  position: absolute; left: -3px; right: -3px; top: 50%;
+  height: 3px; margin-top: -1px; border-radius: 2px;
+  background: var(--coral);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+/* "+500": a small note that pops up at the new price's top right (over the struck old price) for a moment. */
+.menu-delta {
+  position: absolute; left: calc(100% + 12px); bottom: 70%; z-index: 2;
+  padding: 0 7px; border-radius: var(--r-pill);
+  background: var(--coral); color: var(--paper);
+  font-size: 12px; font-weight: 800; line-height: 1.6; letter-spacing: 0.01em;
+  box-shadow: 0 0 0 2px var(--paper);
+  opacity: 0; pointer-events: none; transform-origin: 0% 100%;
+}
+.menu-delta.is-down { background: var(--mint); }
+
+/* ------------------------------------------------------------------ small screens */
+@media (max-width: 720px) {
+  .scene-lines > .line { --av: 44px; column-gap: 10px; }
+  .actor { --o: 5.8px; }
+  .line-body > .line-text { padding: 7px 13px 8px; border-radius: 6px 16px 16px 16px; }
+  .blk.mascot { grid-template-columns: 60px minmax(0, 1fr); }
+  .mascot-art { width: 60px; height: 60px; }
+  .menu-card { padding: 10px var(--s-3) 8px; }
+  .menu-list { gap: 2px var(--s-3); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .menu-price, .menu-was { font-size: 1rem; }
+  .menu-old { margin-left: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .actor .a-eyes, .actor .a-head-idle, .actor .a-stache, .actor .a-tag-swing { animation: none !important; }
+  .actor.is-talking .a-talk { animation: none !important; transform: scaleY(0.72); }
+  .line-avatar, .scene-lines > .line { transition: none; }
+}

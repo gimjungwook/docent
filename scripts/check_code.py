@@ -48,6 +48,8 @@ def run_block(cid, code):
     except Exception as exc:  # report, the compiler decides whether that is expected
         tb = traceback.extract_tb(exc.__traceback__)
         line = next((fr.lineno for fr in reversed(tb) if fr.filename == fname), None)
+        if line is None and isinstance(exc, SyntaxError):
+            line = exc.lineno
         error = {"type": type(exc).__name__, "message": str(exc), "line": line}
     finally:
         sys.stdout = saved

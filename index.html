@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="styles/base.css">
 <link rel="stylesheet" href="styles/layout.css">
 <link rel="stylesheet" href="styles/components.css">
+<link rel="stylesheet" href="styles/effects.css">
+<link rel="stylesheet" href="styles/cast.css">
 <link rel="stylesheet" href="styles/engine.css">
 <link rel="stylesheet" href="styles/practice.css">
 </head>
@@ -36,35 +38,36 @@
 <section class="course-start">
   <div class="course-start-copy">
     <p class="course-lead">글로 읽으면 교과서처럼, 재생 버튼을 누르면 옆에서 설명해 주는 강의처럼 봅니다. 레슨이 끝나면 내 관심사에 맞춘 문제로 직접 연습해요.</p>
-    <a class="btn btn-primary" href="lessons/variables.html">첫 레슨 시작하기</a>
+    <a class="btn btn-primary" href="lessons/variables-story.html">첫 레슨 시작하기</a>
   </div>
 </section>
 
 <section class="course-toc" aria-labelledby="toc-heading">
   <div class="course-toc-head"><h2 id="toc-heading">레슨</h2><p>4개 중 1개 공개</p></div>
   <ol class="toc-track">
-    <li><a class="toc-card" href="lessons/variables.html">
+    <li class="toc-item"><a class="toc-card" href="lessons/variables-story.html">
       <span class="toc-motif" data-motif="tag" aria-hidden="true"><svg class="motif motif-tag motif-look-cinema" viewBox="0 0 480 360" focusable="false" aria-hidden="true"><g class="m-pop" data-p="box"><rect class="m-base" x="236" y="156" width="196" height="136" rx="24"/><rect class="m-face" x="236" y="148" width="196" height="136" rx="24"/><text class="m-value" x="334" y="217">4500</text></g><g data-p="tag" style="transform:translate(190px,206px)"><path class="m-string m-draw" data-p="string" pathLength="1" d="M0 0 Q 26 20 46 12"/><g data-p="swing" style="transform:rotate(-5deg)"><path class="m-accent" d="M-158 -32 H-12 L12 -11 V11 L-12 32 H-158 Q-170 32 -170 20 V-20 Q-170 -32 -158 -32 Z"/><circle class="m-hole" r="6.5"/><text class="m-tagtext" x="-80" y="1">price</text></g></g><rect class="m-clip m-pop" data-p="clip" x="229" y="203" width="14" height="30" rx="4"/></svg></span>
-      <span class="toc-number">레슨 1</span>
+      <span class="toc-number">레슨 1 · 스토리</span>
       <strong class="toc-title">변수</strong>
-      <span class="toc-subtitle">값에 이름표 붙이기</span>
-      <span class="toc-meta">5개 장 · 3분</span>
-    </a></li>
-    <li><div class="toc-card is-planned" aria-disabled="true">
+      <span class="toc-subtitle">카페 알바 민지의 첫 파이썬</span>
+      <span class="toc-meta">7개 장 · 6분</span>
+    </a>
+      <a class="toc-alt" href="lessons/variables.html">기본판 보기</a></li>
+    <li class="toc-item"><div class="toc-card is-planned" aria-disabled="true">
       <span class="toc-motif" data-motif="branch" aria-hidden="true"><svg class="motif motif-branch motif-look-cinema" viewBox="0 0 480 360" focusable="false" aria-hidden="true"><path class="m-line m-thick m-draw" data-p="stem" pathLength="1" d="M40 180 H176"/><path class="m-line m-thick m-draw" data-p="up" pathLength="1" d="M236 180 C 292 180 300 94 368 94"/><path class="m-line m-thick m-draw m-dimmed" data-p="down" pathLength="1" d="M236 180 C 292 180 300 266 368 266"/><path class="m-face m-pop" data-p="diamond" d="M206 150 L236 180 L206 210 L176 180 Z"/><circle class="m-ring" data-p="yes-ring" cx="398" cy="94" r="26"/><circle class="m-accent m-pop" data-p="yes" cx="398" cy="94" r="26"/><circle class="m-ring m-dimmed" data-p="no" cx="398" cy="266" r="26"/><text class="m-label" data-p="label" x="398" y="42">True</text><text class="m-label m-dimmed" data-p="label" x="398" y="320">False</text><circle class="m-dot m-traveler" data-p="dot" r="11"/></svg></span>
       <span class="toc-number">레슨 2</span>
       <strong class="toc-title">조건문</strong>
       <span class="toc-subtitle">코드에 갈림길 만들기</span>
       <span class="toc-meta">준비 중</span>
     </div></li>
-    <li><div class="toc-card is-planned" aria-disabled="true">
+    <li class="toc-item"><div class="toc-card is-planned" aria-disabled="true">
       <span class="toc-motif" data-motif="loop" aria-hidden="true"><svg class="motif motif-loop motif-look-cinema" viewBox="0 0 480 360" focusable="false" aria-hidden="true"><path class="m-line m-thick m-draw" data-p="arc" pathLength="1" d="M299.35 85.02 A 112 112 0 1 1 180.65 85.02"/><path class="m-head m-pop" data-p="head" d="M187.96 100.5 L202.7 71.24 L169.94 71.66 Z"/><g data-p="orbit" style="transform-origin:240px 180px"><circle class="m-dot m-dot-1 m-pop" data-p="dot" cx="255.59" cy="290.91" r="15"/><circle class="m-dot m-dot-2 m-pop" data-p="dot" cx="136.16" cy="138.04" r="15"/><circle class="m-dot m-dot-3 m-pop" data-p="dot" cx="328.26" cy="111.05" r="15"/></g><text class="m-count m-pop" data-p="count" x="240" y="182">×3</text></svg></span>
       <span class="toc-number">레슨 3</span>
       <strong class="toc-title">반복문</strong>
       <span class="toc-subtitle">같은 일을 여러 번</span>
       <span class="toc-meta">준비 중</span>
     </div></li>
-    <li><div class="toc-card is-planned" aria-disabled="true">
+    <li class="toc-item"><div class="toc-card is-planned" aria-disabled="true">
       <span class="toc-motif" data-motif="list" aria-hidden="true"><svg class="motif motif-list motif-look-cinema" viewBox="0 0 480 360" focusable="false" aria-hidden="true"><path class="m-line m-thick m-draw" data-p="bracket" pathLength="1" d="M88 112 H64 V246 H88"/><path class="m-line m-thick m-draw" data-p="bracket" pathLength="1" d="M392 112 H416 V246 H392"/><rect class="m-slot" data-p="slot" x="96" y="148" width="62" height="62" rx="12"/><rect class="m-slot" data-p="slot" x="172" y="148" width="62" height="62" rx="12"/><rect class="m-slot" data-p="slot" x="248" y="148" width="62" height="62" rx="12"/><rect class="m-slot" data-p="slot" x="324" y="148" width="62" height="62" rx="12"/><g class="m-item m-item-1" data-p="item"><rect class="m-face" x="96" y="148" width="62" height="62" rx="12"/><text class="m-value m-value-sm" x="127" y="180">3</text></g><g class="m-item m-item-2" data-p="item"><rect class="m-face" x="172" y="148" width="62" height="62" rx="12"/><text class="m-value m-value-sm" x="203" y="180">1</text></g><g class="m-item m-item-3" data-p="item"><rect class="m-face" x="248" y="148" width="62" height="62" rx="12"/><text class="m-value m-value-sm" x="279" y="180">4</text></g><g class="m-item m-item-4" data-p="item"><rect class="m-face" x="324" y="148" width="62" height="62" rx="12"/><text class="m-value m-value-sm" x="355" y="180">1</text></g><text class="m-index" data-p="idx" x="127" y="244">0</text><text class="m-index" data-p="idx" x="203" y="244">1</text><text class="m-index" data-p="idx" x="279" y="244">2</text><text class="m-index" data-p="idx" x="355" y="244">3</text></svg></span>
       <span class="toc-number">레슨 4</span>
       <strong class="toc-title">리스트</strong>

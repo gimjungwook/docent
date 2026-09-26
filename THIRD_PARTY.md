@@ -34,4 +34,12 @@ If Docent is ever used commercially, the AI helper must not use EXAONE 3.5 witho
 
 ## Effects, motion and sound (motion)
 
-- No third-party code, images, fonts or audio files. Effects use the Web Animations API and Canvas 2D; every sound is synthesized at runtime with the Web Audio API (the reverb impulse is generated noise). Python syntax colouring in code blocks is our own small tokenizer (`src/components/highlight.js`).
+- No third-party code, images, fonts or audio files. Effects (including the v2 code-block effects in `src/components/effects/code.js`) use the Web Animations API and Canvas 2D; every sound, the stage stings and the v2 effect sounds (`playSfx` in `src/fx/sound.js`), is synthesized at runtime with the Web Audio API (the reverb impulse is generated noise). Python syntax colouring in code blocks is our own small tokenizer (`src/components/highlight.js`).
+
+## Effect library v2: text and screen effects (fx)
+
+- No third-party code, images, fonts or audio files. The text and screen effects (`src/components/effects/text.js`, `screen.js`, `lib/`, `styles/effects.css`) and the showcase `lab/effects.html` are our own code. They draw with the Web Animations API, inline SVG and Canvas 2D; the hand-drawn marks (marker, underline, circle, strike) are generated per element from a seeded random function, and the stamp's uneven ink is an inline SVG noise filter (`feTurbulence`) rendered by the browser. Sounds come from `playSfx` in `src/fx/sound.js` (synthesized, see above). Colours and type come only from `styles/tokens.css` and Pretendard (listed under Fonts).
+
+## Characters (cast)
+
+- No third-party assets. The four characters (민지, 도윤, 사장님, 파이), their expressions, poses and emote icons, and the menu card are drawn in our own code as inline SVG (`src/components/cast/`, `styles/cast.css`, gallery `lab/cast.html`). No images, icon sets, emoji, fonts beyond Pretendard, or character libraries are used. Colours come from `styles/tokens.css` plus a few natural skin tones defined in `styles/cast.css`. Motion uses the Web Animations API; sounds come from `playSfx` in `src/fx/sound.js` (synthesized, see above).

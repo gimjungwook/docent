@@ -1,14 +1,18 @@
-// The player: narration audio drives highlight, camera and effect cues.
+// The player: narration audio drives highlight, camera, characters and effect cues.
 import { buildTimeline, indexAt, fmtTime } from "./timeline.js";
 import { Dock } from "./dock.js";
+import { BIG } from "./fxhub.js";
 
 const LEAD = 0.45;               // seconds the camera starts moving before a sentence
-const BLOCK_FX = new Set(["intro", "chapter", "run", "step", "flip", "checkpoint", "outro"]);
+// Effects that need their block framed before they play (the camera moves first).
+const BLOCK_FX = new Set(["intro", "chapter", "run", "step", "flip", "checkpoint", "outro", "typecode", "terminal", "flyvalue", "diff", "errorfx"]);
 const SPEEDS = [1, 1.25, 1.5];
 
 export class Player {
-  constructor({ lesson, timings, base, fx, camera, reader, nav, settings }) {
+  // fx: the effect hub (engine/fxhub.js). free(cue): the cue may play next to another effect (story pages).
+  constructor({ lesson, timings, base, fx, camera, reader, nav, settings, free = () => false }) {
     this.lesson = lesson; this.fx = fx; this.camera = camera; this.reader = reader; this.nav = nav; this.settings = settings;
+    this.free = free;
     this.state = "idle";
     this.available = !!timings;
     this.tl = timings ? buildTimeline(lesson, timings) : { segs: [], cues: [], chapters: [], duration: 0 };
@@ -17,7 +21,14 @@ export class Player {
       if (!this.cuesByTarget.has(c.target)) this.cuesByTarget.set(c.target, []);
       this.cuesByTarget.get(c.target).push(c);
     }
+    // Dialogue rows of scenes, with the timeline indexes of their sentences (for said / now / not yet).
+    const segIndex = new Map(this.tl.segs.map((s, i) => [s.id, i]));
+    this.rows = [...document.querySelectorAll(".scene li.line")].map((row) => ({
+      row, scene: row.closest(".scene"),
+      idx: [...row.querySelectorAll("[data-seg]")].map((e) => segIndex.get(e.dataset.seg)).filter((n) => n != null),
+    })).filter((r) => r.idx.length);
     this.active = -1; this.cameraSeg = null; this.cueIdx = 0; this.pending = []; this.fxBusyUntil = 0; this.firing = false;
+    this.talker = null; this.lastWord = -1; this.liveScene = null;
     this.storeKey = "docent:" + lesson.id + ":t";
     if (this.available) {
       this.audio = new Audio(base + timings.audio);
@@ -48,7 +59,7 @@ export class Player {
   play(from) {
     if (!this.available) return;
     // Called from click/keyboard handlers: lets Safari play the synthesized stings later.
-    try { this.fx.unlockAudio && this.fx.unlockAudio(); } catch {}
+    this.fx.unlockAudio();
     const starting = this.state === "idle" || this.state === "ended";
     if (starting) {
       document.body.classList.add("has-player", "is-narrating", "is-following");
@@ -88,7 +99,7 @@ export class Player {
   seek(t, { resume = false, arrive = false } = {}) {
     if (!this.available) return;
     t = Math.min(Math.max(0, t), this.tl.duration - 0.05);
-    this.audio.currentTime = t;
+    this._setAudioTime(t);
     this._syncEffects(t);
     this.pending = [];
     this.cueIdx = this.tl.cues.findIndex((c) => c.time > t + 0.001);
@@ -101,6 +112,18 @@ export class Player {
     if (this.camera.following) { const seg = this.tl.segs[Math.max(0, i)]; if (seg) this._aim(seg, arrive); }
     this._render(t);
     if (resume && this.state !== "playing") this.play();
+  }
+
+  // Audio without metadata ignores currentTime; apply the jump as soon as it can.
+  _setAudioTime(t) {
+    if (this.audio.readyState >= 1) { this.pendingTime = null; this.audio.currentTime = t; return; }
+    this.pendingTime = t;
+    if (this._metaWait) return;
+    this._metaWait = true;
+    this.audio.addEventListener("loadedmetadata", () => {
+      this._metaWait = false;
+      if (this.pendingTime != null) { this.audio.currentTime = this.pendingTime; this.pendingTime = null; }
+    }, { once: true });
   }
 
   playFromSegment(segId) {
@@ -120,7 +143,7 @@ export class Player {
   // ---- loop ----
   _tick() {
     if (this.state !== "playing") return;
-    const t = this.audio.currentTime;
+    const t = this.pendingTime != null ? this.pendingTime : this.audio.currentTime;
     this._render(t);
     this._camera(t);
     this._cues(t);
@@ -132,14 +155,35 @@ export class Player {
     const i = indexAt(this.tl.segs, t + 0.02);
     if (i !== this.active) this._activate(i);
     const seg = this.tl.segs[i];
+    let talking = null;
     if (seg) {
+      let spoken = 0;
       for (let k = 0; k < seg.unitEls.length; k++) {
         const u = seg.unitEls[k];
-        if (u) u.classList.toggle("is-spoken", seg.unitTimes[k][0] <= t + 0.04);
+        const on = seg.unitTimes[k][0] <= t + 0.04;
+        if (on) spoken = k + 1;
+        if (u) u.classList.toggle("is-spoken", on);
+      }
+      // The character whose line is being spoken moves its mouth, word by word.
+      if (seg.actorEl && this.state === "playing" && t >= seg.start - 0.05 && t <= seg.end + 0.05) {
+        talking = seg.actorEl;
+        if (spoken && spoken !== this.lastWord) {
+          this.lastWord = spoken;
+          seg.actorEl.dispatchEvent(new CustomEvent("docent:word", { detail: { index: spoken - 1 } }));
+        }
       }
     }
+    this._setTalker(talking);
     this.dock.setTime(t);
     if (!this.camera.following) this._updateReturn();
+  }
+
+  _setTalker(el) {
+    if (el === this.talker) return;
+    if (this.talker) this.talker.classList.remove("is-talking");
+    this.talker = el;
+    this.lastWord = -1;
+    if (el) el.classList.add("is-talking");
   }
 
   _activate(i) {
@@ -150,6 +194,7 @@ export class Player {
       for (const u of prev.unitEls) u && u.classList.remove("is-spoken");
     }
     this.active = i;
+    this._markRows(i);
     const seg = this.tl.segs[i];
     if (!seg) { this.dock.setLabel(this.lesson.title); return; }
     seg.el && seg.el.classList.add("is-active");
@@ -157,6 +202,22 @@ export class Player {
     const ch = this.tl.chapters.find((c) => c.id === seg.chapter);
     this.dock.setLabel(this.camera.following ? (ch ? ch.title : this.lesson.title) : seg.text);
     if (this.nav && seg.chapter) this.nav.setActive(seg.chapter);
+  }
+
+  // Scene rows: .is-active while spoken, .is-said once spoken; the scene is .is-live while one of its rows plays.
+  _markRows(i) {
+    const seg = this.tl.segs[i];
+    const scene = seg && seg.rowEl ? seg.rowEl.closest(".scene") : null;
+    if (scene !== this.liveScene) {
+      if (this.liveScene) this.liveScene.classList.remove("is-live");
+      this.liveScene = scene;
+      if (scene) scene.classList.add("is-live");
+    }
+    for (const r of this.rows) {
+      const active = i >= 0 && r.idx.includes(i);
+      r.row.classList.toggle("is-active", active);
+      r.row.classList.toggle("is-said", !active && i >= 0 && Math.max(...r.idx) < i);
+    }
   }
 
   _camera(t) {
@@ -174,6 +235,7 @@ export class Player {
     if (/^ch\d+$/.test(kind)) return { el: seg.blockEl, mode: "center", kind: "block" };
     if (kind === "checkpoint") return { el: seg.blockEl, mode: "center", kind: "block" };
     if (kind === "outro" && seg.cues.some((c) => c.fx === "outro")) return { el: seg.blockEl, mode: "center", kind: "block" };
+    if (seg.rowEl && seg.rowEl.getClientRects().length) return { el: seg.rowEl, mode: "line", kind: "line" };
     const el = seg.el && seg.el.getClientRects().length ? seg.el : seg.blockEl;
     return { el, mode: "line", kind: "line" };
   }
@@ -191,47 +253,70 @@ export class Player {
   _cues(t) {
     while (this.cueIdx < this.tl.cues.length && this.tl.cues[this.cueIdx].time <= t) this.pending.push(this.tl.cues[this.cueIdx++]);
     if (!this.pending.length || this.firing || this.camera.moving) return;
-    if (performance.now() < this.fxBusyUntil) return;
+    // Characters and word effects join in at once; screen and block effects take turns.
+    const rest = [];
+    for (const c of this.pending) { if (this.free(c)) this._fireFree(c); else rest.push(c); }
+    this.pending = rest;
+    if (!this.pending.length || performance.now() < this.fxBusyUntil) return;
     this._fire(this.pending.shift());
+  }
+
+  _fireFree(cue) {
+    const el = document.getElementById(cue.target);
+    cue.fired = true;
+    if (!el || !this.fx.has(cue.fx)) return;
+    const h = this.fx.run(cue.fx, el, this._opts(cue, el));
+    this.reader && this.reader.setFired(cue, true);
+    const d = (h && h.duration) || 0;
+    if (!/^(react|emote|act|menuprice)$/.test(cue.fx)) this.camera.lock(Math.min(d, 900));
   }
 
   async _fire(cue) {
     const el = document.getElementById(cue.target);
-    const fn = this.fx.fx[cue.fx];
-    if (!el || !fn) return;
+    cue.fired = true;
+    if (!el || !this.fx.has(cue.fx)) return;
     this.firing = true;
     try {
-      if (BLOCK_FX.has(cue.fx) && this.camera.following && cue.fx !== "intro" && !this.camera.inView(el, "block")) {
-        await this.camera.moveTo(el, "center");
+      if (BLOCK_FX.has(cue.fx) && this.camera.following && cue.fx !== "intro") {
+        const pair = cue.fx === "flyvalue" && cue.params && cue.params.to && cue.params.to !== "out" ? document.getElementById(cue.params.to) : null;
+        const frame = pair ? [el, pair] : el;
+        if (!this.camera.inView(frame, "block")) await this.camera.moveTo(frame, "center");
       }
-      const h = fn(el, this._opts({ line: cue.line, n: cue.n }));
+      const h = this.fx.run(cue.fx, el, this._opts(cue, el));
       const d = (h && h.duration) || 0;
-      cue.fired = true;
-      this.reader && this.reader.markFired(el);
+      this.reader && this.reader.setFired(cue, true);
       this.camera.lock(d);
       this.fxBusyUntil = performance.now() + Math.min(d, cue.fx === "intro" ? 600 : 1400);
     } finally { this.firing = false; }
   }
 
-  _opts(extra = {}) {
+  _opts(cue = {}, el = null) {
     const s = this.settings.get();
-    return { mode: "play", intensity: s.intensity, reduced: this.camera.reduced, sound: s.sound, style: s.introStyle, ...extra };
+    const o = { mode: "play", intensity: s.intensity, reduced: this.camera.reduced, sound: s.sound };
+    if (cue.line != null) o.line = cue.line;
+    if (cue.n != null) o.n = cue.n;
+    if (cue.params) o.params = cue.params;
+    if (BIG.includes(cue.fx)) o.style = this.settings.styleFor(cue.fx, el);
+    return o;
   }
 
+  // Seeking: every effect goes back to its start, then each cue already passed jumps to its final state in order.
   _syncEffects(t) {
     for (const [target, list] of this.cuesByTarget) {
       const el = document.getElementById(target);
       if (!el) continue;
-      const done = list.filter((c) => c.time <= t + 0.001);
-      for (const c of list) c.fired = c.time <= t + 0.001;
-      const style = this.settings.get().introStyle;
-      if (!done.length) { this.fx.reset && this.fx.reset(el, list[0].fx === "intro" ? { style } : undefined); this.reader && this.reader.unmark(el); continue; }
-      const last = done[done.length - 1];
-      if (last.fx === "step") this.fx.settle(el, { n: last.n });
-      else if (last.fx === "intro") this.fx.settle(el, { style });
-      else if (last.fx === "run" && done.every((c) => c.line)) { this.fx.reset(el); for (const c of done) this.fx.settle(el, { line: c.line }); }
-      else this.fx.settle && this.fx.settle(el);
-      this.reader && this.reader.markFired(el);
+      const names = [...new Set(list.map((c) => c.fx))].reverse();
+      for (const name of names) {
+        const first = list.find((c) => c.fx === name);
+        const o = this._opts(first, el);
+        if (name === "run") delete o.line;
+        this.fx.reset(name, el, o);
+      }
+      for (const c of list) {
+        c.fired = c.time <= t + 0.001;
+        if (c.fired) this.fx.settle(c.fx, el, this._opts(c, el));
+        this.reader && this.reader.setFired(c, c.fired);
+      }
     }
   }
 
@@ -240,17 +325,19 @@ export class Player {
     this.state = state;
     this.dock.setState(state === "ended" ? "paused" : state);
     document.body.classList.toggle("is-playing", state === "playing");
-    if (state !== "playing") cancelAnimationFrame(this.raf);
+    if (state !== "playing") { cancelAnimationFrame(this.raf); this._setTalker(null); }
   }
 
   _ended() {
     this._setState("ended");
-    this.fx.fx && this.tl.cues.forEach((c) => { const el = document.getElementById(c.target); if (el && this.fx.settle) this.fx.settle(el); });
+    for (const c of this.tl.cues) { const el = document.getElementById(c.target); if (el) this.fx.settle(c.fx, el, this._opts(c, el)); }
+    this.reader && this.reader.markAll();
     document.body.classList.remove("is-narrating", "is-following");
     this.camera.active = false;
     this.dock.hideReturn();
     const seg = this.tl.segs[this.active];
     seg && seg.el && seg.el.classList.remove("is-active");
+    this._markRows(-1);
     localStorage.removeItem(this.storeKey);
     this.dock.setLabel("레슨 끝 · 다시 들으려면 재생");
     this.reader && this.reader.resume();
@@ -291,7 +378,7 @@ export class Player {
   _bindSentenceSeek() {
     document.addEventListener("click", (e) => {
       if (this.state === "idle" || !this.available) return;
-      if (e.target.closest("a, button, .practice, .figure, .code, .turn")) return;
+      if (e.target.closest("a, button, .practice, .figure, .code, .turn, .scene-stage")) return;
       const segEl = e.target.closest("[data-seg]");
       if (!segEl) return;
       if (window.getSelection && String(window.getSelection()).length) return;

@@ -29,6 +29,19 @@
 .topbar.on-stage .topbar-taste { color: var(--stage-ink-2); box-shadow: inset 0 0 0 1px var(--stage-rule); }
 .topbar-menu { display: none; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: var(--r-2); margin-left: -8px; }
 .page-course .topbar-menu { display: none !important; }
+/* Story / basic version switch of a lesson */
+.topbar-versions { margin-left: auto; display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--rule); }
+.topbar-versions a {
+  display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: var(--r-pill);
+  font-size: var(--text-xs); font-weight: 650; color: var(--ink-3); text-decoration: none; white-space: nowrap;
+  transition: background var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+.topbar-versions a:hover { color: var(--ink); }
+.topbar-versions a[aria-current] { background: var(--ink); color: var(--paper); }
+.topbar-versions + .topbar-taste { margin-left: 0; }
+.topbar.on-stage .topbar-versions { box-shadow: inset 0 0 0 1px var(--stage-rule); }
+.topbar.on-stage .topbar-versions a { color: var(--stage-ink-2); }
+.topbar.on-stage .topbar-versions a[aria-current] { background: var(--stage-ink); color: var(--stage); }
 
 /* Shell: side navigation + lesson */
 .shell { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); align-items: start; }
@@ -108,6 +121,10 @@
   scrollbar-width: thin;
 }
 .toc-track > li { scroll-snap-align: start; }
+.toc-item { display: flex; flex-direction: column; gap: var(--s-2); }
+.toc-item > .toc-card { flex: 1; }
+.toc-alt { align-self: flex-start; padding: 2px var(--s-1); font-size: var(--text-xs); color: var(--ink-3); }
+.toc-alt:hover { color: var(--ink); }
 @media (min-width: 1100px) {
   /* Four cards fit the row exactly; more lessons turn it into a carousel. */
   .toc-track { grid-auto-columns: calc((min(62rem, 100vw - var(--sidebar-w) * 0 - 2 * var(--s-5)) - 3 * var(--s-4)) / 4); }
@@ -152,6 +169,8 @@ a.toc-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); }
   :root { --topbar-h: 52px; }
   .topbar { padding: 0 var(--s-4); gap: var(--s-3); }
   .topbar-crumb { display: none; }
+  .topbar:has(.topbar-versions) .brand-name { display: none; }
+  .topbar-versions a { padding: 0 9px; }
   .how-list { grid-template-columns: 1fr; gap: var(--s-5); }
   .lesson > .code, .lesson > .figure { width: calc(100% - 2 * var(--s-4)); }
   .lesson > .blk { width: calc(100% - 2 * var(--s-4)); }

@@ -3,7 +3,8 @@
 import { registerSting } from '../../fx/sound.js';
 
 // Cinema: a two-hit "ta-dum". A soft low tap, then a deep resonant landing with a little air on top.
-registerSting('intro-cinema', ({ t, amp, voice, noise }) => {
+registerSting('intro-cinema', ({ t, amp: a0, voice, noise }) => {
+  const amp = a0 * 0.6;
   const h1 = t + 0.1;
   const h2 = t + 0.47;
   voice({ t: h1, freq: 70, to: 48, glide: 0.18, type: 'sine', gain: 0.22 * amp, attack: 0.004, decay: 0.42, send: 0.2 });

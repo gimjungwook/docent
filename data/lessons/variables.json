@@ -4,6 +4,13 @@
  "title": "변수",
  "subtitle": "값에 이름표 붙이기",
  "motif": "tag",
+ "mode": "calm",
+ "intensity": "normal",
+ "styles": {},
+ "versions": {
+  "calm": "variables",
+  "story": "variables-story"
+ },
  "course": {
   "id": "python-first-steps",
   "title": "파이썬 첫걸음"

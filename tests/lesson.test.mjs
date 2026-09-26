@@ -4,10 +4,14 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { EFFECTS } from "../src/components/effects/registry.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const course = JSON.parse(fs.readFileSync(path.join(ROOT, "content/course.json"), "utf8"));
-const lessons = course.lessons.filter((l) => fs.existsSync(path.join(ROOT, "data/lessons", l.id + ".json")));
+// Every lesson and its story version, when compiled.
+const lessons = course.lessons.flatMap((l) => [l.id, l.story].filter(Boolean))
+  .filter((id) => fs.existsSync(path.join(ROOT, "data/lessons", id + ".json"))).map((id) => ({ id }));
+const V1 = new Set(["intro", "chapter", "pop", "burst", "flip", "run", "step", "checkpoint", "outro"]);
 
 for (const meta of lessons) {
   const lesson = JSON.parse(fs.readFileSync(path.join(ROOT, "data/lessons", meta.id + ".json"), "utf8"));
@@ -37,7 +41,20 @@ for (const meta of lessons) {
     }
   });
 
-  test(meta.id + ": component budgets hold", () => {
+  test(meta.id + ": every cue names a known effect", () => {
+    for (const s of lesson.segments) for (const c of s.cues) assert.ok(V1.has(c.fx) || EFFECTS[c.fx], s.id + ": unknown effect " + c.fx);
+  });
+
+  test(meta.id + ": characters react on avatars inside their own scene", () => {
+    for (const s of lesson.segments) for (const c of s.cues) {
+      if (!EFFECTS[c.fx] || EFFECTS[c.fx].kind !== "actor") continue;
+      const scene = s.block.startsWith("sc") ? s.block : null;
+      if (scene) assert.ok(c.target.startsWith(scene + "-r"), s.id + ": " + c.fx + " -> " + c.target + " should be an avatar in " + scene);
+      else assert.equal(c.target, s.block + "-pai", s.id + ": asides only animate 파이");
+    }
+  });
+
+  test(meta.id + ": component budgets hold", { skip: lesson.mode === "story" ? "story versions have no budgets" : false }, () => {
     const cues = lesson.segments.flatMap((s) => s.cues.map((c) => ({ ...c, chapter: s.chapter })));
     assert.equal(cues.filter((c) => c.fx === "checkpoint").length, 1, "exactly one checkpoint");
     assert.ok(cues.filter((c) => c.fx === "flip").length <= 1, "at most one flip");

@@ -39,7 +39,20 @@ async function main() {
   const segments = prepareSegments(lesson, { allowNonHangul: Boolean(args['allow-non-hangul']) });
   const t0 = performance.now();
 
-  const jobs = await synthesize(provider, voice, segments);
+  // Group segments by speaker so each character keeps its own voice; the default voice covers the rest.
+  const groups = new Map();
+  for (const s of segments) {
+    const v = s.voice || voice;
+    if (!groups.has(v)) groups.set(v, []);
+    groups.get(v).push(s);
+  }
+  const jobById = new Map();
+  for (const [v, segs] of groups) {
+    const js = await synthesize(provider, v, segs);
+    js.forEach((j, i) => jobById.set(segs[i].id, j));
+  }
+  const jobs = segments.map((s) => jobById.get(s.id));
+  const speakers = [...groups.keys()];
   const clips = await loadClips(jobs);
   const aligned = await alignClips(segments, clips, { force: Boolean(args['force-align']) });
 
@@ -87,7 +100,7 @@ async function main() {
   const timings = {
     version: 1,
     lesson: lessonId,
-    voice: { provider: provider.name, model: provider.model, speaker: voice, license: provider.license },
+    voice: { provider: provider.name, model: provider.model, speaker: voice, ...(speakers.length > 1 ? { speakers } : {}), license: provider.license },
     audio: audioRel,
     duration: round(full.length / SR),
     segments: timingSegments,

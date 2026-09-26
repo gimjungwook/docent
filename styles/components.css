@@ -12,6 +12,7 @@
 @property --ch-light { syntax: "<number>"; inherits: true; initial-value: 1; }
 @property --ol-light { syntax: "<number>"; inherits: true; initial-value: 1; }
 @property --chk { syntax: "<number>"; inherits: true; initial-value: 1; }
+@property --err-on { syntax: "<number>"; inherits: true; initial-value: 1; }
 
 /* Shared particle overlay (src/fx/particles.js). */
 .fx-particles { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 2147483000; }
@@ -78,6 +79,7 @@
   pointer-events: none;
 }
 .blk.code pre {
+  position: relative;
   margin: 0;
   padding: var(--s-5) 0 var(--s-4);
   overflow-x: auto;
@@ -89,12 +91,16 @@
 }
 .blk.code pre code { display: inline-block; min-width: 100%; font-size: 1em; }
 .blk.code .ln {
+  --ln-pad: calc(var(--s-4) + 3em);
   position: relative;
+  isolation: isolate;
   display: inline-block;
   min-width: 100%;
-  padding: 0 var(--s-8) 0 calc(var(--s-4) + 3em);
+  padding: 0 var(--s-8) 0 var(--ln-pad);
   vertical-align: top;
   background-color: color-mix(in srgb, var(--code-active) calc(var(--ln-on) * 100%), transparent);
+  /* --ln-boost (0..1, set while an effect plays at a higher intensity) stacks a second layer of the same tint. */
+  background-image: linear-gradient(color-mix(in srgb, var(--code-active) calc(var(--ln-on) * var(--ln-boost, 0) * 100%), transparent) 0 0);
 }
 .blk.code .ln::before {
   content: attr(data-line);
@@ -112,7 +118,7 @@
   left: 0;
   top: 0.18em;
   bottom: 0.18em;
-  width: 3px;
+  width: calc(3px + var(--ln-boost, 0) * 1px);
   border-radius: 0 3px 3px 0;
   background: var(--marker);
   opacity: var(--ln-on);
@@ -128,7 +134,7 @@
   position: relative;
   padding: var(--s-3) var(--s-6) var(--s-4) calc(var(--s-4) + 3em);
   border-top: 1px solid var(--stage-rule);
-  background: color-mix(in srgb, var(--code-active) calc(var(--out-on) * 70%), var(--code-out-bg));
+  background: color-mix(in srgb, var(--code-active) calc(var(--out-on) * (70% + 30% * var(--ln-boost, 0))), var(--code-out-bg));
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   line-height: 1.7;
@@ -145,6 +151,127 @@
 .blk.code .out-empty { display: none; }
 .blk.code .out-line { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
 .blk.code .out-line[data-fx-hidden] { opacity: 0; }
+
+/* ------------------------------------------------------------------ code effects (v2: typecode, terminal, flyvalue, diff, errorfx) */
+/* typecode: an empty editor (line numbers only) until the code types itself. */
+.blk.code[data-typed="0"] .ln { clip-path: inset(-3px calc(100% - var(--ln-pad)) -3px 0); }
+.code-caret {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 0.62em;
+  height: 1.3em;
+  border-radius: 2px;
+  background: var(--marker);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* terminal: a status chip in the corner (takes the place of the "Python" label while it shows). */
+.term-status {
+  position: absolute;
+  z-index: 2;
+  top: calc(var(--s-3) - 5px);
+  right: calc(var(--s-4) - 6px);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 26px;
+  padding: 0 11px 0 9px;
+  border-radius: var(--r-pill);
+  background: var(--stage-3);
+  box-shadow: inset 0 0 0 1px var(--stage-rule);
+  font: 650 var(--text-xs) / 1 var(--font-sans);
+  color: var(--code-ink);
+  opacity: 0;
+  pointer-events: none;
+}
+.term-spin { flex: none; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--stage-rule); border-top-color: var(--marker); border-right-color: var(--marker); }
+.term-text { white-space: nowrap; }
+.term-done { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; white-space: nowrap; color: var(--mint); opacity: 0; }
+.term-done::before { content: "\2713\00a0"; font-weight: 800; }
+.term-done.is-failed { color: color-mix(in srgb, var(--danger) 55%, var(--code-ink)); }
+.term-done.is-failed::before { content: "\2715\00a0"; }
+.blk.code[data-term="run"] .term-status, .blk.code[data-term="done"] .term-status { opacity: 1; }
+.blk.code[data-term="done"] :is(.term-spin, .term-text) { opacity: 0; }
+.blk.code[data-term="done"] .term-done { opacity: 1; }
+.blk.code:is([data-term="run"], [data-term="done"], [data-error="on"])::before { opacity: 0; }
+/* The error badge takes the corner once errorfx has fired. */
+.blk.code[data-error="on"] .term-status { visibility: hidden; }
+
+/* flyvalue: the flying value chip and its landing ring, on a fixed layer above the page. */
+.fx-flylayer { position: fixed; inset: 0; z-index: 2147482990; overflow: hidden; pointer-events: none; }
+.fly-chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0.12em 0.5em;
+  border-radius: 9px;
+  background: var(--marker);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-weight: 760;
+  line-height: 1.35;
+  white-space: nowrap;
+  box-shadow: 0 0 0 1.5px var(--ink), 0 0 0 5px color-mix(in srgb, var(--marker) 40%, transparent), var(--shadow-2);
+  opacity: 0;
+  will-change: transform;
+}
+.fly-ring {
+  position: absolute;
+  left: -30px;
+  top: -30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid var(--marker);
+  opacity: 0;
+}
+
+/* diff: a yellow frame behind the changed token and an odometer reel over it; the change keeps a coral underline. */
+.diff-glow {
+  position: absolute;
+  z-index: -1;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--marker) 24%, transparent);
+  box-shadow: 0 0 0 2px var(--marker);
+  opacity: 0;
+  pointer-events: none;
+}
+.diff-reel { position: absolute; z-index: 1; overflow: hidden; pointer-events: none; white-space: nowrap; }
+.diff-col { position: absolute; top: 0; display: flex; flex-direction: column; align-items: center; }
+.diff-col.is-whole { position: relative; align-items: flex-start; }
+.diff-col > span { display: block; height: var(--h, 1.75em); line-height: var(--h, 1.75em); }
+.tok-changed { text-decoration: underline 2px var(--coral); text-underline-offset: 5px; }
+
+/* errorfx: flash, badge and the failing line. */
+.err-flash { position: absolute; inset: 0; z-index: 1; background: var(--danger); opacity: 0; pointer-events: none; }
+.blk.code[data-error="on"] { box-shadow: 0 0 0 2px var(--danger); }
+.err-badge {
+  position: absolute;
+  z-index: 3;
+  top: var(--s-3);
+  right: var(--s-4);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 11px 0 4px;
+  border-radius: var(--r-pill);
+  background: var(--danger);
+  color: var(--paper);
+  font: 750 var(--text-xs) / 1 var(--font-sans);
+  letter-spacing: 0.01em;
+  opacity: 0;
+  pointer-events: none;
+}
+.err-badge b { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--paper); color: var(--danger); font-size: 12px; font-weight: 900; }
+.blk.code[data-error="on"] .err-badge { opacity: 1; }
+.blk.code .ln.ln-error { background-color: color-mix(in srgb, var(--danger) calc(14% + 20% * var(--err-on)), transparent); }
+.blk.code .ln.ln-error::after { background: var(--danger); opacity: 1; }
+.blk.code .ln.ln-error::before { color: var(--danger); }
+.blk.code .out-line.out-error { font-weight: 650; color: color-mix(in srgb, var(--danger) 45%, var(--code-ink)); }
 
 /* ------------------------------------------------------------------ figure + step */
 .blk.figure { display: grid; gap: var(--s-3); }
@@ -468,7 +595,7 @@ a.outro-next:hover::after { transform: translateX(4px); }
 /* ------------------------------------------------------------------ small screens */
 @media (max-width: 720px) {
   .blk.code pre { padding-top: var(--s-4); font-size: 0.875rem; }
-  .blk.code .ln { padding-left: calc(var(--s-3) + 2.6em); padding-right: var(--s-5); }
+  .blk.code .ln { --ln-pad: calc(var(--s-3) + 2.6em); padding-right: var(--s-5); }
   .blk.code .ln::before { left: var(--s-2); }
   .blk.code .out { padding-left: calc(var(--s-3) + 2.6em); font-size: 0.875rem; }
   .blk.checkpoint { gap: var(--s-4); padding: var(--s-4) var(--s-5); }

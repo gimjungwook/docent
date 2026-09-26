@@ -9,7 +9,9 @@
       "title": "변수",
       "subtitle": "값에 이름표 붙이기",
       "motif": "tag",
-      "status": "ready"
+      "status": "ready",
+      "story": "variables-story",
+      "storySubtitle": "카페 알바 민지의 첫 파이썬"
     },
     {
       "id": "conditionals",

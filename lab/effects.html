@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>효과 실험실 · Docent</title>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles/tokens.css">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/layout.css">
+<link rel="stylesheet" href="../styles/components.css">
+<link rel="stylesheet" href="../styles/engine.css">
+<link rel="stylesheet" href="../styles/cast.css">
+<link rel="stylesheet" href="../styles/effects.css">
+<style>
+  /* Lab-only layout. The demos use the lesson's own body styles (layout.css .lesson, components.css). */
+  body { background: var(--paper-2); }
+  .fxlab { --lab-w: 76rem; padding-bottom: var(--s-10); }
+  .fxlab-wrap { width: min(var(--lab-w), calc(100% - 2 * var(--s-5))); margin: 0 auto; }
+  .fxlab-top { padding: var(--s-8) 0 var(--s-5); }
+  .fxlab-top h1 { font-size: clamp(2rem, 1.4rem + 2vw, 2.75rem); font-weight: 800; letter-spacing: var(--tracking-tight); line-height: 1.15; }
+  .fxlab-top p { max-width: 44rem; margin-top: var(--s-3); color: var(--ink-2); line-height: 1.7; }
+  .fxlab-index { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); margin-top: var(--s-5); font-size: var(--text-sm); }
+  .fxlab-index a { color: var(--ink-2); font-weight: 650; text-decoration: none; }
+  .fxlab-index a:hover { color: var(--ink); text-decoration: underline; }
+  .fxlab-index span { margin-left: 4px; color: var(--ink-4); font-variant-numeric: tabular-nums; }
+
+  .fxlab-bar { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--paper) 96%, transparent); border-block: 1px solid var(--rule); }
+  .fxlab-bar form { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-5); padding: var(--s-3) 0; }
+  .fxlab-field { display: flex; align-items: center; gap: var(--s-2); margin: 0; padding: 0; border: 0; }
+  .fxlab-field legend { float: left; margin-right: var(--s-2); padding: 0; font-size: var(--text-xs); font-weight: 700; color: var(--ink-3); }
+  .seg-ctl { display: inline-flex; padding: 3px; border-radius: var(--r-pill); background: var(--paper-2); box-shadow: inset 0 0 0 1px var(--rule); }
+  .seg-ctl label { position: relative; }
+  .seg-ctl input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg-ctl span { display: inline-flex; align-items: center; height: 28px; padding: 0 11px; border-radius: var(--r-pill); font-size: var(--text-xs); font-weight: 650; color: var(--ink-2); cursor: pointer; white-space: nowrap; transition: background-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out); }
+  .seg-ctl input:checked + span { background: var(--ink); color: var(--paper); }
+  .seg-ctl input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .fxlab-bar-all { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-left: auto; }
+
+  .lab-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 14px; border-radius: var(--r-pill); font-size: var(--text-xs); font-weight: 700; white-space: nowrap; box-shadow: inset 0 0 0 1px var(--rule); color: var(--ink); background: var(--paper); transition: box-shadow var(--dur-1) var(--ease-out), background-color var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out); }
+  .lab-btn:hover { box-shadow: inset 0 0 0 1px var(--ink-3); }
+  .lab-btn:active { transform: scale(0.97); }
+  .lab-btn.is-primary { background: var(--ink); color: var(--paper); box-shadow: none; }
+  .lab-btn.is-primary:hover { background: var(--ink-2); }
+  .lab-btn[disabled] { opacity: 0.45; cursor: default; }
+
+  .fxlab-group { margin-top: var(--s-8); scroll-margin-top: 84px; }
+  .fxlab-group-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2) var(--s-4); padding-bottom: var(--s-4); margin-bottom: var(--s-5); border-bottom: 1px solid var(--rule); }
+  .fxlab-group-head h2 { font-size: var(--text-h3); font-weight: 800; letter-spacing: -0.02em; }
+  .fxlab-group-head p { color: var(--ink-2); font-size: var(--text-sm); }
+  .fxlab-note { padding: var(--s-5); border-radius: var(--r-3); background: var(--paper); box-shadow: inset 0 0 0 1px var(--rule); color: var(--ink-3); font-size: var(--text-sm); }
+  .fxlab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 33rem), 1fr)); gap: var(--s-5); }
+
+  .fxlab-card { display: grid; align-content: start; gap: var(--s-4); min-width: 0; padding: var(--s-5); border-radius: var(--r-3); background: var(--paper); box-shadow: inset 0 0 0 1px var(--rule); scroll-margin-top: 96px; transition: box-shadow var(--dur-2) var(--ease-out); }
+  .fxlab-card.is-playing { box-shadow: inset 0 0 0 2px var(--ink); }
+  .fxlab-card-head h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: 1.1875rem; font-weight: 780; letter-spacing: -0.015em; line-height: 1.35; }
+  .fxlab-card-head h3 code { font-size: var(--text-xs); font-weight: 600; color: var(--ink-3); }
+  .fxlab-use { margin-top: 6px; color: var(--ink-2); font-size: var(--text-sm); line-height: 1.6; }
+  .fxlab-use b { color: var(--ink); font-weight: 700; }
+  .fxlab-meta { margin-top: 4px; color: var(--ink-3); font-size: var(--text-xs); }
+  .fxlab-demo { min-width: 0; padding: var(--s-5) 0 var(--s-4); border-block: 1px solid var(--rule); }
+  .fxlab-demo .lesson { padding: 0; }
+  .fxlab-demo .lesson > .blk { width: 100%; }
+  .fxlab-demo .lesson > .para:last-child { margin-bottom: 0; }
+  .fxlab-demo .lesson > .code, .fxlab-demo .lesson > .figure, .fxlab-demo .lesson > .scene { width: 100%; margin-top: 0; margin-bottom: var(--s-3); }
+  .fxlab-demo .lesson > .figure { max-width: 26rem; }
+  .fxlab-demo .fxlab-missing { color: var(--ink-3); font-size: var(--text-sm); }
+  .fxlab-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+  .fxlab-time { margin-left: auto; font-size: var(--text-xs); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .fxlab-time b { color: var(--ink); font-weight: 700; }
+  .fxlab-time.is-error { color: var(--danger); }
+
+  .fxlab-now { position: fixed; z-index: 45; left: 50%; bottom: var(--s-4); transform: translateX(-50%); display: flex; align-items: center; gap: var(--s-3); max-width: calc(100vw - 2 * var(--s-4)); padding: 6px 6px 6px 16px; border-radius: var(--r-pill); background: var(--ink); color: var(--paper); box-shadow: var(--shadow-2); font-size: var(--text-xs); font-weight: 650; }
+  .fxlab-now[hidden] { display: none; }
+  .fxlab-now-text { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+  .fxlab-now .lab-btn { height: 30px; background: var(--paper); color: var(--ink); box-shadow: none; }
+  .fxlab-foot { margin-top: var(--s-9); padding-top: var(--s-5); border-top: 1px solid var(--rule); color: var(--ink-3); font-size: var(--text-xs); line-height: 1.7; }
+
+  @media (max-width: 900px) {
+    .fxlab-bar { position: static; }
+    .fxlab-bar-all { margin-left: 0; }
+  }
+  @media (max-width: 720px) {
+    .fxlab-top { padding-top: var(--s-7); }
+    .fxlab-card { padding: var(--s-4); }
+    .fxlab-time { width: 100%; margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<main class="fxlab">
+  <header class="fxlab-top fxlab-wrap">
+    <h1>효과 실험실</h1>
+    <p>레슨에서 쓰는 효과를 모두 모았어요. 효과마다 어떤 학습 순간에 쓰는지 한 줄로 적어 두었고, 시연은 실제 레슨 본문과 같은 모양 위에서 돌아가요. 이야기 레슨의 기본 강도는 강하게예요.</p>
+    <nav class="fxlab-index" id="fxlab-index" aria-label="효과 묶음"></nav>
+  </header>
+
+  <div class="fxlab-bar">
+    <form class="fxlab-wrap" id="fxlab-controls" onsubmit="return false">
+      <fieldset class="fxlab-field"><legend>강도</legend><div class="seg-ctl">
+        <label><input type="radio" name="intensity" value="soft"><span>약하게</span></label>
+        <label><input type="radio" name="intensity" value="normal"><span>보통</span></label>
+        <label><input type="radio" name="intensity" value="strong" checked><span>강하게</span></label>
+      </div></fieldset>
+      <fieldset class="fxlab-field"><legend>소리</legend><div class="seg-ctl">
+        <label><input type="radio" name="sound" value="on" checked><span>켜기</span></label>
+        <label><input type="radio" name="sound" value="off"><span>끄기</span></label>
+      </div></fieldset>
+      <fieldset class="fxlab-field"><legend>동작 줄이기</legend><div class="seg-ctl">
+        <label><input type="radio" name="reduced" value="system" checked><span>시스템 설정</span></label>
+        <label><input type="radio" name="reduced" value="on"><span>켜기</span></label>
+        <label><input type="radio" name="reduced" value="off"><span>끄기</span></label>
+      </div></fieldset>
+      <fieldset class="fxlab-field"><legend>낭독 표시</legend><div class="seg-ctl">
+        <label><input type="radio" name="narrate" value="off" checked><span>끄기</span></label>
+        <label><input type="radio" name="narrate" value="on"><span>켜기</span></label>
+      </div></fieldset>
+      <div class="fxlab-bar-all">
+        <button class="lab-btn is-primary" type="button" id="fxlab-reel">전부 연속 재생</button>
+        <button class="lab-btn" type="button" data-all="reset">모두 처음으로</button>
+        <button class="lab-btn" type="button" data-all="settle">모두 끝으로</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="fxlab-wrap" id="fxlab-groups"></div>
+
+  <footer class="fxlab-wrap fxlab-foot">
+    <p>효과는 모두 브라우저에서 그려요. 소리는 브라우저에서 합성하며 음원 파일을 쓰지 않아요. 동작 줄이기가 켜져 있으면 움직임 없이 바로 끝 상태가 돼요.</p>
+    <p>형광펜·손밑줄·동그라미는 진하게 그은 뒤 옅은 흔적으로 남아 복습 표시가 돼요. 낭독 표시를 켜면 레슨 재생 중처럼 문장을 칠해 두고 효과를 확인할 수 있어요.</p>
+  </footer>
+</main>
+<div class="fxlab-now" id="fxlab-now" hidden><span class="fxlab-now-text" aria-live="polite"></span><button class="lab-btn" type="button" id="fxlab-stop">멈추기</button></div>
+
+<script type="module">
+  import { loadEffects, EFFECTS } from '../src/components/effects/index.js';
+  import { unlockAudio, prime as v1prime, settle as v1settle } from '../src/components/index.js';
+
+  const GROUPS = [
+    { id: 'text', title: '글자 효과', desc: '낭독하는 단어 자체가 움직이거나 표시돼요. 단어를 감싸서 써요.' },
+    { id: 'screen', title: '화면 효과', desc: '결과·성취·경고 순간에 단어 둘레나 화면 전체에서 일어나요. 단어 앞 지점에 붙여요.' },
+    { id: 'code', title: '코드 효과', desc: '코드를 쓰고, 실행하고, 바뀐 곳을 보여 줘요. 코드 블록에 붙여요.' },
+    { id: 'cast', title: '캐릭터 효과', desc: '이야기 장면 속 인물의 표정과 동작으로 상황을 전해요.' },
+  ];
+  const KIND = { inline: '단어 감싸기', point: '단어 앞 지점', block: '블록', actor: '캐릭터' };
+  const FACTOR = { soft: 0.7, normal: 1, strong: 1.2 };
+
+  // ---------------------------------------------------------------- demo markup (compiler shapes, SPEC 12)
+  let segN = 0;
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const U = (h) => '<span class="u">' + h + '</span>';
+  const words = (s) => s.split(' ').map(U).join(' ');
+  const para = (...parts) => '<p class="blk para"><span class="seg" data-seg="lab-s' + (++segN) + '">' + parts.join(' ') + '</span></p>';
+  const attrs = (a) => Object.entries(a || {}).map(([k, v]) => ' data-' + k + '="' + esc(v) + '"').join('');
+  const FX = (name, inner, a) => '<span class="fx fx-' + name + '" data-fx="' + name + '" id="lab-' + name + '"' + attrs(a) + '>' + inner + '</span>';
+  const A = (name, a) => '<span class="fx-anchor" data-fx="' + name + '" id="lab-' + name + '"' + attrs(a) + '></span>';
+  const code = (id, lines, out) => '<figure class="blk code" id="' + id + '" data-lines="' + lines.length + '"><pre><code>' +
+    lines.map((l, i) => '<span class="ln" data-line="' + (i + 1) + '">' + esc(l) + '</span>').join('\n') + '</code></pre>' +
+    (out ? '<div class="out" aria-label="실행 결과">' + out.map(([from, t]) => '<span class="out-line" data-from="' + from + '">' + esc(t) + '</span>').join('') + '</div>' : '') + '</figure>';
+
+  const DEMOS = {
+    // text
+    marker: { html: () => para(words('한 줄로 정리하면 이래요.'), FX('marker', words('변수는 값에 붙인 이름표예요.'))) },
+    underline: { html: () => para(words('꼭 기억하세요.'), FX('underline', words('이름은 숫자로 시작할 수 없어요.'))) },
+    circle: { html: () => para(words('여기서 문제가 되는 값은'), U(FX('circle', '4500') + '이에요.')) },
+    spotlight: { html: () => para(FX('spotlight', words('변수는 값에 붙인 이름이에요.')), words('이것만 기억하면 돼요.')) },
+    zoom: { html: () => para(words('그리고 하나 더,'), FX('zoom', words('이름은 숫자로 시작할 수 없어요.'))) },
+    bouncein: { html: () => para(words('이렇게 값에 붙인 이름을'), U(FX('bouncein', '변수') + '라고'), U('해요.')) },
+    jelly: { html: () => para(words('price 이름표가 4500에'), U(FX('jelly', '붙었어요!'))) },
+    wave: { html: () => para(words('민지가 외쳐요.'), FX('wave', words('드디어 계산이 끝났어요!'))) },
+    typewriter: { html: () => para(words('이런 이름표를'), U(FX('typewriter', '변수') + '라고'), U('불러요.')) },
+    callout: { params: { text: 'price = 4500' }, html: () => para(words('등호 왼쪽에'), U(FX('callout', '이름표', { text: 'price = 4500' }) + '를'), U('써요.')) },
+    strike: { params: { to: '붙인다' }, html: () => para(words('파이썬의 = 기호는'), U(FX('strike', '같다', { to: '붙인다' }) + '는'), U('뜻이에요.')) },
+    flip3d: { html: () => para(words('같은 이름이 가리키는 값이'), U(FX('flip3d', '바뀌어요') + '.')) },
+    countup: { params: { from: '0' }, html: () => para(words('커피 세 잔이면'), U(FX('countup', '13,500', { from: '0' }) + '원이에요.')) },
+    odometer: { params: { from: '4500' }, html: () => para(words('한 잔 가격이'), U(FX('odometer', '5,000', { from: '4500' }) + '원으로'), U('올랐어요.')) },
+    scramble: { html: () => para(words('알아보기 어렵던 글자가'), U(FX('scramble', 'print(price)') + '로'), U('풀려요.')) },
+    shake: { html: () => para(words('계산 결과가'), U(FX('shake', '틀렸어요!'))) },
+    glitch: { html: () => para(words('실행하면'), U(FX('glitch', 'NameError') + '가'), U('나요.')) },
+    // screen
+    stamp: { params: { text: '13,500원' }, html: () => para(words('실행 결과는'), U(A('stamp', { text: '13,500원' }) + '13,500원이에요.')) },
+    sparkle: { html: () => para(words('맞아요,'), U(A('sparkle') + '정확해요!')) },
+    confetti: { html: () => para(words('결과가'), U(A('confetti') + '예상대로'), U('나왔어요!')) },
+    fireworks: { html: () => para(words('이제 여러분도'), U(A('fireworks') + '변수를'), words('쓸 수 있어요!')) },
+    shockwave: { html: () => para(words('결론은'), U(A('shockwave') + '하나예요.'), words('이름으로 부르면 돼요.')) },
+    flash: { html: () => para(U('아하,'), U(A('flash') + '이름만'), words('바꾸면 되는구나!')) },
+    vignette: { html: () => para(words('그런데 사장님이 가격을'), U(A('vignette') + '또'), U('올렸어요.')) },
+    lowerthird: { params: { title: '변수', sub: '값에 붙인 이름' }, html: () => para(words('이렇게 이름을 붙인 것을'), U(A('lowerthird', { title: '변수', sub: '값에 붙인 이름' }) + '변수라고'), U('해요.')) },
+    countdown: { params: { text: '결과를 예상해 보세요' }, html: () => para(words('실행하면 무엇이 나올까요?'), U(A('countdown', { text: '결과를 예상해 보세요' }) + '셋,'), words('둘, 하나!')) },
+    screenshake: { html: () => para(words('그 순간'), U(A('screenshake') + '오류가'), U('났어요!')) },
+    // code
+    typecode: { target: 'lab-code-typecode', html: () => code('lab-code-typecode', ['price = 4500', 'count = 3', 'print(price * count)'], [[3, '13500']]) },
+    terminal: { target: 'lab-code-terminal', html: () => code('lab-code-terminal', ['price = 4500', 'count = 3', 'print(price * count)'], [[3, '13500']]) },
+    flyvalue: { target: 'lab-code-flyvalue', params: { to: 'lab-fly-fig', line: 1 }, html: () =>
+      code('lab-code-flyvalue', ['price = 4500'], null) +
+      '<figure class="blk figure" id="lab-fly-fig" data-fx="step" data-figure="name-tag" data-from="0" data-to="1"><div class="figure-stage" aria-hidden="true"></div><figcaption>price 이름표가 4500이 든 상자에 붙어요.</figcaption></figure>' },
+    diff: { target: 'lab-code-diff', params: { line: 1 }, html: () => code('lab-code-diff', ['price = 5000', 'print(price * 3)'], [[2, '15000']]) },
+    errorfx: { target: 'lab-code-errorfx', params: { line: 2 }, html: () => code('lab-code-errorfx', ['price = 4500', 'print(pirce * 3)'], [[2, "NameError: name 'pirce' is not defined"]]) },
+    // cast (needs src/components/cast/index.js)
+    react: { cast: true, actor: 'minji', say: '네? 가격이 또 바뀌었다고요?', params: { expr: 'surprised' } },
+    emote: { cast: true, actor: 'minji', say: '아, 이름표만 옮겨 붙이면 되겠네요!', params: { emote: 'idea' } },
+    act: { cast: true, actor: 'owner', say: '오늘부터 커피값을 올릴게요!', params: { action: 'jump' } },
+    menuprice: { cast: true, actor: 'owner', menu: true, say: '아메리카노는 이제 5,000원이에요.', params: { item: '아메리카노', price: '5000' } },
+  };
+
+  // ---------------------------------------------------------------- controls
+  const form = document.getElementById('fxlab-controls');
+  const value = (name) => (form.querySelector('input[name="' + name + '"]:checked') || {}).value;
+  function opts(params) {
+    const r = value('reduced');
+    return {
+      mode: 'play',
+      intensity: value('intensity'),
+      sound: value('sound') === 'on',
+      reduced: r === 'system' ? matchMedia('(prefers-reduced-motion: reduce)').matches : r === 'on',
+      params: params ? { ...params } : {},
+    };
+  }
+  const secs = (ms) => (ms <= 0 ? '즉시' : (ms / 1000).toFixed(2).replace(/0$/, '') + '초');
+
+  // ---------------------------------------------------------------- build
+  const cards = [];
+  let table = {};
+  let loaded = {};
+  let castMod = null;
+
+  function expected(name, o) {
+    return o.reduced ? 0 : Math.round((EFFECTS[name].dur || 0) * (FACTOR[o.intensity] || 1));
+  }
+
+  // A one-row scene in the compiler's avatar layout (SPEC 13): optional menu card, then the speaker's row.
+  function castScene(name, spec) {
+    if (!castMod || typeof castMod.renderActor !== 'function') return null;
+    const sid = 'lab-sc-' + name;
+    const who = spec.actor || 'minji';
+    let avatar = '';
+    let menu = '';
+    try {
+      avatar = castMod.renderActor(who, 'neutral', sid + '-r1-' + who);
+      if (spec.menu && typeof castMod.renderMenu === 'function') menu = castMod.renderMenu(sid + '-menu', { 아메리카노: '4500', 라떼: '5000', 케이크: '6500' });
+    } catch (err) { console.error(err); return null; }
+    return '<section class="blk scene" id="' + sid + '" data-cast="' + who + '">' + menu +
+      '<ol class="scene-lines"><li class="line" id="' + sid + '-r1" data-speaker="' + who + '"><div class="line-avatar">' + avatar + '</div>' +
+      '<div class="line-body"><span class="line-name">' + (who === 'owner' ? '사장님' : '민지') + '</span><p class="line-text"><span class="seg" data-seg="lab-s' + (++segN) + '">' + words(spec.say || '커피 세 잔 주문 들어왔어요!') + '</span></p></div></li></ol></section>';
+  }
+
+  function build() {
+    const host = document.getElementById('fxlab-groups');
+    const index = document.getElementById('fxlab-index');
+    for (const g of GROUPS) {
+      const names = Object.keys(EFFECTS).filter((n) => EFFECTS[n].group === g.id);
+      if (!names.length) continue;
+      const sec = document.createElement('section');
+      sec.className = 'fxlab-group';
+      sec.id = 'group-' + g.id;
+      sec.innerHTML = '<header class="fxlab-group-head"><h2>' + g.title + '</h2><p>' + g.desc + '</p></header>';
+      const ready = !!loaded[g.id];
+      const link = document.createElement('a');
+      link.href = '#group-' + g.id;
+      link.innerHTML = g.title + '<span>' + names.length + '</span>';
+      index.appendChild(link);
+      if (!ready) {
+        const note = document.createElement('p');
+        note.className = 'fxlab-note';
+        note.textContent = g.id === 'cast' ? '캐릭터 모듈(src/components/cast/index.js)이 아직 준비되지 않아 이 묶음은 건너뛰어요.' : '이 묶음의 모듈을 불러오지 못했어요. 준비되면 여기에 나타나요.';
+        sec.appendChild(note);
+        host.appendChild(sec);
+        continue;
+      }
+      const grid = document.createElement('div');
+      grid.className = 'fxlab-grid';
+      for (const name of names) {
+        const def = EFFECTS[name];
+        const spec = DEMOS[name] || { html: () => para(words('이 효과의 시연 문장이 아직 없어요.')) };
+        const impl = table[name];
+        const card = document.createElement('article');
+        card.className = 'fxlab-card';
+        card.id = 'fx-' + name;
+        const dur = (def.dur / 1000).toFixed(2).replace(/0$/, '') + '초';
+        let demo = '';
+        if (spec.cast) demo = castScene(name, spec) || '<p class="fxlab-missing">장면을 그리지 못했어요.</p>';
+        else demo = spec.html();
+        card.innerHTML =
+          '<header class="fxlab-card-head"><h3>' + esc(def.label) + ' <code>' + name + '</code></h3>' +
+          '<p class="fxlab-use"><b>쓰는 곳</b> ' + esc(def.use || '') + '</p>' +
+          '<p class="fxlab-meta">' + (KIND[def.kind] || def.kind) + ' · 보통 ' + dur + (def.params ? ' · 값: ' + def.params.join(', ') : '') + '</p></header>' +
+          '<div class="fxlab-demo"><div class="lesson">' + demo + '</div></div>' +
+          '<div class="fxlab-actions"><button class="lab-btn is-primary" type="button" data-act="play">재생</button>' +
+          '<button class="lab-btn" type="button" data-act="reset">처음으로</button>' +
+          '<button class="lab-btn" type="button" data-act="settle">끝으로</button>' +
+          '<span class="fxlab-time" aria-live="polite"></span></div>';
+        grid.appendChild(card);
+        const entry = { name, card, spec, impl, available: !!impl, target: null };
+        cards.push(entry);
+        if (!impl) {
+          card.querySelectorAll('[data-act]').forEach((b) => { b.disabled = true; });
+          readout(entry, '아직 구현되지 않았어요', true);
+        }
+      }
+      sec.appendChild(grid);
+      host.appendChild(sec);
+    }
+  }
+
+  function targetOf(entry) {
+    const s = entry.spec;
+    if (s.cast) {
+      const sid = 'lab-sc-' + entry.name;
+      if (s.menu) return document.getElementById(sid + '-menu') || document.getElementById(sid);
+      return document.getElementById(sid + '-r1-' + s.actor);
+    }
+    return document.getElementById(s.target || 'lab-' + entry.name);
+  }
+
+  function readout(entry, html, error) {
+    const out = entry.card.querySelector('.fxlab-time');
+    out.innerHTML = html;
+    out.classList.toggle('is-error', !!error);
+  }
+
+  function call(entry, fn, extraOpts) {
+    const el = entry.target;
+    if (!el || !entry.impl || typeof entry.impl[fn] !== 'function') return;
+    try { entry.impl[fn](el, extraOpts ? opts(entry.spec.params) : undefined); } catch (err) { console.error('[fx lab] ' + fn + ' ' + entry.name, err); readout(entry, fn + ' 오류: ' + esc(err.message), true); }
+  }
+
+  let playing = null;
+  async function play(entry) {
+    if (!entry.available || !entry.target) return { duration: 0, actual: 0, expected: 0 };
+    unlockAudio();
+    const o = opts(entry.spec.params);
+    call(entry, 'reset');
+    entry.card.classList.add('is-playing');
+    const t0 = performance.now();
+    let h;
+    try {
+      h = entry.impl.run(entry.target, o);
+    } catch (err) {
+      console.error('[fx lab] run ' + entry.name, err);
+      readout(entry, '실행 오류: ' + esc(err.message), true);
+      entry.card.classList.remove('is-playing');
+      return { duration: -1, actual: 0, expected: expected(entry.name, o), error: String(err) };
+    }
+    const exp = expected(entry.name, o);
+    readout(entry, h.duration ? '예정 <b>' + secs(h.duration) + '</b>' : '<b>즉시 전환</b> · 동작 줄이기');
+    playing = h;
+    await h.done;
+    const actual = performance.now() - t0;
+    if (playing === h) playing = null;
+    entry.card.classList.remove('is-playing');
+    if (h.duration) readout(entry, '예정 <b>' + secs(h.duration) + '</b> · 실제 ' + secs(actual), h.duration !== exp);
+    return { duration: h.duration, actual, expected: exp };
+  }
+
+  // ---------------------------------------------------------------- showreel
+  const nowBox = document.getElementById('fxlab-now');
+  const nowText = nowBox.querySelector('.fxlab-now-text');
+  const reelBtn = document.getElementById('fxlab-reel');
+  let reel = false;
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  async function showreel() {
+    if (reel) { stopReel(); return; }
+    reel = true;
+    reelBtn.textContent = '멈추기';
+    nowBox.hidden = false;
+    const list = cards.filter((c) => c.available && c.target);
+    for (let i = 0; i < list.length && reel; i++) {
+      const c = list[i];
+      c.card.scrollIntoView({ block: 'center', behavior: 'instant' });
+      nowText.textContent = (i + 1) + ' / ' + list.length + ' · ' + EFFECTS[c.name].label + ' ' + c.name;
+      await wait(450);
+      if (!reel) break;
+      await play(c);
+      await wait(420);
+    }
+    stopReel();
+  }
+  function stopReel() {
+    reel = false;
+    if (playing) playing.finish();
+    reelBtn.textContent = '전부 연속 재생';
+    nowBox.hidden = true;
+  }
+
+  // ---------------------------------------------------------------- narration look (engine classes)
+  function narrate(on) {
+    document.body.classList.toggle('is-narrating', on);
+    document.querySelectorAll('.fxlab-demo .seg').forEach((seg) => {
+      seg.classList.toggle('is-active', on);
+      const us = Array.from(seg.querySelectorAll('.u'));
+      us.forEach((u, i) => u.classList.toggle('is-spoken', on && i < Math.ceil(us.length * 0.6)));
+    });
+  }
+
+  // ---------------------------------------------------------------- start
+  async function start() {
+    const res = await loadEffects();
+    table = res.table;
+    loaded = res.loaded;
+    if (loaded.cast) {
+      try { castMod = await import('../src/components/cast/index.js'); } catch (err) { castMod = null; }
+    }
+    build();
+    for (const c of cards) c.target = targetOf(c);
+    // v1 helpers used by demos (the flyvalue target figure), then every effect's initial state.
+    document.querySelectorAll('.fxlab-demo [data-fx="step"]').forEach((f) => { v1prime(f); v1settle(f); });
+    if (castMod) {
+      document.querySelectorAll('.fxlab-demo .scene').forEach((sc) => {
+        try { if (castMod.primeCast) castMod.primeCast(sc); } catch (err) { console.error('[fx lab] scene', err); }
+      });
+    }
+    for (const c of cards) {
+      if (!c.available) continue;
+      if (!c.target) { readout(c, '시연 대상이 없어요', true); c.available = false; continue; }
+      call(c, 'prime');
+      c.card.querySelectorAll('[data-act]').forEach((btn) => btn.addEventListener('click', () => {
+        const act = btn.dataset.act;
+        if (act === 'play') play(c);
+        else if (act === 'reset') { call(c, 'reset'); readout(c, '처음 상태'); }
+        else if (act === 'settle') { call(c, 'settle', true); readout(c, '끝 상태'); }
+      }));
+      const o = opts(c.spec.params);
+      readout(c, '예정 ' + secs(expected(c.name, o)));
+    }
+    reelBtn.addEventListener('click', showreel);
+    document.getElementById('fxlab-stop').addEventListener('click', stopReel);
+    document.querySelectorAll('[data-all]').forEach((btn) => btn.addEventListener('click', () => {
+      for (const c of cards) {
+        if (!c.available) continue;
+        if (btn.dataset.all === 'reset') { call(c, 'reset'); readout(c, '처음 상태'); }
+        else { call(c, 'settle', true); readout(c, '끝 상태'); }
+      }
+    }));
+    form.addEventListener('change', (e) => {
+      if (e.target.name === 'narrate') { narrate(value('narrate') === 'on'); return; }
+      for (const c of cards) if (c.available) readout(c, '예정 ' + secs(expected(c.name, opts(c.spec.params))));
+    });
+  }
+
+  const ready = start();
+  window.__fxlab = {
+    ready,
+    names: () => cards.filter((c) => c.available).map((c) => c.name),
+    all: () => cards.map((c) => ({ name: c.name, group: EFFECTS[c.name].group, available: c.available })),
+    loaded: () => loaded,
+    entry: (name) => cards.find((c) => c.name === name),
+    target: (name) => (cards.find((c) => c.name === name) || {}).target,
+    run: (name) => play(cards.find((c) => c.name === name)),
+    reset: (name) => call(cards.find((c) => c.name === name), 'reset'),
+    settle: (name) => call(cards.find((c) => c.name === name), 'settle', true),
+    setControl(name, v) { const i = form.querySelector('input[name="' + name + '"][value="' + v + '"]'); if (i) { i.checked = true; i.dispatchEvent(new Event('change', { bubbles: true })); } },
+    showreel,
+    stopReel,
+    opts,
+    expected,
+  };
+</script>
+</body>
+</html>

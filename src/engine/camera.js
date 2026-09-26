@@ -1,8 +1,19 @@
 // The camera: eases the page so the spoken sentence sits on the reading line.
 // It never fights the reader: wheel/touch/keyboard/scrollbar input detaches it.
+// Targets may be one element or a list (framed together, e.g. a code block and the figure a value flies to).
+// Modes: 'line' (reading line at 38%), 'center' and 'top'.
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 const NAV_KEYS = new Set(["PageUp", "PageDown", "Home", "End", "ArrowUp", "ArrowDown"]);
+
+function rectOf(target) {
+  const list = (Array.isArray(target) ? target : [target]).filter(Boolean);
+  const rs = list.map((el) => el.getBoundingClientRect());
+  if (!rs.length) return { top: 0, bottom: 0, height: 0 };
+  const top = Math.min(...rs.map((r) => r.top));
+  const bottom = Math.max(...rs.map((r) => r.bottom));
+  return { top, bottom, height: bottom - top };
+}
 
 export class Camera {
   constructor({ reduced = false } = {}) {
@@ -50,7 +61,7 @@ export class Camera {
 
   // Is the element where it should be? 'line' = text near the reading line; 'block' = mostly visible.
   inView(el, kind = "line") {
-    const r = el.getBoundingClientRect();
+    const r = rectOf(el);
     const vh = this.vh, top = this.topOffset;
     if (kind === "line") {
       const bandTop = Math.max(top + 8, vh * 0.25), bandBottom = vh * 0.58;
@@ -62,7 +73,7 @@ export class Camera {
   }
 
   targetY(el, mode) {
-    const r = el.getBoundingClientRect();
+    const r = rectOf(el);
     const y = window.scrollY, vh = this.vh, top = this.topOffset;
     let target;
     if (mode === "top") target = y + r.top - top;

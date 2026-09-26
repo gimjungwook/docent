@@ -48,6 +48,8 @@ function turn(el, toBack, o) {
   const floor = el.querySelector('.turn-floor');
   const D = 1000 * o.k.time;
   const a = o.k.amp;
+  // Strong lifts the card a little higher mid-turn so the turn reads from across the page.
+  const lift = (o.intensity === 'strong' ? 0.075 : 0.05) * a;
   const from = toBack ? 0 : 180;
   const to = toBack ? 180 : 360;
   const tl = new Timeline(el);
@@ -55,7 +57,7 @@ function turn(el, toBack, o) {
   const r = (deg) => 'rotateY(' + deg + 'deg)';
   tl.to(card, [
     { transform: r(from) + ' translateZ(0px) scale(1)', easing: ease.inOut },
-    { transform: r(from + 92) + ' translateZ(0px) scale(' + (1 + 0.05 * a).toFixed(3) + ')', offset: 0.46, easing: ease.out },
+    { transform: r(from + 92) + ' translateZ(0px) scale(' + (1 + lift).toFixed(3) + ')', offset: 0.46, easing: ease.out },
     { transform: r(to + 7 * a) + ' translateZ(0px) scale(1.01)', offset: 0.78, easing: ease.inOut },
     { transform: r(to) + ' translateZ(0px) scale(1)' },
   ], { dur: D });
