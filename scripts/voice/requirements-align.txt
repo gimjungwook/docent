@@ -1,0 +1,4 @@
+# Forced alignment (scripts/voice/align.py). Model: kresnik/wav2vec2-large-xlsr-korean (Apache-2.0), cached in ~/.cache/huggingface.
+torch==2.8.0
+transformers==4.57.6
+numpy>=2.0

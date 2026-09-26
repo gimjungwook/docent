@@ -95,6 +95,8 @@ export class Camera {
     return new Promise((resolve) => {
       const step = (now) => {
         if (!this.moving) return resolve();
+        // Someone else moved the page mid-glide (scrollbar drag, find-in-page, a link): hand over at once.
+        if (Math.abs(window.scrollY - this._expectY) > 24) { this.moving = false; resolve(); this._user(); return; }
         const p = clamp((now - t0) / dur, 0, 1);
         this._set(start + span * ease(p));
         if (p < 1) this._raf = requestAnimationFrame(step);

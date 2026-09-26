@@ -80,6 +80,17 @@
 .lesson > .outro { margin-top: var(--s-9); }
 .lesson > .practice { width: min(58rem, calc(100% - 2 * var(--s-5))); margin-top: var(--s-9); scroll-margin-top: calc(var(--topbar-h) + var(--s-5)); }
 .lesson > .intro + .chapter { margin-top: 0; }
+.lesson-footer { width: min(58rem, calc(100% - 2 * var(--s-5))); margin: var(--s-9) auto 0; padding-top: var(--s-5); border-top: 1px solid var(--rule); color: var(--ink-3); font-size: var(--text-xs); line-height: 1.7; }
+.lesson-footer p + p { margin-top: 4px; }
+
+/* Wide screens: tips sit in the right margin next to the paragraph they belong to. */
+@media (min-width: 1360px) {
+  .lesson > .tip {
+    float: right; clear: right; width: 13rem;
+    margin: 0 0 var(--s-4) 0;
+    margin-right: calc(50% - var(--measure) / 2 - 13rem - var(--s-7));
+  }
+}
 
 /* Course page */
 .course { padding-bottom: var(--s-10); }
@@ -97,6 +108,10 @@
   scrollbar-width: thin;
 }
 .toc-track > li { scroll-snap-align: start; }
+@media (min-width: 1100px) {
+  /* Four cards fit the row exactly; more lessons turn it into a carousel. */
+  .toc-track { grid-auto-columns: calc((min(62rem, 100vw - var(--sidebar-w) * 0 - 2 * var(--s-5)) - 3 * var(--s-4)) / 4); }
+}
 .toc-card {
   position: relative; display: flex; flex-direction: column; gap: 6px; height: 100%; min-height: 19rem;
   padding: var(--s-5); border-radius: var(--r-3); text-decoration: none;

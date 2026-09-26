@@ -1,0 +1,2 @@
+# Re-transcription for eval.mjs (transcribe.py), Apple Silicon only. Model mlx-community/whisper-large-v3-turbo (MIT).
+mlx-whisper==0.4.3

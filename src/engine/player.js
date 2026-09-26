@@ -32,6 +32,8 @@ export class Player {
       onSpeed: () => this.cycleSpeed(),
       onReturn: () => this.refollow(),
     });
+    this.aiVoice = !!(timings && timings.voice && timings.voice.provider !== "say");
+    if (this.available) this.dock.setInvite("재생하며 보기", fmtTime(this.tl.duration) + (this.aiVoice ? " · AI 음성" : ""));
     const saved = Number(localStorage.getItem(this.storeKey) || 0);
     if (this.available && saved > 8 && saved < this.tl.duration - 8) { this.resumeAt = saved; this.dock.setInvite("이어서 듣기", fmtTime(saved) + "부터"); }
     camera.onDetach(() => { if (this.state !== "idle") { document.body.classList.remove("is-following"); this._updateReturn(); } });
@@ -45,6 +47,8 @@ export class Player {
 
   play(from) {
     if (!this.available) return;
+    // Called from click/keyboard handlers: lets Safari play the synthesized stings later.
+    try { this.fx.unlockAudio && this.fx.unlockAudio(); } catch {}
     const starting = this.state === "idle" || this.state === "ended";
     if (starting) {
       document.body.classList.add("has-player", "is-narrating", "is-following");
@@ -102,9 +106,15 @@ export class Player {
   playFromSegment(segId) {
     const seg = this.tl.segs.find((s) => s.id === segId);
     if (!seg) return;
-    const t = Math.max(0, seg.start - 0.25);
+    const t = this._startOf(seg);
     if (this.state === "idle" || this.state === "ended") this.play(t);
     else { this.camera.follow(); document.body.classList.add("is-following"); this.dock.hideReturn(); this.seek(t, { resume: true }); }
+  }
+
+  // Where to jump so a sentence's own effects (including block effects that start before the voice) still play.
+  _startOf(seg) {
+    const earliest = seg.cues.reduce((m, c) => Math.min(m, c.time), seg.start);
+    return Math.max(0, Math.min(seg.start - 0.25, earliest - 0.12));
   }
 
   // ---- loop ----
@@ -214,9 +224,12 @@ export class Player {
       if (!el) continue;
       const done = list.filter((c) => c.time <= t + 0.001);
       for (const c of list) c.fired = c.time <= t + 0.001;
-      if (!done.length) { this.fx.reset && this.fx.reset(el); this.reader && this.reader.unmark(el); continue; }
+      const style = this.settings.get().introStyle;
+      if (!done.length) { this.fx.reset && this.fx.reset(el, list[0].fx === "intro" ? { style } : undefined); this.reader && this.reader.unmark(el); continue; }
       const last = done[done.length - 1];
-      if (last.fx === "step") { const h = this.fx.fx.step(el, this._opts({ n: last.n, reduced: true })); h && h.finish && h.finish(); }
+      if (last.fx === "step") this.fx.settle(el, { n: last.n });
+      else if (last.fx === "intro") this.fx.settle(el, { style });
+      else if (last.fx === "run" && done.every((c) => c.line)) { this.fx.reset(el); for (const c of done) this.fx.settle(el, { line: c.line }); }
       else this.fx.settle && this.fx.settle(el);
       this.reader && this.reader.markFired(el);
     }
@@ -265,12 +278,12 @@ export class Player {
       if (e.target && e.target.closest && e.target.closest(".practice")) return;
       if (e.key === " " && !(e.target && e.target.closest && e.target.closest("button, a"))) { e.preventDefault(); this.toggle(); }
       if (this.state === "idle") return;
-      if (e.key === "ArrowRight" && !(e.target && e.target.closest(".dock-track"))) { e.preventDefault(); const s = this.tl.segs[this.active + 1]; if (s) this.seek(s.start - 0.1, { resume: this.state === "playing" }); }
+      if (e.key === "ArrowRight" && !(e.target && e.target.closest(".dock-track"))) { e.preventDefault(); const s = this.tl.segs[this.active + 1]; if (s) this.seek(this._startOf(s), { resume: this.state === "playing" }); }
       if (e.key === "ArrowLeft" && !(e.target && e.target.closest(".dock-track"))) {
         e.preventDefault();
         const cur = this.tl.segs[this.active];
         const back = cur && this.audio.currentTime - cur.start > 1.2 ? cur : this.tl.segs[Math.max(0, this.active - 1)];
-        if (back) this.seek(back.start - 0.1, { resume: this.state === "playing" });
+        if (back) this.seek(this._startOf(back), { resume: this.state === "playing" });
       }
     });
   }
@@ -278,7 +291,7 @@ export class Player {
   _bindSentenceSeek() {
     document.addEventListener("click", (e) => {
       if (this.state === "idle" || !this.available) return;
-      if (e.target.closest("a, button, code, .practice, .figure, .code")) return;
+      if (e.target.closest("a, button, .practice, .figure, .code, .turn")) return;
       const segEl = e.target.closest("[data-seg]");
       if (!segEl) return;
       if (window.getSelection && String(window.getSelection()).length) return;

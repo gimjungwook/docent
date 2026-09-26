@@ -97,7 +97,7 @@ function mountListenHere(player) {
     const r = intro.getBoundingClientRect();
     fx.reset && fx.reset(intro);
     if (r.bottom > 0 && r.top < window.innerHeight) fx.fx.intro(intro, { mode: "read", intensity: s.intensity, reduced, sound: s.sound, style: s.introStyle });
-    else fx.settle && fx.settle(intro);
+    else fx.settle && fx.settle(intro, { style: s.introStyle });
   });
   mountTastePanel(settings, { onReplayIntro: replayIntro });
 

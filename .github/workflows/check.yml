@@ -1,0 +1,25 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Rebuild lessons (runs every code example in Python)
+        run: node scripts/compile.mjs
+      - name: Generated pages are up to date
+        run: git diff --exit-code -- index.html lessons data/lessons
+      - name: Structure tests
+        run: node --test tests/*.test.mjs
+      - name: Practice sets (solutions pass, starters fail)
+        run: if [ -f scripts/check_practice.py ]; then python3 scripts/check_practice.py; fi

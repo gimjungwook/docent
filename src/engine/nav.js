@@ -37,7 +37,7 @@ export function mountNav() {
     requestAnimationFrame(() => {
       ticking = false;
       const barH = topbar ? topbar.getBoundingClientRect().height : 0;
-      if (topbar) topbar.classList.toggle("on-stage", bands.some((b) => { const r = b.getBoundingClientRect(); return r.top <= barH * 0.5 && r.bottom > barH * 0.5; }));
+      if (topbar) topbar.classList.toggle("on-stage", bands.some((b) => { const r = b.getBoundingClientRect(); return r.top <= barH * 0.5 && r.bottom > barH + 12; }));
       if (body.classList.contains("is-narrating")) return;
       const line = window.innerHeight * 0.4;
       let id = null;

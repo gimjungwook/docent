@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>음성 비교 · Docent 실험실</title>
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-sans); font-size: var(--text-body); line-height: var(--leading-body); }
+  main { max-width: 64rem; margin: 0 auto; padding: var(--s-8) var(--s-5) var(--s-10); }
+  h1 { font-size: var(--text-h2); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin: 0 0 var(--s-3); }
+  h2 { font-size: var(--text-h3); margin: var(--s-8) 0 var(--s-4); letter-spacing: var(--tracking-tight); }
+  p { margin: 0 0 var(--s-4); max-width: var(--measure); color: var(--ink-2); }
+  .note { font-size: var(--text-sm); color: var(--ink-3); }
+  .ai-notice { display: inline-block; font-size: var(--text-sm); color: var(--ink-2); border: 1px solid var(--rule); border-radius: var(--r-1); padding: var(--s-1) var(--s-3); background: var(--paper-2); }
+  table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  #metrics { min-width: 46rem; }
+  th, td { text-align: left; padding: var(--s-2) var(--s-3); border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { color: var(--ink-3); font-weight: 600; white-space: nowrap; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.best td:first-child { font-weight: 700; }
+  .table-wrap { overflow-x: auto; }
+  .voices { display: flex; flex-wrap: wrap; gap: var(--s-2); margin: 0 0 var(--s-5); padding: 0; border: 0; }
+  .voices legend { font-size: var(--text-sm); color: var(--ink-3); margin-bottom: var(--s-2); }
+  .voice { position: relative; }
+  .voice input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .voice span { display: inline-block; padding: var(--s-2) var(--s-4); border: 1px solid var(--rule); border-radius: var(--r-pill); background: var(--paper); font-size: var(--text-sm); color: var(--ink-2); transition: background var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out); }
+  .voice input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .voice input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .voice input:disabled + span { opacity: 0.45; cursor: not-allowed; }
+  .controls { display: flex; gap: var(--s-3); align-items: center; margin-bottom: var(--s-5); flex-wrap: wrap; }
+  button { font: inherit; font-size: var(--text-sm); cursor: pointer; border-radius: var(--r-1); border: 1px solid var(--rule); background: var(--paper); color: var(--ink); padding: var(--s-2) var(--s-4); }
+  button:hover { border-color: var(--ink-3); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.primary:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
+  ol.sentences { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  ol.sentences li { display: grid; grid-template-columns: auto 1fr; gap: var(--s-3) var(--s-4); padding: var(--s-4) var(--s-3); border-bottom: 1px solid var(--rule); border-radius: var(--r-1); }
+  ol.sentences li.active { background: var(--marker-soft); }
+  .say { font-size: var(--text-lead); line-height: 1.6; }
+  .say .w { color: var(--ink); transition: color var(--dur-1) linear; }
+  li.active .say .w { color: var(--ink-4); }
+  li.active .say .w.spoken { color: var(--ink); }
+  li.active .say .w.now { box-shadow: inset 0 -0.35em 0 var(--marker); }
+  .hyp { grid-column: 2; font-size: var(--text-sm); color: var(--ink-3); }
+  .hyp b { font-weight: 600; color: var(--ink-2); }
+  .play { width: 2.5rem; height: 2.5rem; padding: 0; border-radius: var(--r-pill); display: inline-grid; place-items: center; }
+  .play svg { width: 14px; height: 14px; fill: currentColor; }
+  .status { font-size: var(--text-sm); color: var(--ink-3); min-height: 1.5em; }
+  .tag { font-size: var(--text-xs); color: var(--ink-3); border: 1px solid var(--rule); border-radius: var(--r-1); padding: 0 var(--s-1); margin-left: var(--s-1); white-space: nowrap; }
+  @media (max-width: 640px) { main { padding: var(--s-6) var(--s-4) var(--s-9); } .say { font-size: var(--text-body); } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>음성 비교</h1>
+  <p>같은 문장을 목소리마다 들어 보고 레슨 낭독에 쓸 목소리를 고릅니다. 목소리를 고른 뒤 문장 옆 재생 버튼을 누르세요. 재생 중에 다른 목소리를 누르면 같은 문장을 그 목소리로 다시 들려줍니다.</p>
+  <p class="ai-notice">이 페이지의 모든 음성은 AI가 합성한 음성입니다.</p>
+
+  <h2>측정 결과</h2>
+  <div class="table-wrap"><table id="metrics"><thead><tr>
+    <th scope="col">목소리</th><th scope="col">속도(RTF)</th><th scope="col">재전사 오류율</th><th scope="col">정규화 오류율</th>
+    <th scope="col">말 빠르기</th><th scope="col">단어 정렬</th><th scope="col">라이선스</th>
+  </tr></thead><tbody></tbody></table></div>
+  <p class="note" id="method"></p>
+
+  <h2>들어 보기</h2>
+  <fieldset class="voices" id="voices"><legend>목소리</legend></fieldset>
+  <div class="controls">
+    <button class="primary" id="all" type="button">전체 듣기</button>
+    <button id="stop" type="button">멈춤</button>
+    <span class="status" id="status" aria-live="polite"></span>
+  </div>
+  <ol class="sentences" id="sentences"></ol>
+</main>
+<audio id="player" preload="auto"></audio>
+<script type="module">
+const PLAY = '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z"/></svg>';
+const $ = (id) => document.getElementById(id);
+const player = $('player');
+const pct = (x) => (x * 100).toFixed(1) + '%';
+const state = { data: null, voice: null, seg: null, stopAt: null, available: new Map() };
+
+function voiceLabel(c) {
+  if (c.provider === 'say') return 'macOS ' + c.voice;
+  if (c.provider === 'supertonic') return 'Supertonic ' + c.voice + (c.options && c.options.speed !== 0.9 ? ' · 속도 ' + c.options.speed : '');
+  if (c.provider === 'qwen3') return 'Qwen3-TTS ' + c.voice;
+  if (c.provider === 'fish-openrouter') return 'Fish S2 Pro';
+  return c.provider + ' ' + c.voice;
+}
+
+function licenseLabel(c) {
+  if (c.localOnly) return '로컬 전용 (공개 불가)';
+  if (c.provider === 'supertonic') return 'OpenRAIL-M · AI 음성 표기 필요';
+  if (c.provider === 'qwen3') return 'Apache-2.0';
+  return c.license;
+}
+
+async function probe(url) {
+  try {
+    const r = await fetch(url, { method: 'HEAD' });
+    return r.ok;
+  } catch { return false; }
+}
+
+function renderMetrics(data) {
+  const ok = data.candidates.filter((c) => c.status === 'ok');
+  const best = ok.filter((c) => !c.localOnly).sort((a, b) => a.cerNumbers - b.cerNumbers)[0];
+  const body = $('metrics').tBodies[0];
+  body.innerHTML = '';
+  for (const c of data.candidates) {
+    const tr = document.createElement('tr');
+    if (best && c.slug === best.slug) tr.className = 'best';
+    const cells = c.status !== 'ok'
+      ? [voiceLabel(c), '—', '—', '—', '—', '—', /401/.test(c.reason || '') ? '실행 안 됨: 키 거부(HTTP 401)' : '실행 안 됨']
+      : [voiceLabel(c), c.rtf.toFixed(2), pct(c.cer), pct(c.cerNumbers), c.syllablesPerSecond.toFixed(1) + '음절/초',
+         c.forced + '/' + c.segments.length + ' · 신뢰도 ' + c.confidence.toFixed(2), licenseLabel(c)];
+    if (c.status !== 'ok') tr.title = c.reason || '';
+    cells.forEach((v, i) => {
+      const td = document.createElement('td');
+      td.textContent = v;
+      if (i >= 1 && i <= 4) td.className = 'num';
+      tr.append(td);
+    });
+    body.append(tr);
+  }
+  $('method').textContent = '속도는 M1 Max에서 문장 합성 시간 ÷ 음성 길이(모델 적재 시간 제외). 오류율은 ' + data.whisper +
+    '로 다시 받아쓴 글자를 원문과 비교한 값이며 띄어쓰기와 문장부호는 무시합니다. 정규화 오류율은 받아쓰기가 숫자(4,500)나 영어(price)로 적은 부분을 원문 읽기(사천오백, 프라이스)로 바꾼 뒤 잰 값입니다.';
+}
+
+async function renderVoices(data) {
+  const box = $('voices');
+  const ok = data.candidates.filter((c) => c.status === 'ok');
+  for (const c of ok) state.available.set(c.slug, await probe('../' + c.audio));
+  ok.forEach((c, i) => {
+    const label = document.createElement('label');
+    label.className = 'voice';
+    const input = Object.assign(document.createElement('input'), { type: 'radio', name: 'voice', value: c.slug });
+    input.disabled = !state.available.get(c.slug);
+    const span = document.createElement('span');
+    span.textContent = voiceLabel(c) + (input.disabled ? ' (이 컴퓨터 전용)' : '');
+    label.append(input, span);
+    box.append(label);
+    input.addEventListener('change', () => selectVoice(c.slug, true));
+  });
+  const first = ok.find((c) => state.available.get(c.slug) && !c.localOnly) || ok.find((c) => state.available.get(c.slug));
+  if (first) {
+    box.querySelector('input[value="' + first.slug + '"]').checked = true;
+    selectVoice(first.slug, false);
+  }
+}
+
+function renderSentences(data) {
+  const list = $('sentences');
+  data.sentences.forEach((s, i) => {
+    const li = document.createElement('li');
+    li.dataset.index = i;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'play';
+    btn.innerHTML = PLAY;
+    btn.setAttribute('aria-label', (i + 1) + '번 문장 재생');
+    btn.addEventListener('click', () => playSentence(i));
+    const say = document.createElement('div');
+    say.className = 'say';
+    s.say.trim().split(/\s+/).forEach((w, k) => {
+      if (k) say.append(' ');
+      const span = Object.assign(document.createElement('span'), { className: 'w', textContent: w });
+      say.append(span);
+    });
+    const hyp = document.createElement('div');
+    hyp.className = 'hyp';
+    li.append(btn, say, hyp);
+    list.append(li);
+  });
+}
+
+function currentCandidate() {
+  return state.data.candidates.find((c) => c.slug === state.voice);
+}
+
+function selectVoice(slug, replay) {
+  state.voice = slug;
+  const c = currentCandidate();
+  document.querySelectorAll('#sentences li').forEach((li, i) => {
+    const seg = c.segments[i];
+    li.querySelector('.hyp').innerHTML = '';
+    const b = document.createElement('b');
+    b.textContent = '받아쓰기 ';
+    li.querySelector('.hyp').append(b, seg.hyp + '  ·  오류율 ' + pct(seg.cerNumbers) + (seg.align === 'forced' ? '' : '  ·  비례 타이밍'));
+  });
+  const src = '../' + c.audio;
+  if (!player.src.endsWith(c.audio)) player.src = src;
+  if (replay && state.seg !== null) playSentence(state.seg);
+}
+
+function playSentence(i) {
+  const c = currentCandidate();
+  if (!c) return;
+  const seg = c.segments[i];
+  state.seg = i;
+  state.stopAt = seg.end + 0.05;
+  player.currentTime = Math.max(0, seg.start - 0.05);
+  player.play();
+  $('status').textContent = voiceLabel(c) + ' · ' + (i + 1) + '번 문장';
+}
+
+$('all').addEventListener('click', () => {
+  const c = currentCandidate();
+  if (!c) return;
+  state.seg = null;
+  state.stopAt = null;
+  player.currentTime = 0;
+  player.play();
+  $('status').textContent = voiceLabel(c) + ' · 전체';
+});
+$('stop').addEventListener('click', () => player.pause());
+
+function tick() {
+  const c = state.data && currentCandidate();
+  if (c && !player.paused) {
+    const t = player.currentTime;
+    if (state.stopAt !== null && t >= state.stopAt) player.pause();
+    document.querySelectorAll('#sentences li').forEach((li, i) => {
+      const seg = c.segments[i];
+      const active = t >= seg.start - 0.05 && t <= seg.end + 0.05;
+      li.classList.toggle('active', active);
+      if (!active) return;
+      li.querySelectorAll('.w').forEach((w, k) => {
+        const [a, b] = seg.words[k];
+        w.classList.toggle('spoken', t >= a);
+        w.classList.toggle('now', t >= a && t < b);
+      });
+    });
+  }
+  requestAnimationFrame(tick);
+}
+
+player.addEventListener('pause', () => {
+  document.querySelectorAll('#sentences li.active').forEach((li) => li.classList.remove('active'));
+});
+
+async function main() {
+  try {
+    const res = await fetch('../audio/lab/eval.json');
+    if (!res.ok) throw new Error(res.status);
+    state.data = await res.json();
+  } catch (e) {
+    $('status').textContent = '측정 결과(audio/lab/eval.json)를 불러오지 못했습니다. node scripts/voice/eval.mjs 로 만드세요.';
+    return;
+  }
+  renderMetrics(state.data);
+  renderSentences(state.data);
+  await renderVoices(state.data);
+  requestAnimationFrame(tick);
+}
+main();
+</script>
+</body>
+</html>

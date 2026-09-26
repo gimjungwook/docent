@@ -1,0 +1,318 @@
+{
+  "version": 1,
+  "lesson": "variables",
+  "title": "변수 실습",
+  "lessonTitle": "변수",
+  "lessonSummary": "= 로 값에 이름 붙이기, print()로 값 출력하기, 같은 이름에 새 값 다시 담기, 변수끼리 계산하기(total = price * count), 이름 규칙(글자·숫자·밑줄(_)만 쓰기, 숫자로 시작할 수 없음, 대문자와 소문자를 구분함, 단어는 snake_case로 잇기)",
+  "defaultTheme": "cafe",
+  "themes": [
+    {
+      "id": "cafe",
+      "label": "카페",
+      "exercises": [
+        {
+          "id": "cafe-1",
+          "level": 1,
+          "title": "주문 금액 계산하기",
+          "focus": "변수끼리 곱해서 새 변수에 담고 출력하기",
+          "prompt": "아메리카노 한 잔은 4500원이에요. 세 잔을 주문했을 때 낼 금액을 `total`에 담고 출력해 보세요. 13500을 직접 쓰지 말고 `price`와 `count`를 곱해서 구해요.",
+          "starter": "# 한 잔 가격과 주문한 잔 수\nprice = 4500\ncount = 3\n\n# 이 줄을 고쳐 보세요\ntotal = 0\nprint(total)\n",
+          "checks": [
+            {
+              "type": "assert",
+              "code": "assert total == 13500",
+              "label": "`total`에 13500이 들어 있어요",
+              "fail": "지금 `total`에 든 값이 13500이 아니에요. 곱하기는 `*` 기호로 해요."
+            },
+            {
+              "type": "assert",
+              "code": "assert _uses('total', 'price', 'count')",
+              "label": "`price`와 `count`로 계산했어요",
+              "fail": "`total =` 오른쪽에 `price`와 `count`가 함께 들어가야 해요. 숫자를 직접 쓰면 가격이 바뀔 때마다 코드를 고쳐야 하거든요."
+            },
+            {
+              "type": "stdout",
+              "expect": "13500",
+              "label": "화면에 13500이 나와요",
+              "fail": "`total`의 값을 `print()`로 한 번 출력해 보세요."
+            }
+          ],
+          "hints": [
+            "파이썬에서 곱하기는 `*` 기호로 해요. 숫자뿐 아니라 변수끼리도 곱할 수 있어요.",
+            "`total = 0`의 오른쪽 0을 `price`와 `count`를 곱하는 식으로 바꿔 보세요.",
+            "`total = price * count`라고 쓰면 돼요. 그러면 아래 줄의 `print(total)`이 13500을 보여 줘요."
+          ],
+          "solution": "# 한 잔 가격과 주문한 잔 수\nprice = 4500\ncount = 3\n\n# 두 값을 곱해서 담아요\ntotal = price * count\nprint(total)\n"
+        },
+        {
+          "id": "cafe-2",
+          "level": 2,
+          "title": "스탬프 다시 담기",
+          "focus": "대문자와 소문자를 구분하는 이름 규칙, 같은 이름에 새 값 다시 담기",
+          "prompt": "쿠폰에 스탬프가 3개 있었는데, 오늘 두 잔을 더 사서 2개가 늘었어요. 그런데 아래 코드는 실행하면 오류가 나요. 오류 메시지를 읽고 이름을 `stamps` 하나로 맞춘 뒤, 늘어난 스탬프 수를 출력해 보세요.",
+          "starter": "# 지금까지 모은 스탬프\nStamps = 3\n\n# 오늘 두 개를 더 받았어요\nstamps = stamps + 2\nprint(stamps)\n",
+          "checks": [
+            {
+              "type": "assert",
+              "code": "assert 'Stamps' not in _names",
+              "label": "이름을 소문자 `stamps` 하나로 맞췄어요",
+              "fail": "`Stamps`라는 이름이 아직 남아 있어요. 파이썬은 대문자와 소문자를 다른 이름으로 봐요."
+            },
+            {
+              "type": "assert",
+              "code": "assert _assigns('stamps') >= 2 and _uses('stamps', 'stamps')",
+              "label": "원래 값에 2를 더해 다시 담았어요",
+              "fail": "`stamps`의 원래 값에 2를 더한 결과를 `stamps`에 다시 담아 보세요. 5를 직접 쓰지 않아요."
+            },
+            {
+              "type": "assert",
+              "code": "assert stamps == 5",
+              "label": "`stamps`에 5가 들어 있어요",
+              "fail": "`stamps`의 마지막 값이 5가 아니에요. 3에서 시작해 2를 더했는지 확인해 보세요."
+            },
+            {
+              "type": "stdout",
+              "expect": "5",
+              "label": "화면에 5가 나와요",
+              "fail": "`stamps`의 마지막 값을 `print()`로 출력해 보세요."
+            }
+          ],
+          "hints": [
+            "오류 메시지의 NameError는 그런 이름을 찾을 수 없다는 뜻이에요. 몇 번째 줄에서 어떤 이름을 못 찾았는지 먼저 보세요.",
+            "파이썬은 대문자와 소문자를 구분해요. 첫 줄의 `Stamps`와 아래 줄의 `stamps`는 서로 다른 이름이에요.",
+            "`Stamps = 3`을 `stamps = 3`으로 바꾸면 돼요. 그러면 `stamps = stamps + 2`가 3에 2를 더한 5를 `stamps`에 다시 담아요."
+          ],
+          "solution": "# 지금까지 모은 스탬프\nstamps = 3\n\n# 오늘 두 개를 더 받았어요\nstamps = stamps + 2\nprint(stamps)\n"
+        }
+      ]
+    },
+    {
+      "id": "game",
+      "label": "게임",
+      "exercises": [
+        {
+          "id": "game-1",
+          "level": 1,
+          "title": "몬스터 점수 계산하기",
+          "focus": "변수끼리 곱해서 새 변수에 담고 출력하기",
+          "prompt": "몬스터를 한 마리 잡을 때마다 120점을 받아요. 오늘 7마리를 잡았다면 몇 점일까요? `score`에 점수를 담고 출력해 보세요. 840을 직접 쓰지 말고 `points`와 `monsters`를 곱해서 구해요.",
+          "starter": "# 한 마리 점수와 잡은 수\npoints = 120\nmonsters = 7\n\n# 이 줄을 고쳐 보세요\nscore = 0\nprint(score)\n",
+          "checks": [
+            {
+              "type": "assert",
+              "code": "assert score == 840",
+              "label": "`score`에 840이 들어 있어요",
+              "fail": "지금 `score`에 든 값이 840이 아니에요. 곱하기는 `*` 기호로 해요."
+            },
+            {
+              "type": "assert",
+              "code": "assert _uses('score', 'points', 'monsters')",
+              "label": "`points`와 `monsters`로 계산했어요",
+              "fail": "`score =` 오른쪽에 `points`와 `monsters`가 함께 들어가야 해요. 그래야 잡은 수가 바뀌어도 코드가 알아서 다시 계산해요."
+            },
+            {
+              "type": "stdout",
+              "expect": "840",
+              "label": "화면에 840이 나와요",
+              "fail": "`score`의 값을 `print()`로 한 번 출력해 보세요."
+            }
+          ],
+          "hints": [
+            "파이썬에서 곱하기는 `*` 기호로 해요. 숫자뿐 아니라 변수끼리도 곱할 수 있어요.",
+            "`score = 0`의 오른쪽 0을 `points`와 `monsters`를 곱하는 식으로 바꿔 보세요.",
+            "`score = points * monsters`라고 쓰면 돼요. 그러면 아래 줄의 `print(score)`가 840을 보여 줘요."
+          ],
+          "solution": "# 한 마리 점수와 잡은 수\npoints = 120\nmonsters = 7\n\n# 두 값을 곱해서 담아요\nscore = points * monsters\nprint(score)\n"
+        },
+        {
+          "id": "game-2",
+          "level": 2,
+          "title": "체력 회복하기",
+          "focus": "숫자로 시작할 수 없는 이름 규칙, 같은 이름에 새 값 다시 담기",
+          "prompt": "1번 플레이어의 체력이 60인데, 포션을 마셔서 25만큼 회복했어요. 그런데 아래 코드는 이름이 숫자로 시작해서 실행되지 않아요. 이름을 `player1_hp`로 고치고, 회복한 체력을 같은 이름에 다시 담아 출력해 보세요.",
+          "starter": "# 1번 플레이어의 체력\n1p_hp = 60\n\n# 포션으로 25 회복!\n1p_hp = 1p_hp + 25\nprint(1p_hp)\n",
+          "checks": [
+            {
+              "type": "assert",
+              "code": "assert _assigns('player1_hp') >= 2 and _uses('player1_hp', 'player1_hp')",
+              "label": "원래 체력에 25를 더해 다시 담았어요",
+              "fail": "`player1_hp`의 원래 값에 25를 더한 결과를 `player1_hp`에 다시 담아 보세요. 85를 직접 쓰지 않아요."
+            },
+            {
+              "type": "assert",
+              "code": "assert player1_hp == 85",
+              "label": "`player1_hp`에 85가 들어 있어요",
+              "fail": "`player1_hp`의 마지막 값이 85가 아니에요. 60에서 시작해 25를 더했는지 확인해 보세요."
+            },
+            {
+              "type": "stdout",
+              "expect": "85",
+              "label": "화면에 85가 나와요",
+              "fail": "`player1_hp`의 마지막 값을 `print()`로 출력해 보세요."
+            }
+          ],
+          "hints": [
+            "SyntaxError는 파이썬이 코드를 읽다가 규칙에 어긋난 곳을 찾았다는 뜻이에요. 표시된 줄의 이름을 살펴보세요.",
+            "이름은 숫자로 시작할 수 없어요. 숫자는 이름의 가운데나 끝에는 써도 돼요.",
+            "`1p_hp`를 모두 `player1_hp`로 바꿔 보세요. 그러면 `player1_hp = player1_hp + 25`가 60에 25를 더한 85를 다시 담아요."
+          ],
+          "solution": "# 1번 플레이어의 체력\nplayer1_hp = 60\n\n# 포션으로 25 회복!\nplayer1_hp = player1_hp + 25\nprint(player1_hp)\n"
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "label": "음악",
+      "exercises": [
+        {
+          "id": "music-1",
+          "level": 1,
+          "title": "플레이리스트 재생 시간",
+          "focus": "변수끼리 곱해서 새 변수에 담고 출력하기",
+          "prompt": "210초짜리 노래 12곡으로 플레이리스트를 만들었어요. 모두 들으려면 몇 초가 걸릴까요? `total_seconds`에 담고 출력해 보세요. 2520을 직접 쓰지 말고 `song_seconds`와 `songs`를 곱해서 구해요.",
+          "starter": "# 한 곡의 길이(초)와 곡 수\nsong_seconds = 210\nsongs = 12\n\n# 이 줄을 고쳐 보세요\ntotal_seconds = 0\nprint(total_seconds)\n",
+          "checks": [
+            {
+              "type": "assert",
+              "code": "assert total_seconds == 2520",
+              "label": "`total_seconds`에 2520이 들어 있어요",
+              "fail": "지금 `total_seconds`에 든 값이 2520이 아니에요. 곱하기는 `*` 기호로 해요."
+            },
+            {
+              "type": "assert",
+              "code": "assert _uses('total_seconds', 'song_seconds', 'songs')",
+              "label": "`song_seconds`와 `songs`로 계산했어요",
+              "fail": "`total_seconds =` 오른쪽에 `song_seconds`와 `songs`가 함께 들어가야 해요. 그래야 곡을 더 넣어도 코드가 알아서 다시 계산해요."
+            },
+            {
+              "type": "stdout",
+              "expect": "2520",
+              "label": "화면에 2520이 나와요",
+              "fail": "`total_seconds`의 값을 `print()`로 한 번 출력해 보세요."
+            }
+          ],
+          "hints": [
+            "파이썬에서 곱하기는 `*` 기호로 해요. 숫자뿐 아니라 변수끼리도 곱할 수 있어요.",
+            "`total_seconds = 0`의 오른쪽 0을 `song_seconds`와 `songs`를 곱하는 식으로 바꿔 보세요.",
+            "`total_seconds = song_seconds * songs`라고 쓰면 돼요. 그러면 아래 줄의 `print(total_seconds)`가 2520을 보여 줘요."
+          ],
+          "solution": "# 한 곡의 길이(초)와 곡 수\nsong_seconds = 210\nsongs = 12\n\n# 두 값을 곱해서 담아요\ntotal_seconds = song_seconds * songs\nprint(total_seconds)\n"
+        },
+        {
+          "id": "music-2",
+          "level": 2,
+          "title": "재생 횟수 늘리기",
+          "focus": "이름에는 글자·숫자·밑줄만 쓰는 규칙과 snake_case, 같은 이름에 새 값 다시 담기",
+          "prompt": "좋아하는 노래를 아침에 4번 듣고, 저녁에 3번 더 들었어요. 그런데 아래 코드는 이름에 빼기 기호(-)가 들어가서 실행되지 않아요. 이름을 snake_case인 `play_count`로 고치고, 늘어난 횟수를 같은 이름에 다시 담아 출력해 보세요.",
+          "starter": "# 아침에 들은 횟수\nplay-count = 4\n\n# 저녁에 3번 더 들었어요\nplay-count = play-count + 3\nprint(play-count)\n",
+          "checks": [
+            {
+              "type": "assert",
+              "code": "assert _assigns('play_count') >= 2 and _uses('play_count', 'play_count')",
+              "label": "원래 횟수에 3을 더해 다시 담았어요",
+              "fail": "`play_count`의 원래 값에 3을 더한 결과를 `play_count`에 다시 담아 보세요. 7을 직접 쓰지 않아요."
+            },
+            {
+              "type": "assert",
+              "code": "assert play_count == 7",
+              "label": "`play_count`에 7이 들어 있어요",
+              "fail": "`play_count`의 마지막 값이 7이 아니에요. 4에서 시작해 3을 더했는지 확인해 보세요."
+            },
+            {
+              "type": "stdout",
+              "expect": "7",
+              "label": "화면에 7이 나와요",
+              "fail": "`play_count`의 마지막 값을 `print()`로 출력해 보세요."
+            }
+          ],
+          "hints": [
+            "SyntaxError가 난 줄을 보세요. 파이썬은 `play-count`를 `play` 빼기 `count`로 읽어요.",
+            "이름에는 글자, 숫자, 밑줄(_)만 쓸 수 있어요. 두 단어를 이을 때는 밑줄을 써요.",
+            "`play-count`를 모두 `play_count`로 바꿔 보세요. 그러면 `play_count = play_count + 3`이 4에 3을 더한 7을 다시 담아요."
+          ],
+          "solution": "# 아침에 들은 횟수\nplay_count = 4\n\n# 저녁에 3번 더 들었어요\nplay_count = play_count + 3\nprint(play_count)\n"
+        }
+      ]
+    },
+    {
+      "id": "travel",
+      "label": "여행",
+      "exercises": [
+        {
+          "id": "travel-1",
+          "level": 1,
+          "title": "숙박비 계산하기",
+          "focus": "변수끼리 곱해서 새 변수에 담고 출력하기",
+          "prompt": "여행지 숙소가 하룻밤에 85000원이에요. 4박을 묵으면 숙박비는 모두 얼마일까요? `hotel_total`에 담고 출력해 보세요. 340000을 직접 쓰지 말고 `per_night`와 `nights`를 곱해서 구해요.",
+          "starter": "# 하룻밤 숙박비와 묵을 밤 수\nper_night = 85000\nnights = 4\n\n# 이 줄을 고쳐 보세요\nhotel_total = 0\nprint(hotel_total)\n",
+          "checks": [
+            {
+              "type": "assert",
+              "code": "assert hotel_total == 340000",
+              "label": "`hotel_total`에 340000이 들어 있어요",
+              "fail": "지금 `hotel_total`에 든 값이 340000이 아니에요. 곱하기는 `*` 기호로 해요."
+            },
+            {
+              "type": "assert",
+              "code": "assert _uses('hotel_total', 'per_night', 'nights')",
+              "label": "`per_night`와 `nights`로 계산했어요",
+              "fail": "`hotel_total =` 오른쪽에 `per_night`와 `nights`가 함께 들어가야 해요. 그래야 며칠 더 묵어도 코드가 알아서 다시 계산해요."
+            },
+            {
+              "type": "stdout",
+              "expect": "340000",
+              "label": "화면에 340000이 나와요",
+              "fail": "`hotel_total`의 값을 `print()`로 한 번 출력해 보세요."
+            }
+          ],
+          "hints": [
+            "파이썬에서 곱하기는 `*` 기호로 해요. 숫자뿐 아니라 변수끼리도 곱할 수 있어요.",
+            "`hotel_total = 0`의 오른쪽 0을 `per_night`와 `nights`를 곱하는 식으로 바꿔 보세요.",
+            "`hotel_total = per_night * nights`라고 쓰면 돼요. 그러면 아래 줄의 `print(hotel_total)`이 340000을 보여 줘요."
+          ],
+          "solution": "# 하룻밤 숙박비와 묵을 밤 수\nper_night = 85000\nnights = 4\n\n# 두 값을 곱해서 담아요\nhotel_total = per_night * nights\nprint(hotel_total)\n"
+        },
+        {
+          "id": "travel-2",
+          "level": 2,
+          "title": "남은 여행 예산",
+          "focus": "대문자와 소문자를 구분하는 이름 규칙과 snake_case, 같은 이름에 새 값 다시 담기",
+          "prompt": "여행 예산 500000원 가운데 45000원을 기념품에 썼어요. 그런데 아래 코드는 이름이 제각각이라 오류가 나요. 이름을 snake_case인 `travel_budget` 하나로 맞추고, 기념품 값을 뺀 남은 예산을 같은 이름에 다시 담아 출력해 보세요.",
+          "starter": "# 여행 예산과 기념품 값\nTravelBudget = 500000\nsouvenir = 45000\n\n# 기념품 값을 빼고 남은 예산\ntravelbudget = TravelBudget - souvenir\nprint(Travelbudget)\n",
+          "checks": [
+            {
+              "type": "assert",
+              "code": "assert not [name for name in _names if name != name.lower()]",
+              "label": "이름을 모두 소문자 snake_case로 썼어요",
+              "fail": "대문자가 들어간 이름이 남아 있어요. 파이썬에서는 `travel_budget`처럼 소문자와 밑줄(_)로 이름을 지어요."
+            },
+            {
+              "type": "assert",
+              "code": "assert _assigns('travel_budget') >= 2 and _uses('travel_budget', 'travel_budget', 'souvenir')",
+              "label": "예산에서 기념품 값을 빼서 다시 담았어요",
+              "fail": "`travel_budget`의 원래 값에서 `souvenir`를 뺀 결과를 `travel_budget`에 다시 담아 보세요. 455000을 직접 쓰지 않아요."
+            },
+            {
+              "type": "assert",
+              "code": "assert travel_budget == 455000",
+              "label": "`travel_budget`에 455000이 들어 있어요",
+              "fail": "`travel_budget`의 마지막 값이 455000이 아니에요. 500000에서 `souvenir`를 뺐는지 확인해 보세요."
+            },
+            {
+              "type": "stdout",
+              "expect": "455000",
+              "label": "화면에 455000이 나와요",
+              "fail": "`travel_budget`의 마지막 값을 `print()`로 출력해 보세요."
+            }
+          ],
+          "hints": [
+            "NameError는 그런 이름을 찾을 수 없다는 뜻이에요. 오류가 난 줄의 이름과 위에서 만든 이름을 한 글자씩 비교해 보세요.",
+            "`TravelBudget`, `travelbudget`, `Travelbudget`은 파이썬에게 모두 다른 이름이에요. 하나의 이름 `travel_budget`으로 맞춰요.",
+            "세 이름을 모두 `travel_budget`으로 바꿔 보세요. 그러면 `travel_budget = travel_budget - souvenir`가 남은 예산 455000을 다시 담아요."
+          ],
+          "solution": "# 여행 예산과 기념품 값\ntravel_budget = 500000\nsouvenir = 45000\n\n# 기념품 값을 빼고 남은 예산\ntravel_budget = travel_budget - souvenir\nprint(travel_budget)\n"
+        }
+      ]
+    }
+  ]
+}

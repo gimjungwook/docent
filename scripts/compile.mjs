@@ -5,6 +5,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { renderFigure } from "../src/components/figures/index.js";
+import { motifSVG } from "../src/components/intro/motifs.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const rel = (...p) => path.join(ROOT, ...p);
@@ -18,6 +20,9 @@ const HOLD = { sentence: 280, paragraph: 520, pop: 300, burst: 900, flip: 800, r
   checkpointBefore: 450, checkpointAfter: 900, outroBefore: 1700, outroAfter: 1400 };
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+// Final-state artwork inlined for readers without JavaScript; prime() swaps in the live versions.
+const plate = (motif) => { try { return '<div class="intro-plate"><div class="intro-plate-in">' + motifSVG(motif) + "</div></div>"; } catch { return ""; } };
+const figureArt = (name, step) => { try { return renderFigure(name, step); } catch { return ""; } };
 
 // ---------- parsing ----------
 function parseFrontMatter(src) {
@@ -225,7 +230,7 @@ function compileLesson(id, course) {
       const s = segments[segments.length - 1];
       s.pauseBefore = HOLD.introBefore; s.pauseAfter = HOLD.introAfter;
       s.cues.unshift({ unit: 0, fx: "intro", target: "intro", lead: HOLD.introBefore });
-      html.push('<section class="blk intro" id="intro" data-fx="intro" data-motif="' + esc(meta.motif || "generic") + '">\n  <div class="intro-stage" aria-hidden="true"></div>\n  <div class="intro-copy">\n    <p class="intro-course">' + esc(course.title) + '</p>\n    <p class="intro-number">' + String(meta.number).padStart(2, "0") + '</p>\n    <h1 class="intro-title">' + esc(meta.title) + '</h1>\n    <p class="intro-subtitle">' + esc(meta.subtitle) + '</p>\n    <p class="intro-voice" hidden>' + segHtml + "</p>\n  </div>\n</section>");
+      html.push('<section class="blk intro" id="intro" data-fx="intro" data-motif="' + esc(meta.motif || "generic") + '">\n  <div class="intro-stage" aria-hidden="true">' + plate(meta.motif || "generic") + '</div>\n  <div class="intro-copy">\n    <p class="intro-course">' + esc(course.title) + '</p>\n    <p class="intro-number">' + String(meta.number).padStart(2, "0") + '</p>\n    <h1 class="intro-title">' + esc(meta.title) + '</h1>\n    <p class="intro-subtitle">' + esc(meta.subtitle) + '</p>\n    <p class="intro-voice" hidden>' + segHtml + "</p>\n  </div>\n</section>");
       ids.add("intro");
     } else if (b.type === "chapter") {
       if (chapter && ctx.chapterBursts > 1) fail(chapter.id + ": more than one [burst] in a chapter");
@@ -253,7 +258,7 @@ function compileLesson(id, course) {
       ids.add(b.id);
     } else if (b.type === "figure") {
       const from = Number(b.attrs.from ?? 0), to = Number(b.attrs.to ?? from);
-      html.push('<figure class="blk figure" id="' + b.id + '" data-fx="step" data-figure="' + esc(b.figure) + '" data-from="' + from + '" data-to="' + to + '">\n  <div class="figure-stage" aria-hidden="true"></div>\n  <figcaption>' + inlineStatic(b.caption) + "</figcaption>\n</figure>");
+      html.push('<figure class="blk figure" id="' + b.id + '" data-fx="step" data-figure="' + esc(b.figure) + '" data-from="' + from + '" data-to="' + to + '">\n  <div class="figure-stage" aria-hidden="true">' + figureArt(b.figure, to) + '</div>\n  <figcaption>' + inlineStatic(b.caption) + "</figcaption>\n</figure>");
       ids.add(b.id);
     } else if (b.type === "tip") {
       const tid = "tip" + ++tipN;
@@ -331,11 +336,20 @@ function topbar(base, crumb) {
   return '<header class="topbar">\n  <button class="topbar-menu" type="button" aria-controls="sidebar" aria-expanded="false"><span class="sr-only">목차 열기</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>\n  <a class="brand" href="' + base + 'index.html"><span class="brand-mark" aria-hidden="true">&gt;&gt;&gt;</span><span class="brand-name">Docent</span></a>\n  ' + (crumb || "") + '\n  <button class="topbar-taste" type="button" aria-haspopup="dialog" aria-expanded="false">시안 비교</button>\n</header>';
 }
 
+function voiceNote(id) {
+  const t = timingsFor(id);
+  if (!t || !t.voice) return "";
+  const v = t.voice;
+  if (v.provider === "say") return '<p class="voice-note">이 음성은 로컬 확인용 임시 음성이에요.</p>';
+  const model = v.model === "supertonic-3" ? "Supertonic 3" : v.model;
+  return '<p class="voice-note">이 레슨의 음성은 AI로 합성했어요. 음성 모델: ' + esc(model) + ".</p>";
+}
+
 function renderLesson(compiled, course) {
   const { lesson, body } = compiled;
   const crumb = '<p class="topbar-crumb"><a href="../index.html">' + esc(course.title) + '</a><span aria-hidden="true">/</span><span>' + lesson.number + ". " + esc(lesson.title) + "</span></p>";
   return HEAD(lesson.title + " — " + course.title + " · Docent", "../", lesson.subtitle) +
-    '<body class="page-lesson" data-lesson="' + lesson.id + '" data-base="../">\n<a class="skip-link" href="#lesson">본문으로 건너뛰기</a>\n' + topbar("../", crumb) + '\n<div class="shell">\n' + sidebar(course, lesson.id, lesson.chapters) + '\n<main class="lesson" id="lesson">\n' + body + '\n</main>\n</div>\n<script type="module" src="../src/app.js"></script>\n</body>\n</html>\n';
+    '<body class="page-lesson" data-lesson="' + lesson.id + '" data-base="../">\n<a class="skip-link" href="#lesson">본문으로 건너뛰기</a>\n' + topbar("../", crumb) + '\n<div class="shell">\n' + sidebar(course, lesson.id, lesson.chapters) + '\n<main class="lesson" id="lesson">\n' + body + '\n<footer class="lesson-footer">' + voiceNote(lesson.id) + '<p>코드 예시의 실행 결과는 레슨을 만들 때 파이썬으로 실제로 실행해서 채웠어요.</p></footer>\n</main>\n</div>\n<script type="module" src="../src/app.js"></script>\n</body>\n</html>\n';
 }
 
 function renderCourse(course, compiledById) {
@@ -344,16 +358,18 @@ function renderCourse(course, compiledById) {
     const t = timingsFor(l.id);
     const dur = t ? fmtMin(t.duration) : c ? "약 " + fmtMin(c.lesson.stats.estimatedSeconds) : "";
     const ready = l.status === "ready" && c;
-    const inner = '<span class="toc-motif" data-motif="' + esc(l.motif) + '" aria-hidden="true"></span>\n      <span class="toc-number">레슨 ' + l.number + '</span>\n      <strong class="toc-title">' + esc(l.title) + '</strong>\n      <span class="toc-subtitle">' + esc(l.subtitle) + '</span>\n      <span class="toc-meta">' + (ready ? (c.lesson.chapters.length + "개 장 · " + dur) : "준비 중") + "</span>";
+    let art = "";
+    try { art = motifSVG(l.motif); } catch {}
+    const inner = '<span class="toc-motif" data-motif="' + esc(l.motif) + '" aria-hidden="true">' + art + '</span>\n      <span class="toc-number">레슨 ' + l.number + '</span>\n      <strong class="toc-title">' + esc(l.title) + '</strong>\n      <span class="toc-subtitle">' + esc(l.subtitle) + '</span>\n      <span class="toc-meta">' + (ready ? (c.lesson.chapters.length + "개 장 · " + dur) : "준비 중") + "</span>";
     return ready ? '    <li><a class="toc-card" href="lessons/' + l.id + '.html">\n      ' + inner + "\n    </a></li>" : '    <li><div class="toc-card is-planned" aria-disabled="true">\n      ' + inner + "\n    </div></li>";
   }).join("\n");
   const first = course.lessons.find((l) => l.status === "ready");
   return HEAD(course.title + " · Docent", "", course.subtitle) +
     '<body class="page-course" data-base="">\n<a class="skip-link" href="#course">본문으로 건너뛰기</a>\n' + topbar("", "") + '\n<main class="course" id="course">\n' +
-    '<section class="blk intro intro-course-hero" id="intro" data-fx="intro" data-motif="generic">\n  <div class="intro-stage" aria-hidden="true"></div>\n  <div class="intro-copy">\n    <p class="intro-course">Docent 코스</p>\n    <p class="intro-number">입문</p>\n    <h1 class="intro-title">' + esc(course.title) + '</h1>\n    <p class="intro-subtitle">' + esc(course.subtitle) + '</p>\n  </div>\n</section>\n\n' +
+    '<section class="blk intro intro-course-hero" id="intro" data-fx="intro" data-motif="generic">\n  <div class="intro-stage" aria-hidden="true">' + plate("generic") + '</div>\n  <div class="intro-copy">\n    <p class="intro-course">Docent 코스</p>\n    <p class="intro-number">입문</p>\n    <h1 class="intro-title">' + esc(course.title) + '</h1>\n    <p class="intro-subtitle">' + esc(course.subtitle) + '</p>\n  </div>\n</section>\n\n' +
     '<section class="course-start">\n  <div class="course-start-copy">\n    <p class="course-lead">글로 읽으면 교과서처럼, 재생 버튼을 누르면 옆에서 설명해 주는 강의처럼 봅니다. 레슨이 끝나면 내 관심사에 맞춘 문제로 직접 연습해요.</p>\n    ' + (first ? '<a class="btn btn-primary" href="lessons/' + first.id + '.html">첫 레슨 시작하기</a>' : "") + '\n  </div>\n</section>\n\n' +
     '<section class="course-toc" aria-labelledby="toc-heading">\n  <div class="course-toc-head"><h2 id="toc-heading">레슨</h2><p>' + course.lessons.length + '개 중 ' + course.lessons.filter((l) => l.status === "ready").length + '개 공개</p></div>\n  <ol class="toc-track">\n' + cards + '\n  </ol>\n</section>\n\n' +
-    '<section class="course-how" aria-labelledby="how-heading">\n  <h2 id="how-heading">이렇게 공부해요</h2>\n  <ol class="how-list">\n    <li><strong>읽기</strong><span>스크롤하며 읽으면 그림과 코드가 필요한 자리에서 한 번씩 움직여요.</span></li>\n    <li><strong>듣기</strong><span>재생 버튼을 누르면 음성이 설명하고, 화면이 지금 읽는 곳을 따라가요. 언제든 직접 스크롤해도 돼요.</span></li>\n    <li><strong>해 보기</strong><span>레슨 끝에서 관심 있는 주제를 고르면 그 주제로 된 문제를 브라우저에서 바로 풀어요.</span></li>\n  </ol>\n</section>\n</main>\n<footer class="site-footer"><p>Docent · 파이썬 첫걸음 시안 · 2026</p></footer>\n<script type="module" src="src/app.js"></script>\n</body>\n</html>\n';
+    '<section class="course-how" aria-labelledby="how-heading">\n  <h2 id="how-heading">이렇게 공부해요</h2>\n  <ol class="how-list">\n    <li><strong>읽기</strong><span>스크롤하며 읽으면 그림과 코드가 필요한 자리에서 한 번씩 움직여요.</span></li>\n    <li><strong>듣기</strong><span>재생 버튼을 누르면 음성이 설명하고, 화면이 지금 읽는 곳을 따라가요. 언제든 직접 스크롤해도 돼요.</span></li>\n    <li><strong>해 보기</strong><span>레슨 끝에서 관심 있는 주제를 고르면 그 주제로 된 문제를 브라우저에서 바로 풀어요.</span></li>\n  </ol>\n</section>\n</main>\n<footer class="site-footer"><p>Docent · 파이썬 첫걸음 시안 · 2026 · 레슨 음성은 AI로 합성했어요.</p></footer>\n<script type="module" src="src/app.js"></script>\n</body>\n</html>\n';
 }
 
 // ---------- main ----------
