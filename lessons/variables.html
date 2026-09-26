@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>변수 — 파이썬 첫걸음 · Docent</title>
+<meta name="description" content="값에 이름표 붙이기">
+<meta name="theme-color" content="#0b0d12">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles/tokens.css">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/layout.css">
+<link rel="stylesheet" href="../styles/components.css">
+<link rel="stylesheet" href="../styles/engine.css">
+<link rel="stylesheet" href="../styles/practice.css">
+</head>
+<body class="page-lesson" data-lesson="variables" data-base="../">
+<a class="skip-link" href="#lesson">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="topbar-menu" type="button" aria-controls="sidebar" aria-expanded="false"><span class="sr-only">목차 열기</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+  <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">&gt;&gt;&gt;</span><span class="brand-name">Docent</span></a>
+  <p class="topbar-crumb"><a href="../index.html">파이썬 첫걸음</a><span aria-hidden="true">/</span><span>1. 변수</span></p>
+  <button class="topbar-taste" type="button" aria-haspopup="dialog" aria-expanded="false">시안 비교</button>
+</header>
+<div class="shell">
+<nav class="sidebar" id="sidebar" aria-label="코스 목차">
+  <a class="sidebar-course" href="../index.html">파이썬 첫걸음</a>
+  <ol class="sidebar-lessons">
+    <li class="is-current"><a href="variables.html" aria-current="page"><span class="n">1</span>변수</a>
+      <ol class="sidebar-chapters">
+        <li><a href="#ch1" data-chapter="ch1">값을 기억해야 할 때</a></li>
+        <li><a href="#ch2" data-chapter="ch2">이름표 붙이기</a></li>
+        <li><a href="#ch3" data-chapter="ch3">이름표 옮겨 붙이기</a></li>
+        <li><a href="#ch4" data-chapter="ch4">이름표끼리 계산하기</a></li>
+        <li><a href="#ch5" data-chapter="ch5">좋은 이름 짓기</a></li>
+        <li><a href="#practice" data-chapter="practice">직접 해 보기</a></li>
+      </ol>
+    </li>
+    <li class="is-planned"><span class="sidebar-planned"><span class="n">2</span>조건문<em>준비 중</em></span></li>
+    <li class="is-planned"><span class="sidebar-planned"><span class="n">3</span>반복문<em>준비 중</em></span></li>
+    <li class="is-planned"><span class="sidebar-planned"><span class="n">4</span>리스트<em>준비 중</em></span></li>
+  </ol>
+</nav>
+<main class="lesson" id="lesson">
+<section class="blk intro" id="intro" data-fx="intro" data-motif="tag">
+  <div class="intro-stage" aria-hidden="true"></div>
+  <div class="intro-copy">
+    <p class="intro-course">파이썬 첫걸음</p>
+    <p class="intro-number">01</p>
+    <h1 class="intro-title">변수</h1>
+    <p class="intro-subtitle">값에 이름표 붙이기</p>
+    <p class="intro-voice" hidden><span class="seg" data-seg="s1"><span class="u" id="s1-u0">파이썬</span> <span class="u" id="s1-u1">첫걸음,</span> <span class="u" id="s1-u2">첫</span> <span class="u" id="s1-u3">번째</span> <span class="u" id="s1-u4">레슨.</span> <span class="u" id="s1-u5">변수.</span></span></p>
+  </div>
+</section>
+
+<section class="blk chapter" id="ch1" data-fx="chapter" data-index="1">
+  <p class="chapter-index" aria-hidden="true">1</p>
+  <h2 class="chapter-title"><span class="seg" data-seg="s2"><span class="u" id="s2-u0">값을</span> <span class="u" id="s2-u1">기억해야</span> <span class="u" id="s2-u2">할</span> <span class="u" id="s2-u3">때</span></span></h2>
+</section>
+
+<p class="blk para" id="p1"><span class="seg" data-seg="s3"><span class="u" id="s3-u0">카페에서</span> <span class="u" id="s3-u1">커피</span> <span class="u" id="s3-u2">세</span> <span class="u" id="s3-u3">잔</span> <span class="u" id="s3-u4">값을</span> <span class="u" id="s3-u5">계산한다고</span> <span class="u" id="s3-u6">해</span> <span class="u" id="s3-u7">볼게요.</span></span> <span class="seg" data-seg="s4"><span class="u" id="s4-u0">한</span> <span class="u" id="s4-u1">잔에</span> <span class="u" id="s4-u2">4,500원이에요.</span></span></p>
+
+<figure class="blk code" id="c1" data-fx="run" data-lines="1">
+  <pre><code><span class="ln" data-line="1">print(4500 * 3)</span></code></pre>
+  <div class="out" aria-label="실행 결과"><span class="out-line" data-from="1">13500</span></div>
+</figure>
+
+<p class="blk para" id="p2"><span class="seg" data-seg="s5"><span class="u" id="s5-u0"><code class="ic">print</code>는</span> <span class="u" id="s5-u1">괄호</span> <span class="u" id="s5-u2">안의</span> <span class="u" id="s5-u3">값을</span> <span class="u" id="s5-u4">계산해서</span> <span class="u" id="s5-u5">화면에</span> <span class="u" id="s5-u6">보여</span> <span class="u" id="s5-u7">주는</span> <span class="u" id="s5-u8">명령이에요.</span></span> <span class="seg" data-seg="s6"><span class="u" id="s6-u0">그래서</span> <span class="u" id="s6-u1">13500이</span> <span class="u" id="s6-u2">나와요.</span></span></p>
+
+<p class="blk para" id="p3"><span class="seg" data-seg="s7"><span class="u" id="s7-u0">그런데</span> <span class="u" id="s7-u1">내일부터</span> <span class="u" id="s7-u2">한</span> <span class="u" id="s7-u3">잔에</span> <span class="u" id="s7-u4">5,000원으로</span> <span class="u" id="s7-u5">오른다면</span> <span class="u" id="s7-u6">어떨까요?</span></span> <span class="seg" data-seg="s8"><span class="u" id="s8-u0">이</span> <span class="u" id="s8-u1">숫자가</span> <span class="u" id="s8-u2">들어간</span> <span class="u" id="s8-u3">곳을</span> <span class="u" id="s8-u4">전부</span> <span class="u" id="s8-u5">찾아서</span> <span class="u" id="s8-u6">고쳐야</span> <span class="u" id="s8-u7">해요.</span></span> <span class="seg" data-seg="s9"><span class="u" id="s9-u0">코드가</span> <span class="u" id="s9-u1">길어질수록</span> <span class="u" id="s9-u2">한</span> <span class="u" id="s9-u3">군데쯤은</span> <span class="u" id="s9-u4">놓치기</span> <span class="u" id="s9-u5">쉽죠.</span></span></p>
+
+<p class="blk para" id="p4"><span class="seg" data-seg="s10"><span class="u" id="s10-u0">그래서</span> <span class="u" id="s10-u1">값에</span> <span class="u" id="s10-u2">이름을</span> <span class="u" id="s10-u3">붙여</span> <span class="u" id="s10-u4">두고,</span> <span class="u" id="s10-u5">필요할</span> <span class="u" id="s10-u6">때</span> <span class="u" id="s10-u7">이름으로</span> <span class="u" id="s10-u8">부르기로</span> <span class="u" id="s10-u9">해요.</span></span></p>
+
+<section class="blk chapter" id="ch2" data-fx="chapter" data-index="2">
+  <p class="chapter-index" aria-hidden="true">2</p>
+  <h2 class="chapter-title"><span class="seg" data-seg="s11"><span class="u" id="s11-u0">이름표</span> <span class="u" id="s11-u1">붙이기</span></span></h2>
+</section>
+
+<p class="blk para" id="p5"><span class="seg" data-seg="s12"><span class="u" id="s12-u0">파이썬에서는</span> <span class="u" id="s12-u1">등호로</span> <span class="u" id="s12-u2">값에</span> <span class="u" id="s12-u3">이름을</span> <span class="u" id="s12-u4">붙여요.</span></span></p>
+
+<figure class="blk code" id="c2" data-fx="run" data-lines="2">
+  <pre><code><span class="ln" data-line="1">price = 4500</span>
+<span class="ln" data-line="2">print(price * 3)</span></code></pre>
+  <div class="out" aria-label="실행 결과"><span class="out-line" data-from="2">13500</span></div>
+</figure>
+
+<p class="blk para" id="p6"><span class="seg" data-seg="s13"><span class="u" id="s13-u0"><code class="ic">price = 4500</code>은</span> <span class="u" id="s13-u1">4500이라는</span> <span class="u" id="s13-u2">값에</span> <span class="u" id="s13-u3"><code class="ic">price</code>라는</span> <span class="u" id="s13-u4"><span class="fx-pop" data-fx="pop" id="s13-u4-pop">이름표</span>를</span> <span class="u" id="s13-u5">붙이라는</span> <span class="u" id="s13-u6">뜻이에요.</span></span></p>
+
+<figure class="blk figure" id="f1" data-fx="step" data-figure="name-tag" data-from="0" data-to="1">
+  <div class="figure-stage" aria-hidden="true"></div>
+  <figcaption>price 이름표가 4500이 든 상자에 붙어요.</figcaption>
+</figure>
+
+<p class="blk para" id="p7"><span class="seg" data-seg="s14"><span class="u" id="s14-u0">이제</span> <span class="u" id="s14-u1"><code class="ic">price</code>라고</span> <span class="u" id="s14-u2">부르면</span> <span class="u" id="s14-u3">이름표가</span> <span class="u" id="s14-u4">붙은</span> <span class="u" id="s14-u5">값이</span> <span class="u" id="s14-u6">나와요.</span></span> <span class="seg" data-seg="s15"><span class="u" id="s15-u0">그래서</span> <span class="u" id="s15-u1"><code class="ic">price * 3</code>은</span> <span class="u" id="s15-u2">13500이에요.</span></span></p>
+
+<p class="blk para" id="p8"><span class="seg" data-seg="s16"><span class="u" id="s16-u0">여기서</span> <span class="u" id="s16-u1">등호는</span> <span class="u" id="s16-u2">수학의</span> <span class="u" id="s16-u3">같다가</span> <span class="u" id="s16-u4">아니에요.</span></span> <span class="seg" data-seg="s17"><span class="u" id="s17-u0">오른쪽</span> <span class="u" id="s17-u1">값에</span> <span class="u" id="s17-u2">왼쪽</span> <span class="u" id="s17-u3">이름을</span> <span class="u" id="s17-u4"><span class="fx-pop" data-fx="pop" id="s17-u4-pop">붙인다</span>는</span> <span class="u" id="s17-u5">뜻이에요.</span></span></p>
+
+<section class="blk chapter" id="ch3" data-fx="chapter" data-index="3">
+  <p class="chapter-index" aria-hidden="true">3</p>
+  <h2 class="chapter-title"><span class="seg" data-seg="s18"><span class="u" id="s18-u0">이름표</span> <span class="u" id="s18-u1">옮겨</span> <span class="u" id="s18-u2">붙이기</span></span></h2>
+</section>
+
+<p class="blk para" id="p9"><span class="seg" data-seg="s19"><span class="u" id="s19-u0">가격이</span> <span class="u" id="s19-u1">올랐으니</span> <span class="u" id="s19-u2">이름표를</span> <span class="u" id="s19-u3">새</span> <span class="u" id="s19-u4">값으로</span> <span class="u" id="s19-u5">옮겨</span> <span class="u" id="s19-u6">붙여</span> <span class="u" id="s19-u7">볼게요.</span></span></p>
+
+<figure class="blk code" id="c3" data-fx="run" data-lines="3">
+  <pre><code><span class="ln" data-line="1">price = 4500</span>
+<span class="ln" data-line="2">price = 5000</span>
+<span class="ln" data-line="3">print(price * 3)</span></code></pre>
+  <div class="out" aria-label="실행 결과"><span class="out-line" data-from="3">15000</span></div>
+</figure>
+
+<p class="blk para" id="p10"><span class="seg" data-seg="s20"><span class="u" id="s20-u0">같은</span> <span class="u" id="s20-u1">이름에</span> <span class="u" id="s20-u2">다시</span> <span class="u" id="s20-u3">등호를</span> <span class="u" id="s20-u4">쓰면,</span> <span class="u" id="s20-u5">이름표가</span> <span class="u" id="s20-u6">4500에서</span> <span class="u" id="s20-u7">떨어져</span> <span class="u" id="s20-u8">5000으로</span> <span class="u" id="s20-u9">옮겨</span> <span class="u" id="s20-u10">가요.</span></span></p>
+
+<figure class="blk figure" id="f2" data-fx="step" data-figure="name-tag" data-from="1" data-to="2">
+  <div class="figure-stage" aria-hidden="true"></div>
+  <figcaption>price 이름표가 5000으로 옮겨 가요. 이름이 없어진 4500은 더 이상 부를 수 없어요.</figcaption>
+</figure>
+
+<p class="blk para" id="p11"><span class="seg" data-seg="s21"><span class="u" id="s21-u0">실행하면</span> <span class="u" id="s21-u1">15000이</span> <span class="u" id="s21-u2">나와요.</span></span> <span class="seg" data-seg="s22"><span class="u" id="s22-u0">계산하는</span> <span class="u" id="s22-u1">줄은</span> <span class="u" id="s22-u2">한</span> <span class="u" id="s22-u3">글자도</span> <span class="u" id="s22-u4">고치지</span> <span class="u" id="s22-u5">않았는데,</span> <span class="u" id="s22-u6" data-fx="burst">결과가</span> <span class="u" id="s22-u7">알아서</span> <span class="u" id="s22-u8">바뀌었어요!</span></span></p>
+
+<section class="blk checkpoint" id="checkpoint" data-fx="checkpoint" data-progress="0.52">
+  <div class="checkpoint-ring" aria-hidden="true"></div>
+  <p class="checkpoint-text"><span class="seg" data-seg="s23"><span class="u" id="s23-u0">여기까지</span> <span class="u" id="s23-u1">잘</span> <span class="u" id="s23-u2">따라왔어요.</span></span> <span class="seg" data-seg="s24"><span class="u" id="s24-u0">이름표를</span> <span class="u" id="s24-u1">붙이고</span> <span class="u" id="s24-u2">옮겨</span> <span class="u" id="s24-u3">붙이는</span> <span class="u" id="s24-u4">것까지</span> <span class="u" id="s24-u5">배웠어요.</span></span></p>
+</section>
+
+<section class="blk chapter" id="ch4" data-fx="chapter" data-index="4">
+  <p class="chapter-index" aria-hidden="true">4</p>
+  <h2 class="chapter-title"><span class="seg" data-seg="s25"><span class="u" id="s25-u0">이름표끼리</span> <span class="u" id="s25-u1">계산하기</span></span></h2>
+</section>
+
+<p class="blk para" id="p12"><span class="seg" data-seg="s26"><span class="u" id="s26-u0">이름표는</span> <span class="u" id="s26-u1">몇</span> <span class="u" id="s26-u2">개든</span> <span class="u" id="s26-u3">붙일</span> <span class="u" id="s26-u4">수</span> <span class="u" id="s26-u5">있어요.</span></span> <span class="seg" data-seg="s27"><span class="u" id="s27-u0">잔</span> <span class="u" id="s27-u1">수에도</span> <span class="u" id="s27-u2">이름을</span> <span class="u" id="s27-u3">붙여</span> <span class="u" id="s27-u4">볼게요.</span></span></p>
+
+<figure class="blk code" id="c4" data-fx="run" data-lines="4">
+  <pre><code><span class="ln" data-line="1">price = 5000</span>
+<span class="ln" data-line="2">count = 3</span>
+<span class="ln" data-line="3">total = price * count</span>
+<span class="ln" data-line="4">print(total)</span></code></pre>
+  <div class="out" aria-label="실행 결과"><span class="out-line" data-from="4">15000</span></div>
+</figure>
+
+<p class="blk para" id="p13"><span class="seg" data-seg="s28"><span class="u" id="s28-u0">잔</span> <span class="u" id="s28-u1">수</span> <span class="u" id="s28-u2">3에는</span> <span class="u" id="s28-u3"><code class="ic">count</code>라는</span> <span class="u" id="s28-u4">이름표를</span> <span class="u" id="s28-u5">붙였어요.</span></span> <span class="seg" data-seg="s29"><span class="u" id="s29-u0">그리고</span> <span class="u" id="s29-u1"><code class="ic">price * count</code>로</span> <span class="u" id="s29-u2">계산한</span> <span class="u" id="s29-u3">새</span> <span class="u" id="s29-u4">값에는</span> <span class="u" id="s29-u5"><code class="ic">total</code>이라는</span> <span class="u" id="s29-u6">이름표를</span> <span class="u" id="s29-u7">붙였죠.</span></span></p>
+
+<figure class="blk figure" id="f3" data-fx="step" data-figure="name-tag" data-from="2" data-to="4">
+  <div class="figure-stage" aria-hidden="true"></div>
+  <figcaption>count와 total 이름표가 생겼어요. total은 price와 count를 곱한 값에 붙어요.</figcaption>
+</figure>
+
+<p class="blk para" id="p14"><span class="seg" data-seg="s30"><span class="u" id="s30-u0">마지막</span> <span class="u" id="s30-u1">줄에서</span> <span class="u" id="s30-u2"><code class="ic">total</code>을</span> <span class="u" id="s30-u3">출력하면</span> <span class="u" id="s30-u4">15000이</span> <span class="u" id="s30-u5">나와요.</span></span></p>
+
+<p class="blk para" id="p15"><span class="seg" data-seg="s31"><span class="u" id="s31-u0">숫자만</span> <span class="u" id="s31-u1">늘어놓았을</span> <span class="u" id="s31-u2">때보다,</span> <span class="u" id="s31-u3">이름만</span> <span class="u" id="s31-u4">읽어도</span> <span class="u" id="s31-u5">무엇을</span> <span class="u" id="s31-u6">계산하는지</span> <span class="u" id="s31-u7">한눈에</span> <span class="u" id="s31-u8">보여요.</span></span></p>
+
+<section class="blk chapter" id="ch5" data-fx="chapter" data-index="5">
+  <p class="chapter-index" aria-hidden="true">5</p>
+  <h2 class="chapter-title"><span class="seg" data-seg="s32"><span class="u" id="s32-u0">좋은</span> <span class="u" id="s32-u1">이름</span> <span class="u" id="s32-u2">짓기</span></span></h2>
+</section>
+
+<p class="blk para" id="p16"><span class="seg" data-seg="s33"><span class="u" id="s33-u0">이름을</span> <span class="u" id="s33-u1">지을</span> <span class="u" id="s33-u2">때는</span> <span class="u" id="s33-u3">지켜야</span> <span class="u" id="s33-u4">할</span> <span class="u" id="s33-u5">규칙이</span> <span class="u" id="s33-u6">몇</span> <span class="u" id="s33-u7">가지</span> <span class="u" id="s33-u8">있어요.</span></span></p>
+
+<figure class="blk code" id="c5" data-fx="run" data-lines="4">
+  <pre><code><span class="ln" data-line="1">user_name = &quot;민지&quot;</span>
+<span class="ln" data-line="2">age2 = 20</span>
+<span class="ln" data-line="3">Age = 30</span>
+<span class="ln" data-line="4">print(user_name, age2, Age)</span></code></pre>
+  <div class="out" aria-label="실행 결과"><span class="out-line" data-from="4">민지 20 30</span></div>
+</figure>
+
+<p class="blk para" id="p17"><span class="seg" data-seg="s34"><span class="u" id="s34-u0">이름에는</span> <span class="u" id="s34-u1">영어</span> <span class="u" id="s34-u2">글자와</span> <span class="u" id="s34-u3">숫자,</span> <span class="u" id="s34-u4">그리고</span> <span class="u" id="s34-u5">밑줄을</span> <span class="u" id="s34-u6">쓸</span> <span class="u" id="s34-u7">수</span> <span class="u" id="s34-u8">있어요.</span></span> <span class="seg" data-seg="s35"><span class="u" id="s35-u0">다만</span> <span class="u" id="s35-u1">숫자로</span> <span class="u" id="s35-u2">시작할</span> <span class="u" id="s35-u3">수는</span> <span class="u" id="s35-u4">없어서,</span> <span class="u" id="s35-u5"><code class="ic">age2</code>는</span> <span class="u" id="s35-u6">되지만</span> <span class="u" id="s35-u7"><code class="ic">2age</code>는</span> <span class="u" id="s35-u8">안</span> <span class="u" id="s35-u9">돼요.</span></span> <span class="seg" data-seg="s36"><span class="u" id="s36-u0">대문자와</span> <span class="u" id="s36-u1">소문자도</span> <span class="u" id="s36-u2">구분해요.</span></span> <span class="seg" data-seg="s37"><span class="u" id="s37-u0"><code class="ic">age2</code>와</span> <span class="u" id="s37-u1"><code class="ic">Age</code>는</span> <span class="u" id="s37-u2">서로</span> <span class="u" id="s37-u3">다른</span> <span class="u" id="s37-u4">이름표예요.</span></span></p>
+
+<aside class="blk tip" id="tip1"><p class="tip-label">참고</p><p>여러 단어로 된 이름은 <code class="ic">user_name</code>처럼 밑줄로 이어 써요. 파이썬 코드에서 가장 많이 쓰는 방식이에요.</p></aside>
+
+<div class="blk turn" id="t1" data-fx="flip">
+  <div class="turn-card"><div class="turn-front">변수</div><div class="turn-back">값에 붙인 이름</div></div>
+</div>
+
+<p class="blk para" id="p18"><span class="seg" data-seg="s38"><span class="u" id="s38-u0">오늘</span> <span class="u" id="s38-u1">배운</span> <span class="u" id="s38-u2">것을</span> <span class="u" id="s38-u3">한</span> <span class="u" id="s38-u4">줄로</span> <span class="u" id="s38-u5">말하면,</span> <span class="u" id="s38-u6">변수는</span> <span class="u" id="s38-u7">값에</span> <span class="u" id="s38-u8">붙인</span> <span class="u" id="s38-u9">이름이에요.</span></span></p>
+
+<section class="blk outro" id="outro" data-fx="outro">
+  <p class="outro-kicker">레슨 1 마침</p>
+  <h2 class="outro-title">오늘 배운 것</h2>
+  <ol class="recap"><li>변수는 값에 붙인 이름표예요.</li><li><code class="ic">=</code>는 오른쪽 값에 왼쪽 이름을 붙여요.</li><li>이름표는 언제든 다른 값으로 옮겨 붙일 수 있어요.</li></ol>
+  <p class="outro-say"><span class="seg" data-seg="s39"><span class="u" id="s39-u0">오늘은</span> <span class="u" id="s39-u1">값에</span> <span class="u" id="s39-u2">이름표를</span> <span class="u" id="s39-u3">붙이고,</span> <span class="u" id="s39-u4">옮겨</span> <span class="u" id="s39-u5">붙이고,</span> <span class="u" id="s39-u6">이름으로</span> <span class="u" id="s39-u7">계산하는</span> <span class="u" id="s39-u8">법을</span> <span class="u" id="s39-u9">배웠어요.</span></span> <span class="seg" data-seg="s40"><span class="u" id="s40-u0">이제</span> <span class="u" id="s40-u1">관심</span> <span class="u" id="s40-u2">있는</span> <span class="u" id="s40-u3">주제를</span> <span class="u" id="s40-u4">골라</span> <span class="u" id="s40-u5">직접</span> <span class="u" id="s40-u6">연습해</span> <span class="u" id="s40-u7">봐요.</span></span> <span class="seg" data-seg="s41"><span class="u" id="s41-u0">다음</span> <span class="u" id="s41-u1">레슨에서는</span> <span class="u" id="s41-u2">조건문으로</span> <span class="u" id="s41-u3">코드에</span> <span class="u" id="s41-u4">갈림길을</span> <span class="u" id="s41-u5">만들어요.</span></span></p>
+  <p class="outro-next is-planned"><span class="outro-next-label">다음 레슨 · 준비 중</span><strong>조건문</strong><em>코드에 갈림길 만들기</em></p>
+</section>
+
+<section class="blk practice" id="practice" data-practice="variables" aria-label="직접 해 보기">
+  <noscript><p>직접 해 보기는 자바스크립트가 켜져 있어야 동작해요.</p></noscript>
+</section>
+</main>
+</div>
+<script type="module" src="../src/app.js"></script>
+</body>
+</html>

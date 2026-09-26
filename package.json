@@ -1,0 +1,16 @@
+{
+  "name": "docent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "읽으면 교과서, 재생하면 강의가 되는 레슨 페이지",
+  "scripts": {
+    "compile": "node scripts/compile.mjs",
+    "voice": "node scripts/voice/build.mjs",
+    "serve": "python3 -m http.server 8810",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

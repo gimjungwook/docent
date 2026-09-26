@@ -1,0 +1,39 @@
+{
+  "id": "python-first-steps",
+  "title": "파이썬 첫걸음",
+  "subtitle": "코드 한 줄이 무엇을 하는지 듣고 보며 익히는 입문 코스",
+  "lessons": [
+    {
+      "id": "variables",
+      "number": 1,
+      "title": "변수",
+      "subtitle": "값에 이름표 붙이기",
+      "motif": "tag",
+      "status": "ready"
+    },
+    {
+      "id": "conditionals",
+      "number": 2,
+      "title": "조건문",
+      "subtitle": "코드에 갈림길 만들기",
+      "motif": "branch",
+      "status": "planned"
+    },
+    {
+      "id": "loops",
+      "number": 3,
+      "title": "반복문",
+      "subtitle": "같은 일을 여러 번",
+      "motif": "loop",
+      "status": "planned"
+    },
+    {
+      "id": "lists",
+      "number": 4,
+      "title": "리스트",
+      "subtitle": "값을 한 줄로 모아 두기",
+      "motif": "list",
+      "status": "planned"
+    }
+  ]
+}

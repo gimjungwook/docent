@@ -1,0 +1,120 @@
+/* Docent engine UI: spoken-sentence highlight, dock, return pill, taste panel. Owner: root. */
+
+/* Narration highlight: the active sentence gets a soft band; spoken words fill in. */
+.seg { border-radius: 4px; transition: background-color var(--dur-3) var(--ease-out), box-shadow var(--dur-3) var(--ease-out); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.is-narrating .seg.is-active { background-color: var(--marker-soft); box-shadow: 0 0 0 3px var(--marker-soft); }
+.is-narrating .seg.is-active .u { color: var(--ink-4); transition: color 120ms linear; }
+.is-narrating .seg.is-active .u.is-spoken { color: var(--ink); }
+.is-narrating .chapter .seg.is-active, .is-narrating .outro .seg.is-active, .is-narrating .intro .seg.is-active { background-color: transparent; box-shadow: none; }
+.is-narrating .chapter .seg.is-active .u, .is-narrating .outro .seg.is-active .u { color: var(--stage-ink-2); }
+.is-narrating .chapter .seg.is-active .u.is-spoken, .is-narrating .outro .seg.is-active .u.is-spoken { color: var(--stage-ink); }
+
+/* Focus mode: while following, other paragraphs step back. */
+.focus-on.is-narrating.is-following .lesson > .para:not(.is-current-block),
+.focus-on.is-narrating.is-following .lesson > .tip,
+.focus-on.is-narrating.is-following .lesson > .checkpoint:not(.is-current-block) { opacity: 0.38; }
+.lesson > .para, .lesson > .tip, .lesson > .checkpoint { transition: opacity 600ms var(--ease-out); }
+
+/* Click a sentence to jump there once the player has started. */
+.has-player .seg[data-seg] { cursor: pointer; }
+.has-player .seg[data-seg]:hover { background-color: var(--paper-2); box-shadow: 0 0 0 3px var(--paper-2); }
+.is-narrating .seg.is-active:hover { background-color: var(--marker-soft); box-shadow: 0 0 0 3px var(--marker-soft); }
+.chapter .seg[data-seg]:hover, .outro .seg[data-seg]:hover { background-color: transparent !important; box-shadow: none !important; }
+
+/* Dock */
+.dock {
+  position: fixed; z-index: 50; left: 50%; bottom: max(var(--s-4), env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: var(--s-4);
+  width: min(44rem, calc(100vw - 2 * var(--s-4))); height: var(--dock-h);
+  padding: 0 var(--s-4) 0 10px;
+  border-radius: 20px;
+  background: var(--stage); color: var(--stage-ink);
+  box-shadow: 0 16px 40px rgba(11, 13, 18, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  transition: width var(--dur-4) var(--ease-out), transform var(--dur-3) var(--ease-out), opacity var(--dur-3) var(--ease-out);
+}
+.page-lesson .shell ~ .dock { margin-left: calc(var(--sidebar-w) / 2); }
+@media (max-width: 1099px) { .page-lesson .shell ~ .dock { margin-left: 0; } }
+.dock-play {
+  display: grid; place-items: center; flex: none; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--marker); color: var(--stage);
+  transition: transform var(--dur-1) var(--ease-out), background var(--dur-2) var(--ease-out);
+}
+.dock-play:hover { transform: scale(1.06); }
+.dock-play:active { transform: scale(0.96); }
+.dock-play svg { width: 18px; height: 18px; }
+.dock-play .i-pause { display: none; }
+.dock.is-playing .dock-play .i-play { display: none; }
+.dock.is-playing .dock-play .i-pause { display: block; }
+.dock-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
+.dock-meta { display: flex; align-items: baseline; gap: var(--s-3); font-size: var(--text-xs); line-height: 1.2; }
+.dock-label { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-weight: 600; color: var(--stage-ink); }
+.dock-time { flex: none; color: var(--stage-ink-2); font-variant-numeric: tabular-nums; }
+.dock-track { position: relative; height: 16px; cursor: pointer; touch-action: none; }
+.dock-track::before { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 4px; border-radius: 4px; background: var(--stage-3); }
+.dock-fill { position: absolute; left: 0; top: 6px; height: 4px; width: 0; border-radius: 4px; background: var(--stage-ink); }
+.dock-tick { position: absolute; top: 4px; width: 2px; height: 8px; margin-left: -1px; border-radius: 1px; background: var(--stage); box-shadow: 0 0 0 1px var(--stage-3); }
+.dock-thumb { position: absolute; top: 2px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--stage-ink); opacity: 0; transition: opacity var(--dur-2) var(--ease-out); }
+.dock-track:hover .dock-thumb, .dock-track:focus-visible .dock-thumb, .dock.is-scrubbing .dock-thumb { opacity: 1; }
+.dock-speed { flex: none; min-width: 44px; height: 32px; padding: 0 8px; border-radius: 8px; font-size: var(--text-xs); font-weight: 700; font-variant-numeric: tabular-nums; color: var(--stage-ink-2); box-shadow: inset 0 0 0 1px var(--stage-rule); }
+.dock-speed:hover { color: var(--stage-ink); }
+
+/* Before the first play the dock is a single inviting pill. */
+.dock.is-idle { width: auto; padding-right: 22px; gap: var(--s-3); }
+.dock.is-idle .dock-main, .dock.is-idle .dock-speed { display: none; }
+.dock-invite { display: none; font-size: var(--text-sm); font-weight: 650; white-space: nowrap; }
+.dock-invite small { margin-left: 6px; font-weight: 500; color: var(--stage-ink-2); font-size: var(--text-xs); }
+.dock.is-idle .dock-invite { display: inline; }
+.dock.is-unavailable .dock-play { background: var(--stage-3); color: var(--stage-ink-2); cursor: default; }
+
+/* Return pill when the reader scrolled away during playback */
+.dock-return {
+  position: fixed; z-index: 51; left: 50%; bottom: calc(var(--dock-h) + var(--s-4) + 12px);
+  transform: translate(-50%, 8px); opacity: 0; pointer-events: none;
+  display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px 0 12px;
+  border-radius: var(--r-pill); background: var(--accent); color: #fff; font-size: var(--text-sm); font-weight: 650;
+  box-shadow: 0 8px 24px rgba(44, 95, 224, 0.35);
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-3) var(--ease-out);
+}
+.page-lesson .shell ~ .dock-return { margin-left: calc(var(--sidebar-w) / 2); }
+@media (max-width: 1099px) { .page-lesson .shell ~ .dock-return { margin-left: 0; } }
+.dock-return.is-shown { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.dock-return svg { width: 16px; height: 16px; transition: transform var(--dur-2) var(--ease-out); }
+.dock-return.is-up svg { transform: rotate(180deg); }
+
+/* Taste panel (시안 비교) */
+.taste {
+  position: fixed; z-index: 70; top: calc(var(--topbar-h) + 8px); right: var(--s-4);
+  width: min(22rem, calc(100vw - 2 * var(--s-4)));
+  padding: var(--s-5); border-radius: var(--r-3);
+  background: var(--paper); color: var(--ink); box-shadow: var(--shadow-2), 0 0 0 1px var(--rule);
+  font-size: var(--text-sm); line-height: 1.5;
+}
+.taste[hidden] { display: none; }
+.taste h2 { font-size: 1rem; letter-spacing: -0.01em; margin-bottom: 4px; }
+.taste > p { color: var(--ink-3); font-size: var(--text-xs); margin-bottom: var(--s-4); }
+.taste fieldset { border: 0; margin: 0 0 var(--s-4); padding: 0; }
+.taste legend { padding: 0; margin-bottom: 8px; font-weight: 650; font-size: var(--text-xs); color: var(--ink-2); }
+.taste-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.taste-options label { position: relative; }
+.taste-options input { position: absolute; opacity: 0; pointer-events: none; }
+.taste-options span { display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--rule); cursor: pointer; font-size: var(--text-xs); font-weight: 600; color: var(--ink-2); transition: all var(--dur-1) var(--ease-out); }
+.taste-options input:checked + span { background: var(--ink); color: var(--paper); box-shadow: none; }
+.taste-options input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.taste-actions { display: flex; gap: var(--s-2); margin-top: var(--s-2); }
+.taste-actions .btn { min-height: 38px; padding: 0 var(--s-4); font-size: var(--text-xs); }
+
+/* Hover affordance in read mode: start listening from this paragraph */
+.listen-here {
+  position: absolute; z-index: 30; display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px 0 9px;
+  border-radius: var(--r-pill); background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 650; white-space: nowrap;
+  opacity: 0; transform: translateX(6px); pointer-events: none; transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+.listen-here.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+.listen-here svg { width: 12px; height: 12px; }
+@media (hover: none), (max-width: 1099px) { .listen-here { display: none; } }
+
+@media (max-width: 720px) {
+  .dock { gap: var(--s-3); padding-right: var(--s-3); border-radius: 18px; }
+  .dock-speed { min-width: 40px; }
+}

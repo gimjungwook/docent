@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>파이썬 첫걸음 · Docent</title>
+<meta name="description" content="코드 한 줄이 무엇을 하는지 듣고 보며 익히는 입문 코스">
+<meta name="theme-color" content="#0b0d12">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components.css">
+<link rel="stylesheet" href="styles/engine.css">
+<link rel="stylesheet" href="styles/practice.css">
+</head>
+<body class="page-course" data-base="">
+<a class="skip-link" href="#course">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="topbar-menu" type="button" aria-controls="sidebar" aria-expanded="false"><span class="sr-only">목차 열기</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&gt;&gt;&gt;</span><span class="brand-name">Docent</span></a>
+  
+  <button class="topbar-taste" type="button" aria-haspopup="dialog" aria-expanded="false">시안 비교</button>
+</header>
+<main class="course" id="course">
+<section class="blk intro intro-course-hero" id="intro" data-fx="intro" data-motif="generic">
+  <div class="intro-stage" aria-hidden="true"></div>
+  <div class="intro-copy">
+    <p class="intro-course">Docent 코스</p>
+    <p class="intro-number">입문</p>
+    <h1 class="intro-title">파이썬 첫걸음</h1>
+    <p class="intro-subtitle">코드 한 줄이 무엇을 하는지 듣고 보며 익히는 입문 코스</p>
+  </div>
+</section>
+
+<section class="course-start">
+  <div class="course-start-copy">
+    <p class="course-lead">글로 읽으면 교과서처럼, 재생 버튼을 누르면 옆에서 설명해 주는 강의처럼 봅니다. 레슨이 끝나면 내 관심사에 맞춘 문제로 직접 연습해요.</p>
+    <a class="btn btn-primary" href="lessons/variables.html">첫 레슨 시작하기</a>
+  </div>
+</section>
+
+<section class="course-toc" aria-labelledby="toc-heading">
+  <div class="course-toc-head"><h2 id="toc-heading">레슨</h2><p>4개 중 1개 공개</p></div>
+  <ol class="toc-track">
+    <li><a class="toc-card" href="lessons/variables.html">
+      <span class="toc-motif" data-motif="tag" aria-hidden="true"></span>
+      <span class="toc-number">레슨 1</span>
+      <strong class="toc-title">변수</strong>
+      <span class="toc-subtitle">값에 이름표 붙이기</span>
+      <span class="toc-meta">5개 장 · 약 3분</span>
+    </a></li>
+    <li><div class="toc-card is-planned" aria-disabled="true">
+      <span class="toc-motif" data-motif="branch" aria-hidden="true"></span>
+      <span class="toc-number">레슨 2</span>
+      <strong class="toc-title">조건문</strong>
+      <span class="toc-subtitle">코드에 갈림길 만들기</span>
+      <span class="toc-meta">준비 중</span>
+    </div></li>
+    <li><div class="toc-card is-planned" aria-disabled="true">
+      <span class="toc-motif" data-motif="loop" aria-hidden="true"></span>
+      <span class="toc-number">레슨 3</span>
+      <strong class="toc-title">반복문</strong>
+      <span class="toc-subtitle">같은 일을 여러 번</span>
+      <span class="toc-meta">준비 중</span>
+    </div></li>
+    <li><div class="toc-card is-planned" aria-disabled="true">
+      <span class="toc-motif" data-motif="list" aria-hidden="true"></span>
+      <span class="toc-number">레슨 4</span>
+      <strong class="toc-title">리스트</strong>
+      <span class="toc-subtitle">값을 한 줄로 모아 두기</span>
+      <span class="toc-meta">준비 중</span>
+    </div></li>
+  </ol>
+</section>
+
+<section class="course-how" aria-labelledby="how-heading">
+  <h2 id="how-heading">이렇게 공부해요</h2>
+  <ol class="how-list">
+    <li><strong>읽기</strong><span>스크롤하며 읽으면 그림과 코드가 필요한 자리에서 한 번씩 움직여요.</span></li>
+    <li><strong>듣기</strong><span>재생 버튼을 누르면 음성이 설명하고, 화면이 지금 읽는 곳을 따라가요. 언제든 직접 스크롤해도 돼요.</span></li>
+    <li><strong>해 보기</strong><span>레슨 끝에서 관심 있는 주제를 고르면 그 주제로 된 문제를 브라우저에서 바로 풀어요.</span></li>
+  </ol>
+</section>
+</main>
+<footer class="site-footer"><p>Docent · 파이썬 첫걸음 시안 · 2026</p></footer>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
