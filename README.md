@@ -20,7 +20,7 @@ node scripts/serve.mjs        # http://127.0.0.1:8810/
 | http://127.0.0.1:8810/ | 코스 첫 화면 |
 | http://127.0.0.1:8810/lessons/variables-story.html | 레슨 1 "변수" 스토리판 |
 | http://127.0.0.1:8810/lessons/variables.html | 레슨 1 "변수" 기본판 |
-| http://127.0.0.1:8810/lab/effects.html | 스토리판 효과 36종 가운데 글자·화면 효과를 하나씩 확인 |
+| http://127.0.0.1:8810/lab/effects.html | 스토리판의 학습용 효과 36종(글자 17종, 화면 10종, 코드 5종, 등장인물 4종)을 하나씩 확인 |
 | http://127.0.0.1:8810/lab/cast.html | 등장인물(민지, 도윤, 사장님, 파이)의 표정·감정·동작 확인 |
 | http://127.0.0.1:8810/lab/components.html | 구성 요소 10종을 하나씩 확인 |
 | http://127.0.0.1:8810/lab/voices.html | 목소리 비교 |

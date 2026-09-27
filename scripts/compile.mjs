@@ -553,7 +553,7 @@ function voiceNote(id) {
   const v = t.voice;
   if (v.provider === "say") return '<p class="voice-note">이 음성은 로컬 확인용 임시 음성이에요.</p>';
   const model = v.model === "supertonic-3" ? "Supertonic 3" : v.model;
-  return '<p class="voice-note">이 레슨의 음성은 AI로 합성했어요. 음성 모델: ' + esc(model) + (v.speakers ? " (캐릭터마다 다른 목소리)" : "") + ".</p>";
+  return '<p class="voice-note">이 레슨의 음성은 AI로 합성했어요. 음성 모델: ' + esc(model) + (v.speakers ? " (등장인물마다 다른 목소리)" : "") + ".</p>";
 }
 
 function renderLesson(compiled, course) {

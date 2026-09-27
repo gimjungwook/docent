@@ -102,7 +102,7 @@
 <main class="lab">
   <header class="lab-top">
     <h1>등장인물 실험실</h1>
-    <p>이야기 레슨의 등장인물을 하나씩 확인하는 페이지예요. 민지, 도윤, 사장님, 파이의 표정 10종, 감정 표시 8종, 동작 8종, 말하기, 메뉴판 가격 바꾸기, 짧은 장면을 따로 볼 수 있어요. 그림은 모두 코드로 그린 SVG예요.</p>
+    <p>스토리판의 등장인물을 하나씩 확인하는 페이지예요. 민지, 도윤, 사장님, 파이의 표정 10종, 감정 표시 8종, 동작 8종, 말하기, 메뉴판 가격 바꾸기, 짧은 장면을 따로 볼 수 있어요. 그림은 모두 코드로 그린 SVG예요.</p>
     <nav class="lab-index" aria-label="항목">
       <a href="#lab-expr"><span>1</span>표정</a>
       <a href="#lab-emote"><span>2</span>감정 표시</a>
@@ -115,7 +115,7 @@
 
   <div class="lab-bar">
     <form class="lab-bar-in" id="lab-controls" onsubmit="return false">
-      <fieldset class="lab-field"><legend>강도</legend><div class="seg-ctl">
+      <fieldset class="lab-field"><legend>효과 세기</legend><div class="seg-ctl">
         <label><input type="radio" name="intensity" value="soft"><span>약하게</span></label>
         <label><input type="radio" name="intensity" value="normal"><span>보통</span></label>
         <label><input type="radio" name="intensity" value="strong" checked><span>강하게</span></label>
@@ -124,7 +124,7 @@
         <label><input type="radio" name="sound" value="on"><span>켜기</span></label>
         <label><input type="radio" name="sound" value="off" checked><span>끄기</span></label>
       </div></fieldset>
-      <fieldset class="lab-field"><legend>동작 줄이기</legend><div class="seg-ctl">
+      <fieldset class="lab-field"><legend>움직임 줄이기</legend><div class="seg-ctl">
         <label><input type="radio" name="reduced" value="system" checked><span>시스템 설정</span></label>
         <label><input type="radio" name="reduced" value="on"><span>켜기</span></label>
         <label><input type="radio" name="reduced" value="off"><span>끄기</span></label>
@@ -230,7 +230,7 @@
   function readout(id, handle) {
     const out = document.getElementById(id);
     if (!out) return;
-    out.innerHTML = handle.duration ? '예정 <b>' + secs(handle.duration) + '</b>' : '<b>즉시 전환</b> · 동작 줄이기';
+    out.innerHTML = handle.duration ? '예정 <b>' + secs(handle.duration) + '</b>' : '<b>즉시 전환</b> · 움직임 줄이기';
   }
   let audioReady = false;
   async function unlock() {

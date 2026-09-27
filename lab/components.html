@@ -86,21 +86,21 @@
     <p>레슨에 들어가는 효과 10종을 하나씩 따로 확인하는 페이지예요. 위의 설정을 바꾸고 각 요소의 재생 버튼을 눌러 보세요. 처음 상태로와 끝 상태로는 되감기와 건너뛰기에 쓰는 즉시 전환이에요.</p>
     <nav class="lab-index" aria-label="구성 요소 목록">
       <a href="#lab-intro"><span>1</span>인트로</a>
-      <a href="#lab-chapter"><span>2</span>챕터 표지</a>
-      <a href="#lab-pop"><span>3</span>단어 팝</a>
-      <a href="#lab-burst"><span>4</span>버스트</a>
-      <a href="#lab-flip"><span>5</span>3D 뒤집기</a>
+      <a href="#lab-chapter"><span>2</span>장 표지</a>
+      <a href="#lab-pop"><span>3</span>단어 강조</a>
+      <a href="#lab-burst"><span>4</span>축하 강조</a>
+      <a href="#lab-flip"><span>5</span>뒤집기 카드</a>
       <a href="#lab-run"><span>6</span>코드 실행</a>
       <a href="#lab-step"><span>7</span>그림 단계</a>
-      <a href="#lab-tip"><span>8</span>팁</a>
-      <a href="#lab-checkpoint"><span>9</span>체크포인트</a>
-      <a href="#lab-outro"><span>10</span>아웃트로</a>
+      <a href="#lab-tip"><span>8</span>참고 상자</a>
+      <a href="#lab-checkpoint"><span>9</span>중간 점검</a>
+      <a href="#lab-outro"><span>10</span>마무리</a>
     </nav>
   </header>
 
   <div class="lab-bar">
     <form class="lab-bar-in" id="lab-controls" onsubmit="return false">
-      <fieldset class="lab-field"><legend>강도</legend><div class="seg-ctl">
+      <fieldset class="lab-field"><legend>효과 세기</legend><div class="seg-ctl">
         <label><input type="radio" name="intensity" value="soft"><span>약하게</span></label>
         <label><input type="radio" name="intensity" value="normal" checked><span>보통</span></label>
         <label><input type="radio" name="intensity" value="strong"><span>강하게</span></label>
@@ -117,15 +117,15 @@
         <label><input type="radio" name="motif" value="list"><span>리스트</span></label>
         <label><input type="radio" name="motif" value="generic"><span>기본</span></label>
       </div></fieldset>
-      <fieldset class="lab-field"><legend>소리</legend><div class="seg-ctl">
+      <fieldset class="lab-field"><legend>효과음</legend><div class="seg-ctl">
         <label><input type="radio" name="sound" value="on" checked><span>켜기</span></label>
         <label><input type="radio" name="sound" value="off"><span>끄기</span></label>
       </div></fieldset>
-      <fieldset class="lab-field"><legend>모드</legend><div class="seg-ctl">
-        <label><input type="radio" name="mode" value="play" checked><span>재생</span></label>
+      <fieldset class="lab-field"><legend>방식</legend><div class="seg-ctl">
+        <label><input type="radio" name="mode" value="play" checked><span>듣기</span></label>
         <label><input type="radio" name="mode" value="read"><span>읽기</span></label>
       </div></fieldset>
-      <fieldset class="lab-field"><legend>동작 줄이기</legend><div class="seg-ctl">
+      <fieldset class="lab-field"><legend>움직임 줄이기</legend><div class="seg-ctl">
         <label><input type="radio" name="reduced" value="system" checked><span>시스템 설정</span></label>
         <label><input type="radio" name="reduced" value="on"><span>켜기</span></label>
         <label><input type="radio" name="reduced" value="off"><span>끄기</span></label>
@@ -162,12 +162,12 @@
           </div>
         </section>
       </div>
-      <p class="lab-caption">끝 상태가 곧 레슨 머리글이에요. 동작 줄이기가 켜져 있으면 움직임 없이 바로 이 상태가 돼요.</p>
+      <p class="lab-caption">끝 상태가 곧 레슨 머리글이에요. 움직임 줄이기가 켜져 있으면 움직임 없이 바로 이 상태가 돼요.</p>
     </section>
 
     <section class="lab-item" id="lab-chapter" data-fx-name="chapter">
       <header class="lab-head">
-        <div><h2>챕터 표지 <code>chapter</code></h2><p>챕터를 여는 어두운 띠예요. 큰 번호가 선 위로 떠오르고 제목이 뒤따라요. 챕터마다 한 번.</p></div>
+        <div><h2>장 표지 <code>chapter</code></h2><p>장을 여는 어두운 띠예요. 큰 번호가 선 위로 떠오르고 제목이 뒤따라요. 장마다 한 번.</p></div>
         <div class="lab-actions">
           <button class="lab-btn is-primary" type="button" data-act="play">재생</button>
           <button class="lab-btn" type="button" data-act="reset">처음 상태로</button>
@@ -185,7 +185,7 @@
 
     <section class="lab-item" id="lab-pop" data-fx-name="pop">
       <header class="lab-head">
-        <div><h2>단어 팝 <code>pop</code></h2><p>낭독하는 단어 자체가 튀어 올랐다가 형광펜 강조로 남아요. 문단마다 한 번까지.</p></div>
+        <div><h2>단어 강조 <code>pop</code></h2><p>낭독하는 단어 자체가 튀어 올랐다가 형광펜 강조로 남아요. 문단마다 한 번까지.</p></div>
         <div class="lab-actions">
           <button class="lab-btn is-primary" type="button" data-act="play">재생</button>
           <button class="lab-btn" type="button" data-act="reset">처음 상태로</button>
@@ -200,7 +200,7 @@
 
     <section class="lab-item" id="lab-burst" data-fx-name="burst">
       <header class="lab-head">
-        <div><h2>버스트 <code>burst</code></h2><p>표시한 단어에서 불꽃과 종이 조각이 한 번 터져요. 화면 전체에 한 장만 쓰는 캔버스라 끝나면 스스로 치워요. 챕터마다 한 번까지.</p></div>
+        <div><h2>축하 강조 <code>burst</code></h2><p>표시한 단어에서 불꽃과 종이 조각이 한 번 터져요. 화면 전체에 한 장만 쓰는 캔버스라 끝나면 스스로 치워요. 장마다 한 번까지.</p></div>
         <div class="lab-actions">
           <button class="lab-btn is-primary" type="button" data-act="play">재생</button>
           <span class="lab-time" aria-live="polite">예정 1.1초</span>
@@ -213,7 +213,7 @@
 
     <section class="lab-item" id="lab-flip" data-fx-name="flip">
       <header class="lab-head">
-        <div><h2>3D 뒤집기 <code>flip</code></h2><p>용어 카드가 한 번 돌아 뜻을 보여 줘요. 레슨마다 한 번까지. 읽는 사람이 카드를 눌러 다시 뒤집을 수도 있어요.</p></div>
+        <div><h2>뒤집기 카드 <code>flip</code></h2><p>용어 카드가 한 번 돌아 뜻을 보여 줘요. 레슨마다 한 번까지. 읽는 사람이 카드를 눌러 다시 뒤집을 수도 있어요.</p></div>
         <div class="lab-actions">
           <button class="lab-btn is-primary" type="button" data-act="play">재생</button>
           <button class="lab-btn" type="button" data-act="reset">처음 상태로</button>
@@ -300,7 +300,7 @@
 
     <section class="lab-item" id="lab-tip" data-fx-name="tip">
       <header class="lab-head">
-        <div><h2>팁 <code>tip</code></h2><p>본문 흐름 밖의 짧은 참고예요. 움직이지 않고 낭독하지도 않아요.</p></div>
+        <div><h2>참고 상자 <code>tip</code></h2><p>본문 흐름 밖의 짧은 참고예요. 움직이지 않고 낭독하지도 않아요.</p></div>
       </header>
       <div class="lab-demo is-paper"><div class="lab-col">
         <p class="blk para">이름에는 영어 글자와 숫자, 그리고 밑줄을 쓸 수 있어요. 다만 숫자로 시작할 수는 없어요.</p>
@@ -310,7 +310,7 @@
 
     <section class="lab-item" id="lab-checkpoint" data-fx-name="checkpoint">
       <header class="lab-head">
-        <div><h2>중간 체크포인트 <code>checkpoint</code></h2><p>레슨 가운데쯤 한 번 쉬어 가는 자리예요. 진행 고리가 차오르고 작은 색종이와 짧은 소리가 나요.</p></div>
+        <div><h2>중간 점검 <code>checkpoint</code></h2><p>레슨 가운데쯤 한 번 쉬어 가는 자리예요. 진행 고리가 차오르고 작은 색종이와 짧은 소리가 나요.</p></div>
         <div class="lab-actions">
           <button class="lab-btn is-primary" type="button" data-act="play">재생</button>
           <button class="lab-btn" type="button" data-act="reset">처음 상태로</button>
@@ -328,7 +328,7 @@
 
     <section class="lab-item" id="lab-outro" data-fx-name="outro">
       <header class="lab-head">
-        <div><h2>아웃트로 <code>outro</code></h2><p>배운 것을 하나씩 짚고 다음 레슨 카드를 보여 주는 마무리 띠예요. 끝나면 실습으로 이어져요.</p></div>
+        <div><h2>마무리 <code>outro</code></h2><p>배운 것을 하나씩 짚고 다음 레슨 카드를 보여 주는 마무리 띠예요. 끝나면 실습으로 이어져요.</p></div>
         <div class="lab-actions">
           <button class="lab-btn is-primary" type="button" data-act="play">재생</button>
           <button class="lab-btn" type="button" data-act="reset">처음 상태로</button>
@@ -349,7 +349,7 @@
   </div>
 
   <footer class="lab-foot">
-    <p>소리는 인트로·챕터 표지·체크포인트·아웃트로에서만, 소리 켜기일 때만 나요. 모든 소리는 브라우저에서 합성하며 음원 파일을 쓰지 않아요.</p>
+    <p>효과음은 인트로·장 표지·중간 점검·마무리에서만, 효과음을 켰을 때만 나요. 모든 효과음은 브라우저에서 합성하며 음원 파일을 쓰지 않아요.</p>
     <p>이 페이지의 표시 방식은 컴파일러가 만드는 레슨 페이지와 같은 마크업을 써요(SPEC 7절).</p>
   </footer>
 </main>
@@ -413,7 +413,7 @@
     unlockAudio();
     const t0 = performance.now();
     const handle = fx[name](target, opts(extra));
-    if (!handle.duration) { readout(item, '<b>즉시 전환</b> · 동작 줄이기'); return handle; }
+    if (!handle.duration) { readout(item, '<b>즉시 전환</b> · 움직임 줄이기'); return handle; }
     readout(item, '예정 <b>' + secs(handle.duration) + '</b>');
     handle.done.then(() => {
       const real = performance.now() - t0;
