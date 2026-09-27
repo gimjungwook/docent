@@ -1,7 +1,7 @@
 {
   "version": 1,
   "lesson": "variables",
-  "title": "변수 실습",
+  "title": "변수",
   "lessonTitle": "변수",
   "lessonSummary": "= 로 값에 이름 붙이기, print()로 값 출력하기, 같은 이름에 새 값 다시 담기, 변수끼리 계산하기(total = price * count), 이름 규칙(글자·숫자·밑줄(_)만 쓰기, 숫자로 시작할 수 없음, 대문자와 소문자를 구분함, 단어는 snake_case로 잇기)",
   "defaultTheme": "cafe",

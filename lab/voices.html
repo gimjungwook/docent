@@ -92,7 +92,7 @@ function voiceLabel(c) {
 }
 
 function licenseLabel(c) {
-  if (c.localOnly) return '로컬 전용 (공개 불가)';
+  if (c.localOnly) return '이 컴퓨터 전용 (공개 불가)';
   if (c.provider === 'supertonic') return 'OpenRAIL-M · AI 음성 표기 필요';
   if (c.provider === 'qwen3') return 'Apache-2.0';
   return c.license;

@@ -488,7 +488,7 @@ function compileLesson(id, course) {
       html.push('<section class="blk outro" id="outro" data-fx="outro"' + styleAttr("outro") + '>\n  <p class="outro-kicker">레슨 ' + meta.number + ' 마침</p>\n  <h2 class="outro-title">오늘 배운 것</h2>\n  <ol class="recap">' + b.recap.map((r) => "<li>" + inlineStatic(r) + "</li>").join("") + '</ol>\n  <p class="outro-say">' + segHtml + "</p>\n  " + next + "\n</section>");
       ids.add("outro");
     } else if (b.type === "practice") {
-      html.push('<section class="blk practice" id="practice" data-practice="' + esc(base ? base.id : meta.id) + '" aria-label="직접 해 보기">\n  <noscript><p>직접 해 보기는 자바스크립트가 켜져 있어야 동작해요.</p></noscript>\n</section>');
+      html.push('<section class="blk practice" id="practice" data-practice="' + esc(base ? base.id : meta.id) + '" aria-label="직접 해 보기">\n  <noscript><p>직접 해 보기는 JavaScript가 켜져 있어야 동작해요.</p></noscript>\n</section>');
       ids.add("practice");
     }
   }
@@ -542,7 +542,7 @@ function sidebar(course, currentId, chapters) {
 }
 
 function topbar(base, crumb, versions, currentId) {
-  const switcher = versions ? '\n  <nav class="topbar-versions" aria-label="레슨 버전">' +
+  const switcher = versions ? '\n  <nav class="topbar-versions" aria-label="레슨 판">' +
     [["story", "스토리판"], ["calm", "기본판"]].map(([k, label]) => '<a href="' + versions[k] + '.html"' + (versions[k] === currentId ? ' aria-current="page"' : "") + ">" + label + "</a>").join("") + "</nav>" : "";
   return '<header class="topbar">\n  <button class="topbar-menu" type="button" aria-controls="sidebar" aria-expanded="false"><span class="sr-only">목차 열기</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>\n  <a class="brand" href="' + base + 'index.html"><span class="brand-mark" aria-hidden="true">&gt;&gt;&gt;</span><span class="brand-name">Docent</span></a>\n  ' + (crumb || "") + switcher + '\n  <button class="topbar-taste" type="button" aria-haspopup="dialog" aria-expanded="false">시안 비교</button>\n</header>';
 }
@@ -551,7 +551,7 @@ function voiceNote(id) {
   const t = timingsFor(id);
   if (!t || !t.voice) return "";
   const v = t.voice;
-  if (v.provider === "say") return '<p class="voice-note">이 음성은 로컬 확인용 임시 음성이에요.</p>';
+  if (v.provider === "say") return '<p class="voice-note">이 음성은 제작자 컴퓨터에서 확인하려고 만든 임시 음성이에요.</p>';
   const model = v.model === "supertonic-3" ? "Supertonic 3" : v.model;
   return '<p class="voice-note">이 레슨의 음성은 AI로 합성했어요. 음성 모델: ' + esc(model) + (v.speakers ? " (등장인물마다 다른 목소리)" : "") + ".</p>";
 }

@@ -135,7 +135,7 @@ function runtimeBody(error) {
     case 'KeyError':
       return '사전에 없는 키를 찾았어요.';
     case 'InputNotAvailable':
-      return '이 실습 화면에서는 input()으로 값을 받을 수 없어요. 값을 코드에 직접 적어 주세요.';
+      return '직접 해 보기에서는 input()으로 값을 받을 수 없어요. 값을 코드에 직접 적어 주세요.';
     case 'RecursionError':
       return '함수가 자기 자신을 너무 많이 불렀어요.';
     case 'OverflowError':
@@ -143,7 +143,7 @@ function runtimeBody(error) {
       return '값이 너무 커서 계산할 수 없어요.';
     case 'ModuleNotFoundError':
     case 'ImportError':
-      return '이 실습에서는 그 모듈을 쓸 수 없어요.';
+      return '직접 해 보기에서는 그 모듈을 쓸 수 없어요.';
     case 'AssertionError':
       return 'assert로 확인한 조건이 맞지 않았어요.';
     case 'InternalError':

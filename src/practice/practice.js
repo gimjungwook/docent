@@ -149,7 +149,7 @@ export async function mountPractice(sectionEl, options = {}) {
   sectionEl.classList.add('practice');
   sectionEl.setAttribute('aria-labelledby', `${uid}-title`);
   const heading = () => h('h2', { class: 'pr-title', id: `${uid}-title` }, '직접 해 보기');
-  sectionEl.replaceChildren(h('div', { class: 'pr-head' }, heading(), h('p', { class: 'pr-lead' }, '실습 문제를 불러오고 있어요…')));
+  sectionEl.replaceChildren(h('div', { class: 'pr-head' }, heading(), h('p', { class: 'pr-lead' }, '문제를 불러오고 있어요…')));
 
   let data;
   try {
@@ -159,7 +159,7 @@ export async function mountPractice(sectionEl, options = {}) {
     if (!Array.isArray(data.themes) || !data.themes.length) throw new Error('no themes in practice data');
   } catch (error) {
     sectionEl.replaceChildren(
-      h('div', { class: 'pr-head' }, heading(), h('p', { class: 'pr-lead' }, '실습 문제를 불러오지 못했어요. 페이지를 새로 고쳐 보세요.')),
+      h('div', { class: 'pr-head' }, heading(), h('p', { class: 'pr-lead' }, '문제를 불러오지 못했어요. 페이지를 새로 고쳐 보세요.')),
     );
     console.warn('[docent practice] could not load', dataUrl, error);
     return { element: sectionEl, ok: false, setTheme() {}, resetProgress() {}, destroy() {} };
@@ -214,7 +214,7 @@ class Practice {
         h('span', { class: 'pr-done', hidden: true }, h('span', { class: 'pr-sr' }, ' 모두 통과')),
       ),
     );
-    const themes = h('div', { class: 'pr-themes', role: 'group', 'aria-label': '실습 주제' }, this.chips);
+    const themes = h('div', { class: 'pr-themes', role: 'group', 'aria-label': '관심 주제' }, this.chips);
 
     this.steps = h('div', { class: 'pr-steps', role: 'group', 'aria-label': '문제 단계' });
     this.exTitle = h('h3', { class: 'pr-ex-title', id: `${u}-ex`, tabindex: '-1' });
