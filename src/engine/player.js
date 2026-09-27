@@ -2,6 +2,7 @@
 import { buildTimeline, indexAt, fmtTime } from "./timeline.js";
 import { Dock } from "./dock.js";
 import { BIG } from "./fxhub.js";
+import { cueKey } from "./reader.js";
 
 const LEAD = 0.45;               // seconds the camera starts moving before a sentence
 // Effects that need their block framed before they play (the camera moves first).
@@ -48,7 +49,13 @@ export class Player {
     let saved = 0;
     try { saved = Number(localStorage.getItem(this.storeKey) || 0); } catch {}
     if (this.available && saved > 8 && saved < this.tl.duration - 8) { this.resumeAt = saved; this.dock.setInvite("이어서 듣기", fmtTime(saved) + "부터"); }
-    camera.onDetach(() => { if (this.state !== "idle") { document.body.classList.remove("is-following"); this._updateReturn(); } });
+    camera.onDetach(() => {
+      if (this.state === "idle") return;
+      document.body.classList.remove("is-following");
+      this._updateReturn();
+      // Paused and scrolling on their own, the learner is reading: effects ahead play as in read mode.
+      if (this.state === "paused") this.reader && this.reader.resume();
+    });
     this._tick = this._tick.bind(this);
     this._bindKeys();
     this._bindSentenceSeek();
@@ -89,6 +96,7 @@ export class Player {
   }
 
   refollow() {
+    if (this.state === "paused") this.reader && this.reader.suspend();
     this.camera.follow();
     document.body.classList.add("is-following");
     this.dock.hideReturn();
@@ -252,7 +260,14 @@ export class Player {
 
   // ---- cues ----
   _cues(t) {
-    while (this.cueIdx < this.tl.cues.length && this.tl.cues[this.cueIdx].time <= t) this.pending.push(this.tl.cues[this.cueIdx++]);
+    // Cues the reader already played while narration was paused are not played a second time.
+    const seen = (c) => this.reader && this.reader.fired.has(cueKey(c));
+    if (this.pending.length) this.pending = this.pending.filter((c) => { if (!seen(c)) return true; c.fired = true; return false; });
+    while (this.cueIdx < this.tl.cues.length && this.tl.cues[this.cueIdx].time <= t) {
+      const c = this.tl.cues[this.cueIdx++];
+      if (seen(c)) { c.fired = true; continue; }
+      this.pending.push(c);
+    }
     if (!this.pending.length || this.firing || this.camera.moving) return;
     // Characters and word effects join in at once; screen and block effects take turns.
     const rest = [];
@@ -324,6 +339,11 @@ export class Player {
   // ---- state ----
   _setState(state) {
     this.state = state;
+    // Narrating: the player owns the effects. Paused after the learner scrolled away: read mode takes over.
+    if (this.reader) {
+      if (state === "playing") this.reader.suspend();
+      else if (state === "paused" && !this.camera.following) this.reader.resume();
+    }
     this.dock.setState(state === "ended" ? "paused" : state);
     document.body.classList.toggle("is-playing", state === "playing");
     if (state !== "playing") { cancelAnimationFrame(this.raf); this._setTalker(null); }
