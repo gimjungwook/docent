@@ -18,7 +18,7 @@ export class Dock {
       '<span class="dock-invite"></span>' +
       '<div class="dock-main"><div class="dock-meta"><span class="dock-label"></span><span class="dock-time">0:00 / ' + fmtTime(duration) + "</span></div>" +
       '<div class="dock-track" role="slider" tabindex="0" aria-label="재생 위치" aria-valuemin="0" aria-valuemax="' + Math.round(duration) + '" aria-valuenow="0"><div class="dock-fill"></div><div class="dock-thumb"></div></div></div>' +
-      '<button class="dock-speed" type="button" aria-label="재생 속도">1×</button>';
+      '<button class="dock-speed" type="button" aria-label="재생 속도 1배">1×</button>';
     document.body.appendChild(root);
     const ret = document.createElement("button");
     ret.type = "button";
@@ -56,7 +56,7 @@ export class Dock {
     this.play.setAttribute("aria-label", state === "playing" ? "일시정지" : "재생");
   }
   setLabel(text) { if (this.label.textContent !== text) this.label.textContent = text; }
-  setSpeed(rate) { this.speed.textContent = rate + "×"; }
+  setSpeed(rate) { this.speed.textContent = rate + "×"; this.speed.setAttribute("aria-label", "재생 속도 " + rate + "배"); }
   setTime(t) {
     if (this._scrubbing) return;
     const p = this.duration ? Math.min(1, t / this.duration) : 0;

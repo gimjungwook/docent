@@ -43,7 +43,7 @@ THIRD_PARTY.md            every third-party asset/model with license (append you
 
 Only edit files you own. Shared files (this spec, tokens.css) change only through the root agent.
 
-Dev server: `python3 -m http.server 8810` from the repo root. Every page must work from that server and from GitHub Pages under a sub-path (use relative URLs only).
+Dev server: `node scripts/serve.mjs` (`npm run serve`, port 8810, repo root on 127.0.0.1). It answers HTTP Range requests, which the audio needs for seeking; `python3 -m http.server` serves the pages but cannot seek the audio. Every page must work from that server and from GitHub Pages under a sub-path (use relative URLs only).
 
 ## 3. Lesson script format (content/lessons/<id>.md)
 
@@ -214,7 +214,7 @@ CLI: `node scripts/voice/build.mjs <lessonId> [--provider <name>]` reads data/le
 
 ## 10. Engine behaviour (reference)
 
-States: read (no audio), playing, paused. The rAF loop reads audio.currentTime, finds the active segment and word, fills spoken words (ink) and leaves the rest of the sentence dim, marks the active sentence with a soft band. The camera starts moving ~450 ms before a segment whose element is outside the reading band (26%–62% of the viewport) and eases it to the reading line (38%). Cues fire at their word's start time; if the camera is moving, the cue waits until it settles. While an effect runs, the camera does not move. Seeking calls settle()/reset() on everything between the old and new time. In read mode, effectable elements fire once when they are in the reading band and the page has been still for 180 ms. Dock: play/pause, chapter title, progress with chapter ticks, time, speed (1×/1.25×/1.5×). Keyboard: Space, ←/→ (previous/next sentence).
+States: read (no audio), playing, paused. The rAF loop reads audio.currentTime, finds the active segment and word, fills spoken words (ink) and leaves the rest of the sentence dim, marks the active sentence with a soft band. The camera starts moving ~450 ms before a segment whose element is outside the reading band (25%–58% of the viewport height; the band never starts above the top bar) and eases it to the reading line (38%). Cues fire at their word's start time; if the camera is moving, the cue waits until it settles. While an effect runs, the camera does not move. Seeking calls settle()/reset() on everything between the old and new time. In read mode, a cue fires once when the page has been still for 180 ms and its target is in view: a word cue when its word sits between 18% and 72% of the viewport height, a block cue when 60% of the block (or of the viewport below the top bar, for tall blocks) is visible. Cues whose target has scrolled above the top bar jump to their final state. Once narration has started, read mode stays off until the lesson ends, so while paused the effects after the current time keep their start state. Dock: play/pause, chapter title, progress with chapter ticks, time, speed (1×/1.25×/1.5×). Keyboard: Space, ←/→ (previous/next sentence).
 
 ## 11. Quality bar
 

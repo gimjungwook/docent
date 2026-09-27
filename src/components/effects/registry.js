@@ -34,7 +34,7 @@ export const EFFECTS = {
   glitch:     { label: "글자 깨짐",     group: "text", kind: "inline", dur: 900,  use: "오류 메시지나 잘못된 코드를 가리킬 때만 쓴다" },
 
   // ---- screen (point): moments of result, success and warning ----
-  stamp:       { label: "도장 쾅",       group: "screen", kind: "point", dur: 1400, params: ["text"], use: "실행 결과나 정답을 도장으로 확정해 보여 준다" },
+  stamp:       { label: "도장",          group: "screen", kind: "point", dur: 1400, params: ["text"], use: "실행 결과나 정답을 도장으로 확정해 보여 준다" },
   sparkle:     { label: "반짝이",        group: "screen", kind: "point", dur: 1200, use: "잘 이해했을 때 작은 칭찬을 준다" },
   confetti:    { label: "색종이",        group: "screen", kind: "point", dur: 1400, use: "결과가 기대대로 나왔을 때 축하한다" },
   fireworks:   { label: "폭죽",          group: "screen", kind: "point", dur: 2400, use: "새 개념을 손에 넣은 큰 순간(핵심 정의)을 축하한다" },

@@ -45,7 +45,8 @@ export class Player {
     });
     this.aiVoice = !!(timings && timings.voice && timings.voice.provider !== "say");
     if (this.available) this.dock.setInvite("재생하며 보기", fmtTime(this.tl.duration) + (this.aiVoice ? " · AI 음성" : ""));
-    const saved = Number(localStorage.getItem(this.storeKey) || 0);
+    let saved = 0;
+    try { saved = Number(localStorage.getItem(this.storeKey) || 0); } catch {}
     if (this.available && saved > 8 && saved < this.tl.duration - 8) { this.resumeAt = saved; this.dock.setInvite("이어서 듣기", fmtTime(saved) + "부터"); }
     camera.onDetach(() => { if (this.state !== "idle") { document.body.classList.remove("is-following"); this._updateReturn(); } });
     this._tick = this._tick.bind(this);
@@ -338,12 +339,12 @@ export class Player {
     const seg = this.tl.segs[this.active];
     seg && seg.el && seg.el.classList.remove("is-active");
     this._markRows(-1);
-    localStorage.removeItem(this.storeKey);
+    try { localStorage.removeItem(this.storeKey); } catch {}
     this.dock.setLabel("레슨 끝 · 다시 들으려면 재생");
     this.reader && this.reader.resume();
   }
 
-  _save() { if (this.available && this.audio.currentTime > 3) localStorage.setItem(this.storeKey, String(this.audio.currentTime.toFixed(1))); }
+  _save() { if (this.available && this.audio.currentTime > 3) { try { localStorage.setItem(this.storeKey, String(this.audio.currentTime.toFixed(1))); } catch {} } }
 
   _updateReturn() {
     if (this.camera.following || this.state === "idle" || this.state === "ended") { this.dock.hideReturn(); return; }

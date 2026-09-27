@@ -102,7 +102,7 @@
         <label><input type="radio" name="intensity" value="normal"><span>보통</span></label>
         <label><input type="radio" name="intensity" value="strong" checked><span>강하게</span></label>
       </div></fieldset>
-      <fieldset class="fxlab-field"><legend>소리</legend><div class="seg-ctl">
+      <fieldset class="fxlab-field"><legend>효과음</legend><div class="seg-ctl">
         <label><input type="radio" name="sound" value="on" checked><span>켜기</span></label>
         <label><input type="radio" name="sound" value="off"><span>끄기</span></label>
       </div></fieldset>
@@ -111,7 +111,7 @@
         <label><input type="radio" name="reduced" value="on"><span>켜기</span></label>
         <label><input type="radio" name="reduced" value="off"><span>끄기</span></label>
       </div></fieldset>
-      <fieldset class="fxlab-field"><legend>낭독 표시</legend><div class="seg-ctl">
+      <fieldset class="fxlab-field"><legend>듣기 방식 표시</legend><div class="seg-ctl">
         <label><input type="radio" name="narrate" value="off" checked><span>끄기</span></label>
         <label><input type="radio" name="narrate" value="on"><span>켜기</span></label>
       </div></fieldset>
@@ -127,7 +127,7 @@
 
   <footer class="fxlab-wrap fxlab-foot">
     <p>효과는 모두 브라우저에서 그려요. 효과음은 브라우저에서 합성하며 음원 파일을 쓰지 않아요. 움직임 줄이기가 켜져 있으면 움직임 없이 바로 끝 상태가 돼요.</p>
-    <p>형광펜·손밑줄·동그라미는 진하게 그은 뒤 옅은 흔적으로 남아 복습 표시가 돼요. 낭독 표시를 켜면 레슨 재생 중처럼 문장을 칠해 두고 효과를 확인할 수 있어요.</p>
+    <p>형광펜·손밑줄·동그라미는 진하게 그은 뒤 옅은 흔적으로 남아 복습 표시가 돼요. 듣기 방식 표시를 켜면 레슨 재생 중처럼 문장을 칠해 두고 효과를 확인할 수 있어요.</p>
   </footer>
 </main>
 <div class="fxlab-now" id="fxlab-now" hidden><span class="fxlab-now-text" aria-live="polite"></span><button class="lab-btn" type="button" id="fxlab-stop">멈추기</button></div>
@@ -137,7 +137,7 @@
   import { unlockAudio, prime as v1prime, settle as v1settle } from '../src/components/index.js';
 
   const GROUPS = [
-    { id: 'text', title: '글자 효과', desc: '낭독하는 단어 자체가 움직이거나 표시돼요. 단어를 감싸서 써요.' },
+    { id: 'text', title: '글자 효과', desc: '음성이 읽는 단어 자체가 움직이거나 표시돼요. 단어를 감싸서 써요.' },
     { id: 'screen', title: '화면 효과', desc: '결과·성취·경고 순간에 단어 둘레나 화면 전체에서 일어나요. 단어 앞 지점에 붙여요.' },
     { id: 'code', title: '코드 효과', desc: '코드를 쓰고, 실행하고, 바뀐 곳을 보여 줘요. 코드 블록에 붙여요.' },
     { id: 'cast', title: '등장인물 효과', desc: '스토리판 장면 속 등장인물의 표정과 동작으로 상황을 전해요.' },
