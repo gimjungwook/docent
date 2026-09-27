@@ -56,6 +56,8 @@ export class Player {
       // Paused and scrolling on their own, the learner is reading: effects ahead play as in read mode.
       if (this.state === "paused") this.reader && this.reader.resume();
     });
+    // While paused there is no frame loop, so the return button and the dock label follow the learner's scroll here.
+    window.addEventListener("scroll", () => { if (this.state === "paused" && !this.camera.following) this._updateReturn(); }, { passive: true });
     this._tick = this._tick.bind(this);
     this._bindKeys();
     this._bindSentenceSeek();
@@ -74,9 +76,10 @@ export class Player {
       this.reader && this.reader.suspend();
       this.camera.active = true;
       this.camera.follow();
-      const t = from != null ? from : this.state === "ended" ? 0 : (this.resumeAt || 0);
-      this.resumeAt = 0;
+      // resumeAt: the saved listening position, or where the learner moved the progress bar after the lesson ended.
+      const t = from != null ? from : (this.resumeAt || 0);
       this.seek(t, { resume: false, arrive: true });
+      this.resumeAt = 0;
     } else if (from != null) this.seek(from, { resume: false, arrive: true });
     document.body.classList.add("is-narrating");
     this.audio.play().then(() => {}).catch(() => this._setState("paused"));
@@ -109,6 +112,7 @@ export class Player {
     if (!this.available) return;
     t = Math.min(Math.max(0, t), this.tl.duration - 0.05);
     this._setAudioTime(t);
+    if (this.state === "ended" || this.state === "idle") this.resumeAt = t;
     this._syncEffects(t);
     this.pending = [];
     this.cueIdx = this.tl.cues.findIndex((c) => c.time > t + 0.001);
@@ -384,7 +388,7 @@ export class Player {
       const tag = (e.target && e.target.tagName || "").toLowerCase();
       if (tag === "input" || tag === "textarea" || tag === "select" || (e.target && e.target.isContentEditable)) return;
       if (e.target && e.target.closest && e.target.closest(".practice")) return;
-      if (e.key === " " && !(e.target && e.target.closest && e.target.closest("button, a"))) { e.preventDefault(); this.toggle(); }
+      if (e.key === " " && !(e.target && e.target.closest && e.target.closest("button, a, [role=button]"))) { e.preventDefault(); this.toggle(); }
       if (this.state === "idle") return;
       if (e.key === "ArrowRight" && !(e.target && e.target.closest(".dock-track"))) { e.preventDefault(); const s = this.tl.segs[this.active + 1]; if (s) this.seek(this._startOf(s), { resume: this.state === "playing" }); }
       if (e.key === "ArrowLeft" && !(e.target && e.target.closest(".dock-track"))) {

@@ -26,6 +26,8 @@ const HOLD = { sentence: 280, paragraph: 520, pop: 300, burst: 900, flip: 800, r
   introBefore: 1500, introAfter: 1700, chapterBefore: 450, chapterAfter: 1000,
   checkpointBefore: 450, checkpointAfter: 900, outroBefore: 1700, outroAfter: 1400, sceneBefore: 450, lineAfter: 380 };
 const FACTOR = { soft: 0.7, normal: 1, strong: 1.2 };
+// All code examples of one lesson together; an endless loop stops the build with a message instead of hanging it.
+const CODE_TIMEOUT_MS = 60000;
 const HOLD_WEIGHT = { inline: 0.45, point: 1, block: 1, actor: 0.45 };
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -315,7 +317,14 @@ function buildSegment(atoms, segId, ctx) {
 // ---------- code ----------
 function runCode(blocks) {
   if (!blocks.length) return {};
-  const res = JSON.parse(execFileSync("python3", [rel("scripts/check_code.py")], { input: JSON.stringify(blocks.map((b) => ({ id: b.id, code: b.code }))), encoding: "utf8" }));
+  let out;
+  try {
+    out = execFileSync("python3", [rel("scripts/check_code.py")], { input: JSON.stringify(blocks.map((b) => ({ id: b.id, code: b.code }))), encoding: "utf8", timeout: CODE_TIMEOUT_MS });
+  } catch (e) {
+    if (e.code === "ETIMEDOUT" || e.signal === "SIGTERM") fail("code examples did not finish within " + CODE_TIMEOUT_MS / 1000 + " s (look for an endless loop or input())");
+    throw e;
+  }
+  const res = JSON.parse(out);
   const map = {};
   for (const r of res) {
     const b = blocks.find((x) => x.id === r.id);
@@ -589,6 +598,8 @@ function renderCourse(course, compiledById) {
 const course = JSON.parse(fs.readFileSync(rel("content/course.json"), "utf8"));
 const wanted = process.argv.slice(2);
 const all = course.lessons.flatMap((l) => [l.id, l.story].filter(Boolean));
+const unknown = wanted.filter((id) => !hasScript(id));
+if (unknown.length) { console.error("no script for: " + unknown.join(", ") + " (expected content/lessons/<id>.md)"); process.exit(1); }
 const ids = (wanted.length ? wanted : all).filter((id) => hasScript(id));
 const compiled = {};
 for (const id of ids) {
